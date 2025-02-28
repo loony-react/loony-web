@@ -209,7 +209,7 @@ const RightBookContainer = ({
   state: EditBookState
 }) => {
   return (
-    <div className="doc-settings-container">
+    <div className="doc-settings-container pad-ver-1">
       <ul style={{ paddingLeft: 0, listStyle: "none" }} className="list-item">
         <li>
           <RxReader size={16} color="#2d2d2d" />

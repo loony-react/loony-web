@@ -156,7 +156,7 @@ const RightBookContainer = ({
 }) => {
   const isAuth = authContext.status === AuthStatus.AUTHORIZED
   return (
-    <div className="doc-settings-container">
+    <div className="doc-settings-container pad-ver-1">
       <ul className="list-item" style={{ paddingLeft: 0, listStyle: "none" }}>
         {isAuth && (
           <li>

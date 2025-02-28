@@ -26,6 +26,14 @@
     margin-right: 10px;
     margin-left: 10px;
   }
+  .pad-ver-1 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .mar-ver-1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
 @media (min-width: 1400px) {
   .con-xxl-2 {
@@ -44,5 +52,13 @@
   .mar-hor-1 {
     margin-right: 5%;
     margin-left: 5%;
+  }
+  .pad-ver-1 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .mar-ver-1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 }

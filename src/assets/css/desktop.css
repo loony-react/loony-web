@@ -24,7 +24,6 @@
 }
 .doc-settings-container {
   width: 20%;
-  padding-top: 1.5em;
 }
 .home-container {
   width: 100%;
@@ -377,6 +376,8 @@ button:hover {
   font-weight: bold;
   padding-left: 16px;
   padding-right: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .chapter-button-nav {
   padding: 2px 0px;

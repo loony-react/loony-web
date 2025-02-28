@@ -9,7 +9,7 @@ export default function DesktopNav(props: {
   viewFrontPage: VoidReturnFunction
 }) {
   return (
-    <div className="con-xxl-2 bor-right pad-top-15">
+    <div className="con-xxl-2 bor-right pad-ver-1">
       <PageNavigation {...props} />
     </div>
   )
