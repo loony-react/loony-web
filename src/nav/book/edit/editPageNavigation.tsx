@@ -57,6 +57,7 @@ export const PageNavigation = ({
             setState((prevState) => ({
               ...prevState,
               topNode: frontPage,
+              page_id: frontPage.uid,
               form: "add_chapter",
             }))
           }}
@@ -81,6 +82,7 @@ export const PageNavigation = ({
                   setState({
                     ...state,
                     topNode: chapter,
+                    page_id: frontPage.uid,
                     form: "add_chapter",
                   })
                 }}
@@ -95,6 +97,7 @@ export const PageNavigation = ({
                     setState({
                       ...state,
                       topNode: chapter,
+                      page_id: chapter.uid,
                       form: "add_section",
                     })
                   }}
@@ -119,6 +122,7 @@ export const PageNavigation = ({
                           setState({
                             ...state,
                             topNode: section,
+                            page_id: chapter.uid,
                             form: "add_section",
                           })
                           e.stopPropagation()

@@ -48,18 +48,19 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
       setError("Body is required.")
       return
     }
+    const formData = {
+      title: formTitle,
+      content: formContent,
+      images: formImages ? formImages : [],
+      tags: tags.split(" "),
+      [docIdName]: doc_id,
+      parent_id,
+      identity,
+      page_id,
+      parent_identity,
+    }
     axiosInstance
-      .post(url, {
-        title: formTitle,
-        content: formContent,
-        images: formImages ? formImages : [],
-        tags: tags.split(" "),
-        [docIdName]: doc_id,
-        parent_id,
-        identity,
-        page_id,
-        parent_identity,
-      })
+      .post(url, formData)
       .then(({ data }) => {
         FnCallback(data)
       })
