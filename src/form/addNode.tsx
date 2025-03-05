@@ -11,6 +11,7 @@ import type {
 import AppContext from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
 import type { Auth } from "loony-types"
+import MarkdownPreview from "@uiw/react-markdown-preview"
 
 export default function AddNodeComponent(props: AddNodeComponentProps) {
   const {
@@ -37,7 +38,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   const [theme, setTheme] = useState(11)
   const [error, setError] = useState("")
   const [formImages, setFormImages] = useState(null)
-  const [tags, setTags] = useState("")
+  // const [tags, setTags] = useState("")
 
   const onCreateAction = useCallback(async () => {
     if (!formTitle) {
@@ -52,7 +53,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
       title: formTitle,
       content: formContent,
       images: formImages ? formImages : [],
-      tags: tags.split(" "),
+      tags: [],
       [docIdName]: doc_id,
       parent_id,
       identity,
@@ -101,7 +102,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
             user={user}
             setFormImages={setFormImages}
           />
-          <div className="form-section">
+          {/* <div className="form-section">
             <label>Tags</label>
             <br />
             <input
@@ -111,7 +112,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
                 setTags(e.target.value)
               }}
             />
-          </div>
+          </div> */}
         </div>
       </div>
       <div
@@ -131,6 +132,12 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
         <button onClick={onCreateAction} className="black-bg shadow">
           Submit
         </button>
+      </div>
+      <div className="form-content">
+        <MarkdownPreview
+          source={formContent}
+          wrapperElement={{ "data-color-mode": "light" }}
+        />
       </div>
     </div>
   )

@@ -28,7 +28,7 @@ export default function CreateNewDocument({
   const { user } = authContext as Auth
   const [formTitle, setFormTitle] = useState("")
   const [formContent, setFormContent] = useState("")
-  const [tags, setTags] = useState("")
+  // const [tags, setTags] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const [theme, setTheme] = useState(11)
   const [error, setError] = useState("")
@@ -50,7 +50,7 @@ export default function CreateNewDocument({
         title: formTitle,
         content: formContent,
         images: formImages ? formImages : [],
-        tags: tags.split(" "),
+        tags: [],
         theme,
       })
       .then(() => {
@@ -68,10 +68,10 @@ export default function CreateNewDocument({
       .catch(() => {
         setSubmitting(false)
       })
-  }, [formTitle, formContent, tags, theme])
+  }, [formTitle, formContent, theme])
 
   const routeTo = () => {
-    return
+    navigate("/", { replace: true })
   }
 
   return (
@@ -115,7 +115,7 @@ export default function CreateNewDocument({
               user={user}
               setFormImages={setFormImages}
             />
-            <div className="form-section">
+            {/* <div className="form-section">
               <label>Tags</label>
               <br />
               <input
@@ -125,7 +125,7 @@ export default function CreateNewDocument({
                   setTags(e.target.value)
                 }}
               />
-            </div>
+            </div> */}
           </div>
           <div className="flex-row" style={{ justifyContent: "flex-end" }}>
             <button

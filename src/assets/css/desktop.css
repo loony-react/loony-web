@@ -371,13 +371,12 @@ button:hover {
   font-size: 14px;
 }
 .chapter-nav {
-  padding: 2px 0px;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 1em;
+  font-weight: 600;
   padding-left: 16px;
   padding-right: 16px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 .chapter-button-nav {
   padding: 2px 0px;
@@ -395,6 +394,7 @@ button:hover {
 }
 .section-nav {
   padding-left: 10%;
+  font-size: 1em;
 }
 .chapter-nav:hover,
 .section-nav:hover {
