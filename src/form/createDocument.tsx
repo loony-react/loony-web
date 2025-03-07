@@ -1,10 +1,11 @@
-import { useState, useCallback, useContext } from "react"
+import { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { axiosInstance } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
 import MarkdownPreview from "@uiw/react-markdown-preview"
 import { DesktopLeftNavbar } from "../common/index.tsx"
+import { stopWords } from "../utils/index.tsx"
 
 import "react-easy-crop/react-easy-crop.css"
 import AppContext from "../context/AppContext.tsx"
@@ -28,13 +29,13 @@ export default function CreateNewDocument({
   const { user } = authContext as Auth
   const [formTitle, setFormTitle] = useState("")
   const [formContent, setFormContent] = useState("")
-  // const [tags, setTags] = useState("")
+  const [tags, setTags] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const [theme, setTheme] = useState(11)
   const [error, setError] = useState("")
   const [formImages, setFormImages] = useState(null)
 
-  const createDoc = useCallback(async () => {
+  const createDoc = () => {
     if (!formTitle) {
       setError("Title is required")
       return
@@ -45,14 +46,29 @@ export default function CreateNewDocument({
     }
     setSubmitting(true)
 
-    axiosInstance
-      .post(url, {
-        title: formTitle,
-        content: formContent,
-        images: formImages ? formImages : [],
-        tags: [],
-        theme,
+    const filterTitle = formTitle
+      .split(" ")
+      .filter((x) => {
+        if (stopWords.includes(x)) {
+          return false
+        }
+        if (x === " ") {
+          return false
+        }
+        return true
       })
+      .map((x) => x.toLowerCase())
+
+    const formData = {
+      title: formTitle,
+      content: formContent,
+      images: formImages ? formImages : [],
+      tags: [...filterTitle, ...tags.split(" ").map((x) => x.toLowerCase())],
+      theme,
+    }
+
+    axiosInstance
+      .post(url, formData)
       .then(() => {
         setSubmitting(false)
         appContext.setAppContext((prevState) => ({
@@ -68,7 +84,7 @@ export default function CreateNewDocument({
       .catch(() => {
         setSubmitting(false)
       })
-  }, [formTitle, formContent, theme])
+  }
 
   const routeTo = () => {
     navigate("/", { replace: true })
@@ -115,17 +131,16 @@ export default function CreateNewDocument({
               user={user}
               setFormImages={setFormImages}
             />
-            {/* <div className="form-section">
-              <label>Tags</label>
-              <br />
+            <div className="form-section">
               <input
                 type="text"
+                placeholder="Keywords"
                 value={tags}
                 onChange={(e) => {
                   setTags(e.target.value)
                 }}
               />
-            </div> */}
+            </div>
           </div>
           <div className="flex-row" style={{ justifyContent: "flex-end" }}>
             <button
@@ -148,16 +163,10 @@ export default function CreateNewDocument({
         </div>
 
         <div style={{ padding: 24 }}>
-          {
-            theme === 11 ? (
-              formContent
-            ) : theme === 24 ? (
-              <MarkdownPreview
-                source={formContent}
-                wrapperElement={{ "data-color-mode": "light" }}
-              />
-            ) : theme === 41 ? null : null // <MathsMarkdown source={formContent} />
-          }
+          <MarkdownPreview
+            source={formContent}
+            wrapperElement={{ "data-color-mode": "light" }}
+          />
         </div>
       </div>
     </div>

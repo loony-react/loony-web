@@ -160,16 +160,10 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
       </div>
 
       <div className="form-content">
-        {
-          theme === 11 ? (
-            content
-          ) : theme === 24 ? (
-            <MarkdownPreview
-              source={content}
-              wrapperElement={{ "data-color-mode": "light" }}
-            />
-          ) : theme === 41 ? null : null // <MathsMarkdown source={formContent} />
-        }
+        <MarkdownPreview
+          source={content}
+          wrapperElement={{ "data-color-mode": "light" }}
+        />
       </div>
     </div>
   )

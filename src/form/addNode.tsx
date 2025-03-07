@@ -53,7 +53,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
       title: formTitle,
       content: formContent,
       images: formImages ? formImages : [],
-      tags: [],
+      tags: null,
       [docIdName]: doc_id,
       parent_id,
       identity,
