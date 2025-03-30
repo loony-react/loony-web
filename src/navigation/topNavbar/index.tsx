@@ -1,19 +1,19 @@
-import { LuMenu } from 'react-icons/lu'
-import { LiaUserSolid } from 'react-icons/lia'
-import { Link, useNavigate, NavigateFunction } from 'react-router-dom'
-import { useCallback, useContext } from 'react'
-import { AuthStatus } from 'loony-types'
-import { AuthContext } from '../../context/AuthContext.tsx'
-import { axiosInstance } from 'loony-api'
+import { LuMenu } from "react-icons/lu"
+import { LiaUserSolid } from "react-icons/lia"
+import { Link, useNavigate, NavigateFunction } from "react-router"
+import { useCallback, useContext } from "react"
+import { AuthStatus } from "loony-types"
+import { AuthContext } from "../../context/AuthContext.tsx"
+import { axiosInstance } from "loony-api"
 import type {
   Auth,
   BooleanDispatchAction,
   VoidReturnFunction,
-} from 'loony-types'
+} from "loony-types"
 
 const Logo = () => {
   return (
-    <Link className="nav-item" to="/" style={{ color: 'white' }}>
+    <Link className="nav-item" to="/" style={{ color: "white" }}>
       LOONY
     </Link>
   )
@@ -23,7 +23,7 @@ const CreateDocument = (authContext: Auth) => {
   if (authContext.status === AuthStatus.AUTHORIZED) {
     return (
       <div className="create-button">
-        <button style={{ fontWeight: 'bold' }}>Create</button>
+        <button style={{ fontWeight: "bold" }}>Create</button>
         <div className="dropdown-content">
           <div className="dropdown-content-items">
             <div className="nav-list-items">
@@ -83,9 +83,9 @@ const Profile = ({
   return (
     <div className="login-button">
       <button
-        style={{ fontWeight: 'bold' }}
+        style={{ fontWeight: "bold" }}
         onClick={() => {
-          navigate('/login', { replace: true })
+          navigate("/login", { replace: true })
         }}
       >
         Login
@@ -106,7 +106,7 @@ const Navigation = ({
   const authContext = useContext(AuthContext)
 
   const logoutUser = useCallback(() => {
-    axiosInstance.post('/auth/logout').then(() => {
+    axiosInstance.post("/auth/logout").then(() => {
       authContext.setAuthContext({
         status: AuthStatus.UNAUTHORIZED,
         user: null,

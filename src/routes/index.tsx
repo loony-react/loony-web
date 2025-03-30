@@ -1,31 +1,31 @@
-import { useState, lazy, Suspense } from 'react'
-import { Routes, Route as ReactRoute } from 'react-router-dom'
+import { useState, lazy, Suspense } from "react"
+import { Routes, Route as ReactRoute } from "react-router"
 
-import { CREATE_BOOK, CREATE_BLOG } from 'loony-api'
+import { CREATE_BOOK, CREATE_BLOG } from "loony-api"
 import {
   NotificationContextProps,
   AppContextProps,
   AuthContextProps,
   AuthStatus,
-} from 'loony-types'
+} from "loony-types"
 
-import Home from '../home/index.tsx'
-import BlogView from '../blog/view/index.tsx'
-import EditBlog from '../blog/edit/index.tsx'
-import EditBook from '../book/edit/index.tsx'
-import BookView from '../book/view/index.tsx'
-import Profile from '../profile/index.tsx'
-import Login from '../auth/Login.tsx'
-import Signup from '../auth/Signup.tsx'
-import Alert from '../components/Alert.tsx'
-import NotFound from '../error/NotFound.tsx'
-import UnAuthorized from '../error/UnAuthorized.tsx'
-import Create from '../form/createDocument.tsx'
-import Navigation from '../navigation/topNavbar/index.tsx'
-import PageLoadingContainer from '../components/PageLoadingContainer.tsx'
-const ContentPolicy = lazy(() => import('../static/ContentPolicy.tsx'))
-const PrivacyPolicy = lazy(() => import('../static/PrivacyPolicy.tsx'))
-const UserAgreement = lazy(() => import('../static/UserAgreement.tsx'))
+import Home from "../home/index.tsx"
+import BlogView from "../blog/view/index.tsx"
+import EditBlog from "../blog/edit/index.tsx"
+import EditBook from "../book/edit/index.tsx"
+import BookView from "../book/view/index.tsx"
+import Profile from "../profile/index.tsx"
+import Login from "../auth/Login.tsx"
+import Signup from "../auth/Signup.tsx"
+import Alert from "../components/Alert.tsx"
+import NotFound from "../error/NotFound.tsx"
+import UnAuthorized from "../error/UnAuthorized.tsx"
+import Create from "../form/createDocument.tsx"
+import Navigation from "../navigation/topNavbar/index.tsx"
+import PageLoadingContainer from "../components/PageLoadingContainer.tsx"
+const ContentPolicy = lazy(() => import("../static/ContentPolicy.tsx"))
+const PrivacyPolicy = lazy(() => import("../static/PrivacyPolicy.tsx"))
+const UserAgreement = lazy(() => import("../static/UserAgreement.tsx"))
 
 const Route = ({
   authContext,
@@ -37,7 +37,7 @@ const Route = ({
   notificationContext: NotificationContextProps
 }): React.JSX.Element => {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
-  const isMobile = appContext.device.type === 'mobile' ? true : false
+  const isMobile = appContext.device.type === "mobile" ? true : false
   const props = {
     setMobileNavOpen,
     mobileNavOpen,

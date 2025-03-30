@@ -1,39 +1,32 @@
-import { deleteOne, deleteSubSection, deleteSection } from 'loony-utils'
-import { axiosInstance } from 'loony-api'
-import ConfirmAction from '../../components/ConfirmAction.tsx'
+import { deleteOne, deleteSubSection, deleteSection } from "loony-utils"
+import { axiosInstance } from "loony-api"
+import ConfirmAction from "../../components/ConfirmAction.tsx"
 import {
   AppDispatchAction,
   EditBookAction,
   EditBookState,
   DocNode,
-} from 'loony-types'
-import { NavigateFunction } from 'react-router-dom'
-import { useCallback } from 'react'
-
+} from "loony-types"
+import { NavigateFunction } from "react-router"
+import { useCallback } from "react"
 
 export default function EditModal({
-    state,
-    setState,
-    setAppContext,
-    doc_id,
-    navigate,
-  }: {
-    state: EditBookState
-    setState: EditBookAction
-    setAppContext: AppDispatchAction
-    doc_id: number
-    navigate: NavigateFunction
-    isMobile: boolean
-  }) {
-    const { modal } = state
-    const {
-        deleteNode,
-        navNodes,
-        groupNodesById,
-        childNodes,
-        parentNode,
-      } = state
-    
+  state,
+  setState,
+  setAppContext,
+  doc_id,
+  navigate,
+}: {
+  state: EditBookState
+  setState: EditBookAction
+  setAppContext: AppDispatchAction
+  doc_id: number
+  navigate: NavigateFunction
+  isMobile: boolean
+}) {
+  const { modal } = state
+  const { deleteNode, navNodes, groupNodesById, childNodes, parentNode } = state
+
   const onDeleteNode = () => {
     if (!deleteNode || !parentNode) return
     const submitData = {
@@ -52,7 +45,7 @@ export default function EditModal({
             childNodes: groupNodesById[doc_id].child as DocNode[],
             navNodes: __navNodes,
             deleteNode: null,
-            form: '',
+            form: "",
           })
         }
         if (deleteNode.identity === 102) {
@@ -64,7 +57,7 @@ export default function EditModal({
             parentNode: groupNodesById[doc_id],
             childNodes: groupNodesById[doc_id].child as DocNode[],
             deleteNode: null,
-            form: '',
+            form: "",
           })
         }
         if (deleteNode.identity === 103) {
@@ -79,7 +72,7 @@ export default function EditModal({
               },
             },
             childNodes: child,
-            form: '',
+            form: "",
             deleteNode: null,
           })
         }
@@ -90,30 +83,30 @@ export default function EditModal({
   }
 
   const deleteBook = () => {
-    axiosInstance.post('/book/delete', { doc_id: doc_id }).then(() => {
+    axiosInstance.post("/book/delete", { doc_id: doc_id }).then(() => {
       setAppContext((prevState) => ({
         ...prevState,
         alert: {
-          status: 'success',
-          title: 'Deleted Book',
-          body: 'Your book has been successfully deleted.',
+          status: "success",
+          title: "Deleted Book",
+          body: "Your book has been successfully deleted.",
         },
       }))
-      navigate('/', { replace: true })
+      navigate("/", { replace: true })
     })
   }
 
   const onCancel = useCallback(() => {
     setState({
       ...state,
-      modal: '',
+      modal: "",
       editNode: null,
       addNode: null,
     })
   }, [])
-    return <>
-
-      {modal && modal === 'delete_book' ? (
+  return (
+    <>
+      {modal && modal === "delete_book" ? (
         <ConfirmAction
           confirmTitle="Are you sure you want to delete Book?"
           confirmAction={deleteBook}
@@ -122,7 +115,7 @@ export default function EditModal({
         />
       ) : null}
 
-      {modal && modal === 'delete_page' ? (
+      {modal && modal === "delete_page" ? (
         <ConfirmAction
           confirmTitle="Are you sure you want to delete Page?"
           confirmAction={onDeleteNode}
@@ -131,7 +124,7 @@ export default function EditModal({
         />
       ) : null}
 
-      {modal && modal === 'delete_node' ? (
+      {modal && modal === "delete_node" ? (
         <ConfirmAction
           confirmTitle="Are you sure you want to delete Node?"
           confirmAction={onDeleteNode}
@@ -140,4 +133,5 @@ export default function EditModal({
         />
       ) : null}
     </>
+  )
 }

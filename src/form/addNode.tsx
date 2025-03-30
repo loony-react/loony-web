@@ -40,7 +40,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   const [formImages, setFormImages] = useState(null)
   // const [tags, setTags] = useState("")
 
-  const onCreateAction = useCallback(async () => {
+  const onCreateAction = () => {
     if (!formTitle) {
       setError("Title is required.")
       return
@@ -68,7 +68,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
       .catch((e) => {
         console.log(e)
       })
-  }, [formTitle, formContent])
+  }
 
   return (
     <div className="con-sm-12 con-xxl-5 mar-hor-1">

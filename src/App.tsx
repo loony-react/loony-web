@@ -1,12 +1,12 @@
-import { AuthContext, AuthProvider } from './context/AuthContext.tsx'
-import AppContext, { AppProvider } from './context/AppContext.tsx'
+import { AuthContext, AuthProvider } from "./context/AuthContext.tsx"
+import AppContext, { AppProvider } from "./context/AppContext.tsx"
 import NotificationContext, {
   NotificationProvider,
-} from './context/NotificationContext.tsx'
+} from "./context/NotificationContext.tsx"
 
-import { BrowserRouter } from 'react-router-dom'
-import Route from './routes/index.tsx'
-import { AuthContextProps } from 'loony-types'
+import { BrowserRouter } from "react-router"
+import Route from "./routes/index.tsx"
+import { AuthContextProps } from "loony-types"
 
 function App() {
   return (

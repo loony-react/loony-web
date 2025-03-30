@@ -3,7 +3,7 @@ import { LuFileWarning } from "react-icons/lu"
 import { FiEdit2 } from "react-icons/fi"
 import { extractImage, getNav } from "loony-utils"
 
-import { useParams, Link } from "react-router-dom"
+import { useParams, Link } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import {
   AppRouteProps,

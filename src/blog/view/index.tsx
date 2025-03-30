@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router"
 import { extractImage } from "loony-utils"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { getBlogNodes } from "loony-utils"

@@ -1,5 +1,5 @@
 import { useState, useContext } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router"
 import { axiosInstance } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
@@ -52,23 +52,38 @@ export default function CreateNewDocument({
         if (stopWords.includes(x)) {
           return false
         }
-        if (x === " ") {
+        if (x === " " || x === "") {
           return false
         }
         return true
       })
       .map((x) => x.toLowerCase())
 
-    const formData = {
+    const filterTags = tags
+      .split(" ")
+      .filter((x) => {
+        if (stopWords.includes(x)) {
+          return false
+        }
+        if (x === " " || x === "") {
+          return false
+        }
+        return true
+      })
+      .map((x) => x.toLowerCase())
+
+    const allTags = filterTitle.concat(filterTags)
+
+    const submitData = {
       title: formTitle,
       content: formContent,
       images: formImages ? formImages : [],
-      tags: [...filterTitle, ...tags.split(" ").map((x) => x.toLowerCase())],
+      tags: allTags,
       theme,
     }
 
     axiosInstance
-      .post(url, formData)
+      .post(url, submitData)
       .then(() => {
         setSubmitting(false)
         appContext.setAppContext((prevState) => ({

@@ -3,9 +3,9 @@ import {
   AuthStatus,
   NotificationContextProps,
   NotificationState,
-} from 'loony-types'
-import { axiosInstance, handleError } from './index'
-import { NavigateFunction } from 'react-router-dom'
+} from "loony-types"
+import { axiosInstance, handleError } from "./index"
+import { NavigateFunction } from "react-router"
 
 export const onLogin = async ({
   formData,
@@ -24,21 +24,21 @@ export const onLogin = async ({
 }) => {
   if (!formData.username) {
     setFormError({
-      label: 'username',
-      message: 'Email is required.',
+      label: "username",
+      message: "Email is required.",
     })
     return
   }
   if (!formData.password) {
     setFormError({
-      label: 'password',
-      message: 'Password is required.',
+      label: "password",
+      message: "Password is required.",
     })
     return
   }
 
   axiosInstance
-    .post('/auth/login', {
+    .post("/auth/login", {
       email: formData.username,
       password: formData.password,
     })
@@ -47,7 +47,7 @@ export const onLogin = async ({
         status: AuthStatus.AUTHORIZED,
         user: data,
       })
-      navigate('/', {})
+      navigate("/", {})
     })
     .catch((err) => {
       const __err = handleError(err)
@@ -55,11 +55,11 @@ export const onLogin = async ({
         (prevState: NotificationState) => ({
           ...prevState,
           alert: {
-            title: 'Error',
+            title: "Error",
             content: __err,
-            status: 'error',
+            status: "error",
           },
-        })
+        }),
       )
     })
 }
@@ -86,35 +86,35 @@ export const onSignup = async ({
 }) => {
   if (!formData.fname) {
     setFormError(() => ({
-      label: 'fname',
-      message: 'Please enter your first name.',
+      label: "fname",
+      message: "Please enter your first name.",
     }))
     return
   }
   if (!formData.username) {
     setFormError(() => ({
-      label: 'username',
-      message: 'Phone number is required.',
+      label: "username",
+      message: "Phone number is required.",
     }))
     return
   }
   if (!formData.password) {
     setFormError(() => ({
-      label: 'password',
-      message: 'Please enter password.',
+      label: "password",
+      message: "Please enter password.",
     }))
     return
   }
 
   axiosInstance
-    .post('/auth/signup', {
+    .post("/auth/signup", {
       fname: formData.fname,
       lname: formData.lname,
       email: formData.username,
       password: formData.password,
     })
     .then(() => {
-      navigate('/login', {})
+      navigate("/login", {})
     })
     .catch((err) => {
       const __err = handleError(err)
@@ -122,11 +122,11 @@ export const onSignup = async ({
         (prevState: NotificationState) => ({
           ...prevState,
           alert: {
-            title: 'Error',
+            title: "Error",
             content: __err,
-            status: 'error',
+            status: "error",
           },
-        })
+        }),
       )
     })
 }

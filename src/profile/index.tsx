@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import LeftNavbar from "../common/HomeLeftNavbar.tsx"
-import { NavigateFunction, useNavigate } from "react-router-dom"
+import { NavigateFunction, useNavigate } from "react-router"
 import { axiosInstance } from "loony-api"
 import { User, AppRouteProps, DocNode } from "loony-types"
 import { EmptyBlog, EmptyBook } from "../components/EmptyCard.tsx"

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router"
 import { MdHistory } from "react-icons/md"
 import { GoHome } from "react-icons/go"
 import { IoMdTime } from "react-icons/io"

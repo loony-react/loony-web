@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useCallback } from "react";
-import { deleteBlogNode, orderBlogChildNodes } from "loony-utils";
-import { useNavigate } from "react-router-dom";
-import { axiosInstance } from "loony-api";
-import ConfirmAction from "../../components/ConfirmAction.tsx";
-import { EditBlogState } from "loony-types";
-import { DocNode } from "loony-types";
+import { useCallback } from "react"
+import { deleteBlogNode, orderBlogChildNodes } from "loony-utils"
+import { useNavigate } from "react-router"
+import { axiosInstance } from "loony-api"
+import ConfirmAction from "../../components/ConfirmAction.tsx"
+import { EditBlogState } from "loony-types"
+import { DocNode } from "loony-types"
 
 export default function EditModal({
   state,
   blog_id,
   setState,
 }: {
-  state: EditBlogState;
-  blog_id: number;
-  setState: React.Dispatch<React.SetStateAction<EditBlogState>>;
+  state: EditBlogState
+  blog_id: number
+  setState: React.Dispatch<React.SetStateAction<EditBlogState>>
 }) {
-  const navigate = useNavigate();
-  const { childNodes, modal } = state;
-  const { mainNode } = state;
+  const navigate = useNavigate()
+  const { childNodes, modal } = state
+  const { mainNode } = state
 
   const deleteBlog = useCallback(() => {
     axiosInstance.post("/blog/delete", { blog_id }).then(() => {
-      navigate("/", { replace: true });
-    });
-  }, [navigate, blog_id]);
+      navigate("/", { replace: true })
+    })
+  }, [navigate, blog_id])
 
   const onCancel = useCallback(() => {
     setState({
@@ -32,21 +32,21 @@ export default function EditModal({
       modal: "",
       editNode: null,
       addNode: null,
-    });
-  }, [setState, state]);
+    })
+  }, [setState, state])
 
-  if (!mainNode || !mainNode) return null;
+  if (!mainNode || !mainNode) return null
 
   const onDeleteNode = () => {
-    if (!state.deleteNode) return;
-    const delete_node = state.deleteNode;
+    if (!state.deleteNode) return
+    const delete_node = state.deleteNode
     if (childNodes) {
-      let updateNode: DocNode | undefined;
+      let updateNode: DocNode | undefined
       childNodes.forEach((r) => {
         if (r.parent_id === delete_node.uid) {
-          updateNode = r;
+          updateNode = r
         }
-      });
+      })
 
       const submitData = {
         delete_node: {
@@ -59,28 +59,28 @@ export default function EditModal({
               uid: updateNode ? updateNode.uid : null,
             }
           : null,
-      };
+      }
 
       axiosInstance
         .post(`/blog/delete/node`, submitData)
         .then(() => {
-          const nodesAfterDelete = deleteBlogNode(childNodes, submitData);
+          const nodesAfterDelete = deleteBlogNode(childNodes, submitData)
           const orderChildNodes = orderBlogChildNodes(
             nodesAfterDelete,
-            mainNode
-          );
+            mainNode,
+          )
 
           setState({
             ...state,
             childNodes: orderChildNodes,
             form: "",
-          });
+          })
         })
         .catch((err) => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     }
-  };
+  }
 
   return (
     <>
@@ -101,5 +101,5 @@ export default function EditModal({
         />
       ) : null}
     </>
-  );
+  )
 }

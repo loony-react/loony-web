@@ -7,7 +7,7 @@ import {
 import { PageNavigation } from "./editPageNavigation"
 import { LuFileWarning } from "react-icons/lu"
 import { FiEdit2 } from "react-icons/fi"
-import { Link } from "react-router-dom"
+import { Link } from "react-router"
 
 export default function MobileNav(props: {
   state: EditBookState

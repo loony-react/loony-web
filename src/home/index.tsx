@@ -1,4 +1,4 @@
-import { NavigateFunction, useNavigate } from "react-router-dom"
+import { NavigateFunction, useNavigate } from "react-router"
 import { AppRouteProps, DocNode } from "loony-types"
 
 import { DesktopLeftNavbar } from "../common/index.tsx"

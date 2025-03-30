@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router"
 
 const AuthError = () => {
   return (
-    <div style={{ width: '80%', marginLeft: '20%' }}>
+    <div style={{ width: "80%", marginLeft: "20%" }}>
       <h1>UnAuthorized</h1>
-      <Link to="/login" style={{ color: 'rgb(15, 107, 228)', marginLeft: 5 }}>
+      <Link to="/login" style={{ color: "rgb(15, 107, 228)", marginLeft: 5 }}>
         Login
       </Link>
     </div>

@@ -1,5 +1,5 @@
 import { DocNode, AuthContextProps, AuthStatus } from "loony-types"
-import { Link } from "react-router-dom"
+import { Link } from "react-router"
 import { LuFileWarning } from "react-icons/lu"
 import { FiEdit2 } from "react-icons/fi"
 

@@ -7,7 +7,7 @@ import {
   EditBookState,
   DocNode,
 } from "loony-types"
-import { NavigateFunction } from "react-router-dom"
+import { NavigateFunction } from "react-router"
 import { useCallback } from "react"
 
 export default function EditComponent({

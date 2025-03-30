@@ -1,4 +1,4 @@
-import { NavigateFunction } from 'react-router-dom'
+import { NavigateFunction } from "react-router"
 
 const EmptyBlog = ({ navigate }: { navigate: NavigateFunction }) => {
   return (
@@ -9,7 +9,7 @@ const EmptyBlog = ({ navigate }: { navigate: NavigateFunction }) => {
           <button
             className="white-bg shadow"
             onClick={() => {
-              navigate('/create/blog')
+              navigate("/create/blog")
             }}
           >
             Create
@@ -29,7 +29,7 @@ const EmptyBook = ({ navigate }: { navigate: NavigateFunction }) => {
           <button
             className="white-bg shadow"
             onClick={() => {
-              navigate('/create/book')
+              navigate("/create/book")
             }}
           >
             Create
