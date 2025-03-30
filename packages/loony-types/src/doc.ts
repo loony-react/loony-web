@@ -1,8 +1,6 @@
-interface Indexer {
-  [key: string]: any // Allows indexing with any string key
-}
+// type Indexer = Record<string, string>
 
-export type JsonObject = Indexer
+// export type JsonObject = Indexer
 
 export type DocNode = {
   uid: number
@@ -16,7 +14,7 @@ export type DocNode = {
   child?: DocNode[]
   created_at: string
   updated_at?: string
-} & Indexer
+}
 
 export type AppendNodeResponse = {
   new_node: DocNode
@@ -83,3 +81,5 @@ export type ReadBookState = CommonBookState & {
 }
 
 export type EditBookState = ReadBookState & EditDocState
+
+export type UploadImageState = { name: string }

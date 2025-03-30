@@ -18,11 +18,11 @@ const resetState = {
 }
 
 export const getBlogNodes = (
-  blog_id: number,
+  doc_id: number,
   setState: ReadBlogAction | EditBlogAction,
   setStatus: PageStatusDispatchAction,
 ) => {
-  const url = `/blog/get/nodes?blog_id=${blog_id}`
+  const url = `/blog/get/nodes?doc_id=${doc_id}`
   setStatus((prevState) => ({
     ...prevState,
     status: PageStatus.FETCHING,

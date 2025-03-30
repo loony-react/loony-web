@@ -85,7 +85,7 @@ const View = (props: AppRouteProps) => {
               {nodeImage && nodeImage.name ? (
                 <div style={{ width: "100%", borderRadius: 5 }}>
                   <img
-                    src={`${base_url}/api/book/${doc_id}/720/${nodeImage.name}`}
+                    src={`${base_url}/book/${doc_id}/720/${nodeImage.name}`}
                     alt=""
                     width="100%"
                   />
@@ -131,7 +131,7 @@ const ParentNode = ({
       {image && image.name ? (
         <div style={{ width: "100%", borderRadius: 5 }}>
           <img
-            src={`${base_url}/api/book/${doc_id}/720/${image.name}`}
+            src={`${base_url}/book/${doc_id}/720/${image.name}`}
             alt=""
             width="100%"
           />

@@ -10,7 +10,7 @@ import type {
 import { getUrl } from "loony-utils"
 import AppContext from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
-import type { Auth } from "loony-types"
+import type { Auth, UploadImageState } from "loony-types"
 import MarkdownPreview from "@uiw/react-markdown-preview"
 
 export default function EditNodeComponent(props: EditNodeComponentProps) {
@@ -24,6 +24,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
     // isMobile,
     heading,
   } = props
+  console.log(docIdName)
   const { editNode, mainNode } = state
   const authContext = useContext<AuthContextProps>(AuthContext)
   const appContext = useContext<AppContextProps>(AppContext)
@@ -31,24 +32,24 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
 
   const { user } = authContext as Auth
 
-  const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")
-  const [image, setImage] = useState("")
+  const [formTitle, setFormTitle] = useState("")
+  const [formContent, setFormContent] = useState("")
+  const [formImages, setFormImages] = useState<UploadImageState[]>([])
   const [theme, setTheme] = useState(11)
   const [error, setError] = useState("")
 
   useEffect(() => {
     if (editNode) {
-      setTitle(editNode.title)
-      setContent(editNode.content)
+      setFormTitle(editNode.title)
+      setFormContent(editNode.content)
       if (typeof editNode.images === "string") {
         const __image = JSON.parse(editNode.images)
         if (__image.length > 0) {
-          setImage(__image[0].name)
+          setFormImages(__image)
         }
       }
       if (Array.isArray(editNode.images) && editNode.images.length > 0) {
-        setImage(editNode.images[0].name)
+        setFormImages(editNode.images)
       }
       if (editNode.theme) {
         setTheme(editNode.theme)
@@ -62,21 +63,21 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
     if (!editNode || !mainNode) return
     const url__ = getUrl(editNode, mainNode, url)
     e.preventDefault()
-    if (!title) {
+    if (!formTitle) {
       setError("Title is required.")
       return
     }
-    if (!title) {
+    if (!formContent) {
       setError("Body is required.")
       return
     }
     const submitData = {
-      title,
-      content,
+      title: formTitle,
+      content: formContent,
       uid: editNode.uid,
       [docIdName]: doc_id,
       identity: editNode.identity ? editNode.identity : null,
-      images: image ? [{ name: image }] : [],
+      images: formImages,
       theme,
     }
     axiosInstance
@@ -89,12 +90,12 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
       })
   }
   const onCloseModal = () => {
-    setTitle("")
-    setContent("")
+    setFormTitle("")
+    setFormContent("")
     onCancel()
   }
 
-  const imageName = docIdName === "doc_id" ? "book" : "blog"
+  const imageName = docIdName === "book" ? "book" : "blog"
 
   if (!editNode || !mainNode) return null
 
@@ -109,34 +110,39 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
               {error}
             </div>
           ) : null}
-          {image ? (
-            <img
-              src={`${base_url}/api/${imageName}/${user?.uid}/340/${image}`}
-              alt="tmp file upload"
-            />
-          ) : null}
+          {formImages && formImages.length > 0
+            ? formImages.map((image) => {
+                return (
+                  <img
+                    key={image.name}
+                    src={`${base_url}/${imageName}/${editNode.uid}/340/${image.name}`}
+                    alt="tmp file upload"
+                  />
+                )
+              })
+            : null}
           <div className="form-section">
             <label>Title</label>
             <br />
             <input
               type="text"
               placeholder="Title"
-              value={title}
+              value={formTitle}
               onChange={(e) => {
-                setTitle(e.target.value)
+                setFormTitle(e.target.value)
               }}
             />
           </div>
           <TextArea
-            formContent={content}
-            setFormContent={setContent}
+            formContent={formContent}
+            setFormContent={setFormContent}
             theme={theme}
             setTheme={setTheme}
           />
           <UploadImage
             baseUrl={base_url}
             user={user}
-            setFormImages={setImage}
+            setFormImages={setFormImages}
           />
         </div>
         <div
@@ -161,7 +167,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
 
       <div className="form-content">
         <MarkdownPreview
-          source={content}
+          source={formContent}
           wrapperElement={{ "data-color-mode": "light" }}
         />
       </div>

@@ -209,7 +209,7 @@ const Card = ({
         style={{
           backgroundImage:
             image && image.name
-              ? `url("${base_url}/api/${nodeType}/${node[nodeIdType]}/340/${image.name}")`
+              ? `url("${base_url}/${nodeType}/${node[nodeIdType]}/340/${image.name}")`
               : undefined,
           overflow: "hidden",
           backgroundSize: "cover",

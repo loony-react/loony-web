@@ -1,4 +1,4 @@
-import { useState, useCallback, useContext } from "react"
+import { useState, useContext } from "react"
 import { axiosInstance } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
@@ -7,6 +7,7 @@ import type {
   AuthContextProps,
   AppContextProps,
   AddNodeComponentProps,
+  UploadImageState,
 } from "loony-types"
 import AppContext from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
@@ -37,7 +38,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   const [formContent, setFormContent] = useState("")
   const [theme, setTheme] = useState(11)
   const [error, setError] = useState("")
-  const [formImages, setFormImages] = useState(null)
+  const [formImages, setFormImages] = useState<UploadImageState[]>([])
   // const [tags, setTags] = useState("")
 
   const onCreateAction = () => {

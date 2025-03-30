@@ -13,13 +13,13 @@ const View = (props: AppRouteProps) => {
   const { isMobile, appContext, authContext } = props
   const { base_url } = appContext.env
   const { blogId } = useParams()
-  const blog_id = blogId && parseInt(blogId)
+  const doc_id = blogId && parseInt(blogId)
 
   const [state, setState] = useState<ReadBlogState>({
     mainNode: null,
     childNodes: [],
     topNode: null,
-    doc_id: blog_id as number,
+    doc_id: doc_id as number,
   })
   const [status, setStatus] = useState({
     status: PageStatus.IDLE,
@@ -27,10 +27,10 @@ const View = (props: AppRouteProps) => {
   })
 
   useEffect(() => {
-    if (blog_id) {
-      getBlogNodes(blog_id, setState, setStatus)
+    if (doc_id) {
+      getBlogNodes(doc_id, setState, setStatus)
     }
-  }, [blog_id])
+  }, [doc_id])
 
   if (status.status !== PageStatus.VIEW_PAGE)
     return <PageLoadingContainer isMobile={isMobile} />
@@ -49,7 +49,7 @@ const View = (props: AppRouteProps) => {
           {image && image.name ? (
             <div style={{ width: "100%", borderRadius: 5 }}>
               <img
-                src={`${base_url}/api/blog/${blog_id}/720/${image.name}`}
+                src={`${base_url}/blog/${doc_id}/720/${image.name}`}
                 alt=""
                 width="100%"
               />
@@ -71,7 +71,7 @@ const View = (props: AppRouteProps) => {
               {nodeImage ? (
                 <div style={{ width: "100%", borderRadius: 5 }}>
                   <img
-                    src={`${base_url}/api/blog/${blog_id}/720/${nodeImage}`}
+                    src={`${base_url}/blog/${doc_id}/720/${nodeImage}`}
                     alt=""
                     width="100%"
                   />
@@ -88,7 +88,7 @@ const View = (props: AppRouteProps) => {
       {!isMobile ? (
         <div style={{ width: "20%", paddingLeft: 15, paddingTop: 15 }}>
           <RightNav
-            blog_id={blog_id as number}
+            doc_id={doc_id as number}
             authContext={authContext}
             mainNode={mainNode}
           />

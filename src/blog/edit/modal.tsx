@@ -9,11 +9,11 @@ import { DocNode } from "loony-types"
 
 export default function EditModal({
   state,
-  blog_id,
+  doc_id,
   setState,
 }: {
   state: EditBlogState
-  blog_id: number
+  doc_id: number
   setState: React.Dispatch<React.SetStateAction<EditBlogState>>
 }) {
   const navigate = useNavigate()
@@ -21,10 +21,10 @@ export default function EditModal({
   const { mainNode } = state
 
   const deleteBlog = useCallback(() => {
-    axiosInstance.post("/blog/delete", { blog_id }).then(() => {
+    axiosInstance.post("/blog/delete", { doc_id }).then(() => {
       navigate("/", { replace: true })
     })
-  }, [navigate, blog_id])
+  }, [navigate, doc_id])
 
   const onCancel = useCallback(() => {
     setState({

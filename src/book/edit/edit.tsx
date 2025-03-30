@@ -211,7 +211,7 @@ export default function EditComponent({
           FnCallback={addChapterFnCb}
           url="/book/append/node"
           isMobile={isMobile}
-          docIdName="doc_id"
+          docIdName="book"
           doc_id={doc_id as number}
           parent_id={topNode.uid}
           identity={101}
@@ -227,7 +227,7 @@ export default function EditComponent({
           FnCallback={addSectionFnCb}
           url="/book/append/node"
           isMobile={isMobile}
-          docIdName="doc_id"
+          docIdName="book"
           doc_id={doc_id}
           parent_id={topNode.uid}
           parent_identity={topNode.identity}
@@ -243,7 +243,7 @@ export default function EditComponent({
           FnCallback={addSubSectionFnCb}
           url="/book/append/node"
           isMobile={isMobile}
-          docIdName="doc_id"
+          docIdName="book"
           doc_id={doc_id}
           parent_id={topNode.uid}
           parent_identity={topNode.identity}
@@ -256,7 +256,7 @@ export default function EditComponent({
 
       {form && form === "edit_node" ? (
         <EditDocument
-          docIdName="doc_id"
+          docIdName="book"
           doc_id={doc_id}
           state={state}
           FnCallback={editFnCallback}

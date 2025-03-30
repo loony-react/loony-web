@@ -1,11 +1,14 @@
-import { useState } from 'react'
-import { axiosInstance } from 'loony-api'
-import Cropper, { Area } from 'react-easy-crop'
+import { useState } from "react"
+import { axiosInstance } from "loony-api"
+import Cropper, { Area } from "react-easy-crop"
 import type {
   AfterImageSelect,
   CropImageMetadata,
   EditImageComponentProps,
-} from 'loony-types'
+  User,
+  UploadImageState,
+} from "loony-types"
+import { MdOutlineClear } from "react-icons/md"
 
 export default function UploadImage({
   baseUrl,
@@ -13,8 +16,8 @@ export default function UploadImage({
   setFormImages,
 }: {
   baseUrl: string
-  user: any
-  setFormImages: any
+  user: User | null | undefined
+  setFormImages: (data: UploadImageState[]) => void
 }) {
   const [afterImageSelect, setAfterImageSelect] = useState<AfterImageSelect>({
     image: null,
@@ -22,7 +25,7 @@ export default function UploadImage({
     height: null,
     hasImage: false,
   })
-  const [afterTmpImageUpload, setAfterTmpImageUpload] = useState('')
+  const [afterTmpImageUpload, setAfterTmpImageUpload] = useState("")
   const [imageEdit, setImageEdit] = useState<null | string>(null)
   const [cropImageMetadata, setCropImageMetadata] = useState<CropImageMetadata>(
     {
@@ -30,11 +33,11 @@ export default function UploadImage({
       height: null,
       x: null,
       y: null,
-    }
+    },
   )
 
   const onSelectImage: React.ChangeEventHandler<HTMLInputElement> = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const selectedFile =
       event.target.files &&
@@ -61,7 +64,7 @@ export default function UploadImage({
         })
         setImageEdit(URL.createObjectURL(selectedFile))
       }
-      if (e.target?.result && typeof e.target.result === 'string') {
+      if (e.target?.result && typeof e.target.result === "string") {
         img.src = e.target.result
       }
     }
@@ -71,29 +74,29 @@ export default function UploadImage({
   const uploadImage = async () => {
     const formData = new FormData()
     formData.append(
-      'metadata',
+      "metadata",
       JSON.stringify({
         oriImgMd: afterImageSelect,
         cropImgMd: cropImageMetadata,
-      })
+      }),
     )
-    formData.append('file', afterImageSelect.image as File)
+    formData.append("file", afterImageSelect.image as File)
 
     await axiosInstance
-      .post('/upload_file', formData, {
+      .post("/upload_file", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       })
       .then(({ data }: { data: { name: string } }) => {
         setAfterTmpImageUpload(data.name)
-        setImageEdit('')
+        setImageEdit("")
         setFormImages([data])
       })
   }
 
   return (
-    <div>
+    <div style={{ marginTop: 5, marginBottom: 5 }}>
       {!afterTmpImageUpload && imageEdit ? (
         <EditImageComponent
           uploadImage={uploadImage}
@@ -106,10 +109,34 @@ export default function UploadImage({
         <SelectImage onSelectImage={onSelectImage} />
       ) : null}
       {afterTmpImageUpload && !imageEdit ? (
-        <img
-          src={`${baseUrl}/api/tmp/${user?.uid}/340/${afterTmpImageUpload}`}
-          alt="tmp file upload"
-        />
+        <div
+          style={{
+            padding: 5,
+            border: "1px solid #ccc",
+            borderRadius: 3,
+            display: "inline-block",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                float: "right",
+                padding: 2,
+                border: "1px solid #ccc",
+                borderRadius: 3,
+              }}
+              onClick={() => {
+                setAfterTmpImageUpload("")
+              }}
+            >
+              <MdOutlineClear size={16} color="#2d2d2d" />
+            </div>
+          </div>
+          <img
+            src={`${baseUrl}/tmp/${user?.uid}/340/${afterTmpImageUpload}`}
+            alt="tmp file upload"
+          />
+        </div>
       ) : null}
     </div>
   )
@@ -133,19 +160,19 @@ const EditImageComponent = (props: EditImageComponentProps) => {
       <label>Image</label>
       <div
         style={{
-          border: '1px dashed #ccc',
+          border: "1px dashed #ccc",
           padding: 24,
         }}
       >
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <div style={{ position: 'relative', width: '100%', minHeight: 350 }}>
+          <div style={{ position: "relative", width: "100%", minHeight: 350 }}>
             <Cropper
               image={imageEdit as string}
               crop={crop}
@@ -178,13 +205,13 @@ const EditImageComponent = (props: EditImageComponentProps) => {
             type="file"
             onChange={onSelectImage}
             style={{
-              backgroundColor: 'white',
-              border: 'none',
+              backgroundColor: "white",
+              border: "none",
               padding: 0,
               margin: 0,
               marginTop: 20,
               borderRadius: 15,
-              width: '50%',
+              width: "50%",
             }}
           />
           <button onClick={uploadImage}>Upload</button>
@@ -204,16 +231,16 @@ const SelectImage = ({
       <label>Image</label>
       <div
         style={{
-          border: '1px dashed #ccc',
+          border: "1px dashed #ccc",
           padding: 24,
         }}
       >
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <label>Drop file here</label>
@@ -223,13 +250,13 @@ const SelectImage = ({
             type="file"
             onChange={onSelectImage}
             style={{
-              backgroundColor: 'white',
-              border: 'none',
+              backgroundColor: "white",
+              border: "none",
               padding: 0,
               margin: 0,
               marginTop: 20,
               borderRadius: 15,
-              width: '50%',
+              width: "50%",
             }}
           />
         </div>

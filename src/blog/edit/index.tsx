@@ -27,7 +27,7 @@ import Modal from "./modal.tsx"
 export default function Edit(props: AppRouteProps) {
   const { isMobile } = props
   const { blogId } = useParams()
-  const blog_id = blogId && parseInt(blogId)
+  const doc_id = blogId && parseInt(blogId)
   const base_url = props.appContext.env.base_url
 
   const [state, setState] = useState<EditBlogState>({
@@ -37,7 +37,7 @@ export default function Edit(props: AppRouteProps) {
     editNode: null,
     nodeIndex: null,
     topNode: null,
-    doc_id: blog_id as number,
+    doc_id: doc_id as number,
     childNodes: [],
     form: "",
     modal: "",
@@ -49,10 +49,10 @@ export default function Edit(props: AppRouteProps) {
   })
 
   useEffect(() => {
-    if (blog_id) {
-      getBlogNodes(blog_id, setState, setStatus)
+    if (doc_id) {
+      getBlogNodes(doc_id, setState, setStatus)
     }
-  }, [blog_id])
+  }, [doc_id])
   const { mainNode, childNodes } = state
 
   if (!mainNode) return null
@@ -65,13 +65,13 @@ export default function Edit(props: AppRouteProps) {
     <div className="flex-row full-con">
       <Nav state={state} {...props} />
       {state.modal && (
-        <Modal state={state} setState={setState} blog_id={blog_id as number} />
+        <Modal state={state} setState={setState} doc_id={doc_id as number} />
       )}
       {state.form && (
         <ActivityComponent
           state={state}
           setState={setState}
-          blog_id={blog_id as number}
+          doc_id={doc_id as number}
           isMobile={isMobile}
         />
       )}
@@ -82,7 +82,7 @@ export default function Edit(props: AppRouteProps) {
             {image && image.name ? (
               <div style={{ width: "100%", borderRadius: 5 }}>
                 <img
-                  src={`${base_url}/api/blog/${blog_id}/720/${image.name}`}
+                  src={`${base_url}/blog/${doc_id}/720/${image.name}`}
                   alt=""
                   width="100%"
                 />
@@ -180,7 +180,7 @@ export default function Edit(props: AppRouteProps) {
                     {nodeImage ? (
                       <div style={{ width: "100%", borderRadius: 5 }}>
                         <img
-                          src={`${base_url}/api/blog/${blog_id}/720/${nodeImage}`}
+                          src={`${base_url}/blog/${doc_id}/720/${nodeImage}`}
                           alt=""
                           width="100%"
                         />
@@ -279,7 +279,7 @@ export default function Edit(props: AppRouteProps) {
 
       {!isMobile ? (
         <RightBlogContainer
-          blog_id={blog_id as number}
+          doc_id={doc_id as number}
           setState={setState}
           state={state}
         />
@@ -291,12 +291,12 @@ export default function Edit(props: AppRouteProps) {
 const ActivityComponent = ({
   state,
   setState,
-  blog_id,
+  doc_id,
   isMobile,
 }: {
   state: EditBlogState
   setState: EditBlogAction
-  blog_id: number
+  doc_id: number
   isMobile: boolean
 }) => {
   const { childNodes, form, mainNode, addNode } = state
@@ -349,8 +349,8 @@ const ActivityComponent = ({
           FnCallback={addNodeCbFn}
           url="/blog/append/node"
           isMobile={isMobile}
-          docIdName="blog_id"
-          doc_id={blog_id}
+          docIdName="blog"
+          doc_id={doc_id}
           parent_id={state.addNode.uid}
           identity={101}
           onCancel={onCancel}
@@ -363,8 +363,8 @@ const ActivityComponent = ({
         <EditNodeForm
           heading="Edit Node"
           state={state}
-          docIdName="blog_id"
-          doc_id={blog_id}
+          docIdName="blog"
+          doc_id={doc_id}
           FnCallback={editFnCallback}
           onCancel={onCancel}
           url="/blog/edit"
@@ -376,11 +376,11 @@ const ActivityComponent = ({
 }
 
 const RightBlogContainer = ({
-  blog_id,
+  doc_id,
   setState,
   state,
 }: {
-  blog_id: number
+  doc_id: number
   setState: EditBlogAction
   state: EditBlogState
 }) => {
@@ -389,7 +389,7 @@ const RightBlogContainer = ({
       <ul style={{ paddingLeft: 0, listStyle: "none" }} className="list-item">
         <li>
           <RxReader size={16} color="#2d2d2d" />
-          <Link to={`/view/blog/${blog_id}`}>Read Blog</Link>
+          <Link to={`/view/blog/${doc_id}`}>Read Blog</Link>
         </li>
         <li
           onClick={() => {

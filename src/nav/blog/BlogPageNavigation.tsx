@@ -32,11 +32,11 @@ export const Chapters = ({
 }
 
 export const Edit = ({
-  blog_id,
+  doc_id,
   authContext,
   mainNode,
 }: {
-  blog_id: number
+  doc_id: number
   authContext: AuthContextProps
   mainNode: DocNode
 }) => {
@@ -46,7 +46,7 @@ export const Edit = ({
       authContext.user?.uid === mainNode.user_id ? (
         <li>
           <FiEdit2 color="#2d2d2d" size={16} />
-          <Link to={`/edit/blog/${blog_id}`}>Edit this page</Link>
+          <Link to={`/edit/blog/${doc_id}`}>Edit this page</Link>
         </li>
       ) : null}
       <li>

@@ -9,7 +9,7 @@ import { stopWords } from "../utils/index.tsx"
 
 import "react-easy-crop/react-easy-crop.css"
 import AppContext from "../context/AppContext.tsx"
-import type { Auth } from "loony-types"
+import type { Auth, UploadImageState } from "loony-types"
 import UploadImage from "./uploadImage.tsx"
 
 export default function CreateNewDocument({
@@ -33,7 +33,7 @@ export default function CreateNewDocument({
   const [submitting, setSubmitting] = useState(false)
   const [theme, setTheme] = useState(11)
   const [error, setError] = useState("")
-  const [formImages, setFormImages] = useState(null)
+  const [formImages, setFormImages] = useState<UploadImageState[]>([])
 
   const createDoc = () => {
     if (!formTitle) {
