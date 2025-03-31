@@ -18,7 +18,6 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   const {
     url,
     heading,
-    docIdName,
     doc_id,
     FnCallback,
     parent_id,
@@ -55,7 +54,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
       content: formContent,
       images: formImages ? formImages : [],
       tags: null,
-      [docIdName]: doc_id,
+      doc_id,
       parent_id,
       identity,
       page_id,

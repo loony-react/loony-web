@@ -24,7 +24,6 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
     // isMobile,
     heading,
   } = props
-  console.log(docIdName)
   const { editNode, mainNode } = state
   const authContext = useContext<AuthContextProps>(AuthContext)
   const appContext = useContext<AppContextProps>(AppContext)
@@ -75,7 +74,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
       title: formTitle,
       content: formContent,
       uid: editNode.uid,
-      [docIdName]: doc_id,
+      doc_id,
       identity: editNode.identity ? editNode.identity : null,
       images: formImages,
       theme,
