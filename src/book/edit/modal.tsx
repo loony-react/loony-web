@@ -46,6 +46,7 @@ export default function EditModal({
             navNodes: __navNodes,
             deleteNode: null,
             form: "",
+            modal: "",
           })
         }
         if (deleteNode.identity === 102) {
@@ -58,6 +59,7 @@ export default function EditModal({
             childNodes: groupNodesById[doc_id].child as DocNode[],
             deleteNode: null,
             form: "",
+            modal: "",
           })
         }
         if (deleteNode.identity === 103) {
@@ -74,6 +76,7 @@ export default function EditModal({
             childNodes: child,
             form: "",
             deleteNode: null,
+            modal: "",
           })
         }
       })
