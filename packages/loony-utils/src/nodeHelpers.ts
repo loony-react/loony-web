@@ -356,9 +356,9 @@ export const deleteSection = (
   })
   if (update_node) {
     newNodes.forEach((x) => {
-      x.child.forEach((y, i) => {
+      x.child.forEach((y) => {
         if (y.uid === update_node.uid) {
-          newNodes[i].parent_id = update_node.parent_id
+          y.parent_id = update_node.parent_id
         }
       })
     })
@@ -378,9 +378,9 @@ export const deleteSubSection = (
 ) => {
   const newNodes = nodes.filter((x) => !delete_nodes.includes(x.uid))
   if (update_node) {
-    newNodes.forEach((x, i) => {
+    newNodes.forEach((x) => {
       if (x.uid === update_node.uid) {
-        newNodes[i].parent_id = update_node.parent_id
+        x.parent_id = update_node.parent_id
       }
     })
   }
@@ -460,6 +460,9 @@ export const addNewNode = (
   res: { new_node: DocNode; update_node: DocNode },
 ) => {
   const { new_node, update_node } = res
+  if (new_node.identity < 103) {
+    new_node.child = []
+  }
   const newNodes = []
 
   if (update_node) {
@@ -500,44 +503,40 @@ export const appendChapters = addNewNode
 export const appendSections = (
   navNodes: DocNode[],
   topData: DocNode,
-  res: { new_node: DocNode; update_node: DocNode },
-) => {
+  res: { new_node: DocNode; update_node: DocNode | null },
+): DocNode[] => {
   const { new_node, update_node } = res
-  // const newNodes = []
-
+  if (new_node.identity < 103) {
+    new_node.child = []
+  }
   if (update_node) {
     navNodes.forEach((c) => {
       const t = []
       c.child.forEach((s) => {
         if (s.uid === update_node.uid) {
+          t.push(new_node)
           s.parent_id = update_node.parent_id
         }
-        if (topData.uid === s.uid) {
-          t.push(s)
-          t.push(new_node)
-        } else {
-          t.push(s)
-        }
+        t.push(s)
       })
       c.child = t
     })
     return navNodes
-  } else {
+  } else if (!update_node) {
     navNodes.forEach((c) => {
       const t = []
-      if (topData.uid === c.uid && c.child.length === 0) {
+      if (c.child.length === 0) {
         t.push(new_node)
+        c.child = t
+      } else if (c.child.length !== 0) {
+        c.child.forEach((s) => {
+          t.push(s)
+          if (topData.uid === s.uid) {
+            t.push(new_node)
+          }
+        })
+        c.child = t
       }
-
-      c.child.forEach((s) => {
-        if (topData.uid === s.uid) {
-          t.push(s)
-          t.push(new_node)
-        } else {
-          t.push(s)
-        }
-      })
-      c.child = t
     })
     return navNodes
   }
