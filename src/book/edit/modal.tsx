@@ -25,10 +25,17 @@ export default function EditModal({
   isMobile: boolean
 }) {
   const { modal } = state
-  const { deleteNode, navNodes, groupNodesById, childNodes, parentNode } = state
+  const {
+    deleteNode,
+    navNodes,
+    groupNodesById,
+    childNodes,
+    parentNode,
+    frontPage,
+  } = state
 
   const onDeleteNode = () => {
-    if (!deleteNode || !parentNode) return
+    if (!deleteNode || !parentNode || !frontPage) return
     const submitData = {
       identity: deleteNode.identity,
       parent_id: deleteNode.parent_id,
@@ -41,8 +48,8 @@ export default function EditModal({
           const __navNodes = deleteOne(navNodes, res.data)
           setState({
             ...state,
-            parentNode: groupNodesById[doc_id],
-            childNodes: groupNodesById[doc_id].child as DocNode[],
+            parentNode: groupNodesById[frontPage.uid],
+            childNodes: groupNodesById[frontPage.uid].child as DocNode[],
             navNodes: __navNodes,
             deleteNode: null,
             form: "",
@@ -55,8 +62,8 @@ export default function EditModal({
           setState({
             ...state,
             navNodes: newNavNodes,
-            parentNode: groupNodesById[doc_id],
-            childNodes: groupNodesById[doc_id].child as DocNode[],
+            parentNode: groupNodesById[frontPage.uid],
+            childNodes: groupNodesById[frontPage.uid].child as DocNode[],
             deleteNode: null,
             form: "",
             modal: "",

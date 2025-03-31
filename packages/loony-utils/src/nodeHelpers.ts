@@ -61,6 +61,10 @@ export const getNav = (
     const mainNode = bookTree && bookTree[0]
     mainNode.child = []
     const __navNodes = bookTree.slice(1)
+    const groupNodesById = {}
+    bookTree.forEach((node) => {
+      groupNodesById[node.uid] = node
+    })
     setState((prevState) => ({
       ...prevState,
       mainNode,
@@ -69,39 +73,7 @@ export const getNav = (
       navNodes: __navNodes,
       page_id: mainNode.uid,
       childNodes: [],
-      groupNodesById: {
-        [mainNode.uid]: mainNode,
-      },
-    }))
-    setStatus((prevStatus) => ({
-      ...prevStatus,
-      status: PageStatus.VIEW_PAGE,
-    }))
-  })
-}
-
-export const getChapters = (
-  doc_id: number,
-  setState: ReadBookAction | EditBookAction,
-  setStatus: PageStatusDispatchAction,
-) => {
-  const url = `/book/get/nodes?doc_id=${doc_id}`
-  setStatus((prevState) => ({
-    ...prevState,
-    status: PageStatus.FETCHING,
-  }))
-  axiosInstance.get(url).then(({ data }) => {
-    const bookTree = orderBookNodes(data.child_nodes, data.main_node, [])
-    const mainNode = bookTree && bookTree[0]
-    const __navNodes = bookTree.slice(1)
-
-    setState((prevState) => ({
-      ...prevState,
-      mainNode,
-      frontPage: mainNode,
-      parentNode: mainNode,
-      navNodes: __navNodes,
-      page_id: mainNode.uid,
+      groupNodesById,
     }))
     setStatus((prevStatus) => ({
       ...prevStatus,
@@ -119,15 +91,8 @@ export const getChapter = (
 ) => {
   const { uid } = __node
   const url = `/book/get/chapter?doc_id=${doc_id}&page_id=${uid}`
-  if (groupNodesById[uid]) {
-    setState((prevState) => ({
-      ...prevState,
-      ...resetState,
-      childNodes: groupNodesById[uid].child,
-      page_id: __node.uid,
-      parentNode: groupNodesById[uid],
-    }))
-  } else {
+
+  const fetchData = () => {
     axiosInstance.get(url).then(({ data }) => {
       let parentNode = null
       const childNodes = []
@@ -154,6 +119,21 @@ export const getChapter = (
         parentNode,
       }))
     })
+  }
+
+  if (groupNodesById[uid]) {
+    setState((prevState) => ({
+      ...prevState,
+      ...resetState,
+      childNodes: groupNodesById[uid].child,
+      page_id: __node.uid,
+      parentNode: groupNodesById[uid],
+    }))
+    if (groupNodesById[uid] && !groupNodesById[uid].content) {
+      fetchData()
+    }
+  } else {
+    fetchData()
   }
 }
 
@@ -166,15 +146,7 @@ export const getSection = (
 ) => {
   const { uid } = __node
   const url = `/book/get/section?doc_id=${doc_id}&page_id=${uid}`
-  if (groupNodesById[uid]) {
-    setState((prevState) => ({
-      ...prevState,
-      ...resetState,
-      childNodes: groupNodesById[uid].child,
-      page_id: __node.uid,
-      parentNode: groupNodesById[uid],
-    }))
-  } else {
+  const fetchData = () => {
     axiosInstance.get(url).then(({ data }) => {
       let parentNode = null
       const childNodes = []
@@ -202,6 +174,20 @@ export const getSection = (
       }))
     })
   }
+  if (groupNodesById[uid]) {
+    setState((prevState) => ({
+      ...prevState,
+      ...resetState,
+      childNodes: groupNodesById[uid].child,
+      page_id: __node.uid,
+      parentNode: groupNodesById[uid],
+    }))
+    if (groupNodesById[uid] && !groupNodesById[uid].content) {
+      fetchData()
+    }
+  } else {
+    fetchData()
+  }
 }
 
 export const getSections = (
@@ -213,16 +199,8 @@ export const getSections = (
 ) => {
   const { uid } = __node
   const url = `/book/get/sections?doc_id=${doc_id}&page_id=${uid}`
-  if (allSectionsByPageId[uid]) {
-    setState((prevState) => ({
-      ...prevState,
-      ...resetState,
-      activeSectionsByPageId: allSectionsByPageId[uid],
-      page_id: __node.uid,
-      parentNode: __node,
-      activeSubSectionsBySectionId: [],
-    }))
-  } else {
+
+  const fetchData = () => {
     axiosInstance.get(url).then(({ data }) => {
       const res = orderNodes(data, __node)
       setState((prevState) => ({
@@ -238,6 +216,19 @@ export const getSections = (
         activeSubSectionsBySectionId: [],
       }))
     })
+  }
+
+  if (allSectionsByPageId[uid]) {
+    setState((prevState) => ({
+      ...prevState,
+      ...resetState,
+      activeSectionsByPageId: allSectionsByPageId[uid],
+      page_id: __node.uid,
+      parentNode: __node,
+      activeSubSectionsBySectionId: [],
+    }))
+  } else {
+    fetchData()
   }
 }
 
@@ -552,7 +543,6 @@ const groupSiblingsForParent = (parent: DocNode, child: DocNode[]) => {
   const newSiblings: DocNode[] = []
 
   while (c !== child.length) {
-    // eslint-disable-next-line no-loop-func
     child.forEach((ss: DocNode) => {
       if (ss.parent_id === pId) {
         siblings.push(ss)
@@ -625,7 +615,6 @@ const groupChapters = (parent_id: number, chapters: DocNode[]) => {
   let currentparent_id = parent_id
   const orders = []
   while (orders.length !== chapters.length) {
-    // eslint-disable-next-line no-loop-func
     for (let i = 0; i < chapters.length; i++) {
       const thisChapter = chapters[i]
       if (currentparent_id === thisChapter.parent_id) {
@@ -699,7 +688,6 @@ export const orderNodes = (nodes: DocNode[], parentNode: DocNode) => {
   const results = []
 
   while (results.length !== nodes.length) {
-    // eslint-disable-next-line no-loop-func
     for (let i = 0; i < nodes.length; i++) {
       const thisNode = nodes[i]
       if (updateParentNode.uid === thisNode.parent_id) {
