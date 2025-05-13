@@ -111,6 +111,7 @@ const Navigation = ({
         status: AuthStatus.UNAUTHORIZED,
         user: null,
       })
+      navigate("/", { replace: true })
     })
   }, [])
 
