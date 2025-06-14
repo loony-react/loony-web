@@ -1,4 +1,4 @@
-import MarkdownPreview from '@uiw/react-markdown-preview'
+import BasicMarkdown from "../components/BasicMarkdown"
 
 const body = `# Loony Content Policy
 
@@ -76,10 +76,10 @@ By using **Loony**, you agree to follow this Content Policy. Thank you for helpi
 const ContentPolicy = (): React.JSX.Element => {
   return (
     <div className="home-container">
-      <div style={{ width: '60%', marginRight: 'auto', marginLeft: 'auto' }}>
-        <MarkdownPreview
+      <div style={{ width: "60%", marginRight: "auto", marginLeft: "auto" }}>
+        <BasicMarkdown
           source={body}
-          wrapperElement={{ 'data-color-mode': 'light' }}
+          // wrapperElement={{ "data-color-mode": "light" }}
         />
       </div>
     </div>

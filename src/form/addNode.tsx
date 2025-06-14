@@ -12,7 +12,7 @@ import type {
 import AppContext from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
 import type { Auth } from "loony-types"
-import MarkdownPreview from "@uiw/react-markdown-preview"
+import BasicMarkdown from "../components/BasicMarkdown.tsx"
 
 export default function AddNodeComponent(props: AddNodeComponentProps) {
   const {
@@ -134,10 +134,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
         </button>
       </div>
       <div className="form-content">
-        <MarkdownPreview
-          source={formContent}
-          wrapperElement={{ "data-color-mode": "light" }}
-        />
+        <BasicMarkdown source={formContent} />
       </div>
     </div>
   )

@@ -11,7 +11,7 @@ import { getUrl } from "loony-utils"
 import AppContext from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
 import type { Auth, UploadImageState } from "loony-types"
-import MarkdownPreview from "@uiw/react-markdown-preview"
+import BasicMarkdown from "../components/BasicMarkdown.tsx"
 
 export default function EditNodeComponent(props: EditNodeComponentProps) {
   const {
@@ -165,10 +165,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
       </div>
 
       <div className="form-content">
-        <MarkdownPreview
-          source={formContent}
-          wrapperElement={{ "data-color-mode": "light" }}
-        />
+        <BasicMarkdown source={formContent} />
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import MarkdownPreview from '@uiw/react-markdown-preview'
+import BasicMarkdown from "../components/BasicMarkdown"
 
 const body = `# Loony User Agreement
 
@@ -116,11 +116,8 @@ By using **Loony**, you acknowledge that you have read, understood, and agree to
 const UserAgreement = () => {
   return (
     <div className="home-container">
-      <div style={{ width: '60%', marginRight: 'auto', marginLeft: 'auto' }}>
-        <MarkdownPreview
-          source={body}
-          wrapperElement={{ 'data-color-mode': 'light' }}
-        />
+      <div style={{ width: "60%", marginRight: "auto", marginLeft: "auto" }}>
+        <BasicMarkdown source={body} />
       </div>
     </div>
   )

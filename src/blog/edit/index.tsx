@@ -3,7 +3,7 @@ import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { extractImage, getBlogNodes } from "loony-utils"
 import { AppRouteProps, EditBlogState, PageStatus } from "loony-types"
-import MarkdownPreview from "@uiw/react-markdown-preview"
+import BasicMarkdown from "../../components/BasicMarkdown.tsx"
 import { Suspense, useCallback } from "react"
 import {
   updateBlogNode,
@@ -105,9 +105,9 @@ export default function Edit(props: AppRouteProps) {
                   </Suspense>
                 ) : null} */}
               <Suspense fallback={<div>Loading component...</div>}>
-                <MarkdownPreview
+                <BasicMarkdown
                   source={mainNode.content}
-                  wrapperElement={{ "data-color-mode": "light" }}
+                  // wrapperElement={{ "data-color-mode": "light" }}
                 />
               </Suspense>
             </div>
@@ -200,9 +200,9 @@ export default function Edit(props: AppRouteProps) {
                           </Suspense>
                         ) : null} */}
                       <Suspense fallback={<div>Loading component...</div>}>
-                        <MarkdownPreview
+                        <BasicMarkdown
                           source={node.content}
-                          wrapperElement={{ "data-color-mode": "light" }}
+                          // wrapperElement={{ "data-color-mode": "light" }}
                         />
                       </Suspense>
                     </div>

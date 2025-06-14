@@ -65,12 +65,14 @@ export const onLogin = ({
 }
 
 export const onSendResetPassword = ({
+  sessionId,
   formData,
   setFormError,
   authContext,
   notificationContext,
   navigate,
 }: {
+  sessionId
   formData: { email: string; password: string; confirmPassword: string }
   setFormError: React.Dispatch<
     React.SetStateAction<{ label: string; message: string }>
@@ -113,6 +115,7 @@ export const onSendResetPassword = ({
 
   axiosInstance
     .post("/reset_password", {
+      session_id: sessionId,
       email: formData.email,
       password: formData.password,
       confirm_password: formData.confirmPassword,

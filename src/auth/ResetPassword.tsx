@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { useNavigate } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import { NotificationContextProps } from "loony-types"
 import { onSendResetPassword } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
@@ -25,6 +25,7 @@ const ResetPassword = ({
   })
 
   const navigate = useNavigate()
+  const { sessionId } = useParams()
 
   const authContext = useContext(AuthContext)
 
@@ -36,6 +37,7 @@ const ResetPassword = ({
   const onClickSendResetPassword = () => {
     setFormError({ label: "", message: "" })
     onSendResetPassword({
+      sessionId,
       formData,
       setFormError,
       authContext,

@@ -3,7 +3,8 @@ import { useNavigate } from "react-router"
 import { axiosInstance } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
-import MarkdownPreview from "@uiw/react-markdown-preview"
+// import MarkdownPreview from "@uiw/react-markdown-preview"
+import BasicMarkdown from "../components/BasicMarkdown.tsx"
 import { DesktopLeftNavbar } from "../common/index.tsx"
 import { stopWords } from "../utils/index.tsx"
 
@@ -178,9 +179,9 @@ export default function CreateNewDocument({
         </div>
 
         <div style={{ padding: 24 }}>
-          <MarkdownPreview
+          <BasicMarkdown
             source={formContent}
-            wrapperElement={{ "data-color-mode": "light" }}
+            // wrapperElement={{ "data-color-mode": "light" }}
           />
         </div>
       </div>
