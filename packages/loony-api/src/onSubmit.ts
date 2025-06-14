@@ -7,7 +7,7 @@ import {
 import { axiosInstance, handleError } from "./index"
 import { NavigateFunction } from "react-router"
 
-export const onLogin = async ({
+export const onLogin = ({
   formData,
   setFormError,
   authContext,
@@ -64,7 +64,144 @@ export const onLogin = async ({
     })
 }
 
-export const onSignup = async ({
+export const onSendResetPassword = ({
+  formData,
+  setFormError,
+  authContext,
+  notificationContext,
+  navigate,
+}: {
+  formData: { email: string; password: string; confirmPassword: string }
+  setFormError: React.Dispatch<
+    React.SetStateAction<{ label: string; message: string }>
+  >
+  authContext: AuthContextProps
+  notificationContext: NotificationContextProps
+  navigate: NavigateFunction
+}) => {
+  if (!formData.email) {
+    setFormError({
+      label: "username",
+      message: "Email is required.",
+    })
+    return
+  }
+
+  if (!formData.password) {
+    setFormError({
+      label: "password",
+      message: "Password is required.",
+    })
+    return
+  }
+
+  if (!formData.confirmPassword) {
+    setFormError({
+      label: "confirm_password",
+      message: "Confirm Password is required.",
+    })
+    return
+  }
+
+  if (formData.password !== formData.confirmPassword) {
+    setFormError({
+      label: "confirm_password",
+      message: "Password does not match.",
+    })
+    return
+  }
+
+  axiosInstance
+    .post("/reset_password", {
+      email: formData.email,
+      password: formData.password,
+      confirm_password: formData.confirmPassword,
+    })
+    .then(() => {
+      notificationContext.setNotificationContext(
+        (prevState: NotificationState) => ({
+          ...prevState,
+          alert: {
+            title: "Success",
+            content:
+              "A password reset link has been sent to your email address.",
+            status: "success",
+          },
+        }),
+      )
+    })
+    .catch((err) => {
+      const __err = handleError(err)
+      notificationContext.setNotificationContext(
+        (prevState: NotificationState) => ({
+          ...prevState,
+          alert: {
+            title: "Error",
+            content: __err,
+            status: "error",
+          },
+        }),
+      )
+    })
+}
+
+export const onSendResetPasswordEmail = ({
+  formData,
+  setFormError,
+  authContext,
+  notificationContext,
+  navigate,
+}: {
+  formData: { email: string }
+  setFormError: React.Dispatch<
+    React.SetStateAction<{ label: string; message: string }>
+  >
+  authContext: AuthContextProps
+  notificationContext: NotificationContextProps
+  navigate: NavigateFunction
+}) => {
+  if (!formData.email) {
+    setFormError({
+      label: "username",
+      message: "Email is required.",
+    })
+    return
+  }
+
+  axiosInstance
+    .post("/mail", {
+      to: formData.email,
+      subject: "Forgot password",
+    })
+    .then(() => {
+      notificationContext.setNotificationContext(
+        (prevState: NotificationState) => ({
+          ...prevState,
+          alert: {
+            title: "Success",
+            content:
+              "A password reset link has been sent to your email address.",
+            status: "success",
+          },
+        }),
+      )
+    })
+    .catch((err) => {
+      const __err = handleError(err)
+      notificationContext.setNotificationContext(
+        (prevState: NotificationState) => ({
+          ...prevState,
+          alert: {
+            title: "Error",
+            content: __err,
+            status: "error",
+          },
+        }),
+      )
+    })
+}
+
+export const onSignup = ({
   formData,
   // setState,
   notificationContext,

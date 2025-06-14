@@ -23,6 +23,8 @@ import UnAuthorized from "../error/UnAuthorized.tsx"
 import Create from "../form/createDocument.tsx"
 import Navigation from "../navigation/topNavbar/index.tsx"
 import PageLoadingContainer from "../components/PageLoadingContainer.tsx"
+import ForgotPassword from "../auth/ForgotPassword.tsx"
+import ResetPassword from "auth/ResetPassword.tsx"
 const ContentPolicy = lazy(() => import("../static/ContentPolicy.tsx"))
 const PrivacyPolicy = lazy(() => import("../static/PrivacyPolicy.tsx"))
 const UserAgreement = lazy(() => import("../static/UserAgreement.tsx"))
@@ -141,6 +143,14 @@ const Route = ({
           <ReactRoute path="/" element={<Home {...props} />} />
           <ReactRoute path="/login" element={<Login {...props} />} />
           <ReactRoute path="/signup" element={<Signup {...props} />} />
+          <ReactRoute
+            path="/forgotPassword"
+            element={<ForgotPassword {...props} />}
+          />
+          <ReactRoute
+            path="/resetPassword/:sessionId"
+            element={<ResetPassword {...props} />}
+          />
           <ReactRoute
             path="/view/book/:bookId"
             element={<BookView {...props} />}

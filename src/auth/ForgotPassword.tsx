@@ -1,10 +1,10 @@
 import { useContext, useState } from "react"
-import { Link, useNavigate } from "react-router"
+import { useNavigate } from "react-router"
 import { NotificationContextProps } from "loony-types"
-import { onLogin } from "loony-api"
+import { onSendResetPasswordEmail } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
 
-const Login = ({
+const ForgotPassword = ({
   isMobile,
   notificationContext,
 }: {
@@ -12,10 +12,8 @@ const Login = ({
   notificationContext: NotificationContextProps
 }) => {
   const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+    email: "",
   })
-  const [viewPassword, setViewPassword] = useState(false)
   const [formError, setFormError] = useState({
     label: "",
     message: "",
@@ -30,9 +28,9 @@ const Login = ({
     setFormData({ ...formData, [name]: value })
   }
 
-  const onHandleLogin = () => {
+  const onClickSendResetPasswordEmail = () => {
     setFormError({ label: "", message: "" })
-    onLogin({
+    onSendResetPasswordEmail({
       formData,
       setFormError,
       authContext,
@@ -104,19 +102,19 @@ const Login = ({
                   marginBottom: 20,
                 }}
               >
-                <h2>Log in</h2>
+                <h2>Forgot Password</h2>
               </div>
 
               <div className="input-container">
                 <label htmlFor="phone">Email/Username</label>
                 <input
-                  name="username"
+                  name="email"
                   type="text"
-                  value={formData.username}
+                  value={formData.email}
                   onChange={handleChange}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      onHandleLogin()
+                      onClickSendResetPasswordEmail()
                     }
                   }}
                   required
@@ -130,78 +128,13 @@ const Login = ({
                 ) : null}
               </div>
 
-              <div className="input-container">
-                <label htmlFor="password">Password</label>
-                <input
-                  name="password"
-                  type={viewPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={handleChange}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      onHandleLogin()
-                    }
-                  }}
-                  required
-                />
-
-                {formError.label === "password" ? (
-                  <div style={{ marginBottom: 24 }}>
-                    <div style={{ color: "red" }}>{formError.message}</div>
-                  </div>
-                ) : null}
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginBlock: 10,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div>
-                    <input
-                      style={{ width: 16, height: 16 }}
-                      type="checkbox"
-                      onChange={() => {
-                        setViewPassword(!viewPassword)
-                      }}
-                    />
-                    <span style={{ marginLeft: 10 }}>Show password</span>
-                  </div>
-                  <div>
-                    <Link
-                      to="/forgotPassword"
-                      style={{ color: "rgb(15, 107, 228)", marginLeft: 5 }}
-                    >
-                      Forgot password
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
               <button
                 style={{ width: "100%", marginTop: 30 }}
-                onClick={onHandleLogin}
+                onClick={onClickSendResetPasswordEmail}
                 className="shadow black-bg"
               >
-                Log In
+                Send Reset Password Email
               </button>
-              <div
-                style={{
-                  marginBlock: 10,
-                  fontSize: 14,
-                  display: "flex",
-                  flexDirection: "row",
-                }}
-              >
-                <span style={{ color: "#6d6d6d" }}>Dont have an account? </span>
-                <Link
-                  to="/signup"
-                  style={{ color: "rgb(15, 107, 228)", marginLeft: 5 }}
-                >
-                  Create Account
-                </Link>
-              </div>
             </div>
           </div>
         </div>
@@ -210,4 +143,4 @@ const Login = ({
   )
 }
 
-export default Login
+export default ForgotPassword
