@@ -4,7 +4,7 @@ import { axiosInstance } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
 // import MarkdownPreview from "@uiw/react-markdown-preview"
-import BasicMarkdown from "../components/BasicMarkdown.tsx"
+import ViewContent from "../components/ViewContent.tsx"
 import { DesktopLeftNavbar } from "../common/index.tsx"
 import { stopWords } from "../utils/index.tsx"
 
@@ -28,6 +28,8 @@ export default function CreateNewDocument({
   const { base_url } = appContext.env
 
   const { user } = authContext as Auth
+
+  const [contentType, setContentType] = useState("basic")
   const [formTitle, setFormTitle] = useState("")
   const [formContent, setFormContent] = useState("")
   const [tags, setTags] = useState("")
@@ -77,7 +79,7 @@ export default function CreateNewDocument({
 
     const submitData = {
       title: formTitle,
-      content: formContent,
+      content: `<${contentType}>` + " " + formContent,
       images: formImages ? formImages : [],
       tags: allTags,
       theme,
@@ -136,11 +138,14 @@ export default function CreateNewDocument({
                 placeholder="Title"
               />
             </div>
+
             <TextArea
               formContent={formContent}
               setFormContent={setFormContent}
               theme={theme}
               setTheme={setTheme}
+              setContentType={setContentType}
+              contentType={contentType}
             />
             <UploadImage
               baseUrl={base_url}
@@ -179,10 +184,7 @@ export default function CreateNewDocument({
         </div>
 
         <div style={{ padding: 24 }}>
-          <BasicMarkdown
-            source={formContent}
-            // wrapperElement={{ "data-color-mode": "light" }}
-          />
+          <ViewContent source={formContent} contentType={contentType} />
         </div>
       </div>
     </div>

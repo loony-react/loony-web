@@ -6,6 +6,8 @@ type TextAreaProps = {
   setFormContent: (_: string) => void
   theme: number
   setTheme: (_: number) => void
+  setContentType: (type: string) => void
+  contentType: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -58,19 +60,42 @@ const Tab = ({
 }
 
 export const TextArea = (props: TextAreaProps) => {
-  const { formContent, setFormContent } = props
+  const { formContent, setFormContent, setContentType, contentType } = props
 
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
         border: "1px solid #ccc",
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
       }}
     >
+      <div className="tab-con">
+        <div
+          className={`tab ${contentType === "basic" ? "active-tab" : ""}`}
+          onClick={() => {
+            setContentType("basic")
+          }}
+        >
+          Basic
+        </div>
+        <div
+          className={`tab ${contentType === "markdown" ? "active-tab" : ""}`}
+          onClick={() => {
+            setContentType("markdown")
+          }}
+        >
+          Markdown
+        </div>
+        <div
+          className={`tab ${contentType === "maths" ? "active-tab" : ""}`}
+          onClick={() => {
+            setContentType("maths")
+          }}
+        >
+          Maths
+        </div>
+      </div>
       <div>
         <textarea
           onChange={(e) => {

@@ -10,7 +10,7 @@ import Nav from "../../nav/book/edit/index.tsx"
 import { PageNodeSettings } from "./pageNodeSettings.tsx"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import AppContext from "../../context/AppContext.tsx"
-import BasicMarkdown from "../../components/BasicMarkdown.tsx"
+import ViewContent from "../../components/ViewContent.tsx"
 import Modal from "./modal.tsx"
 
 import {
@@ -135,7 +135,7 @@ export default function Edit(props: AppRouteProps) {
                     </div>
                   ) : null}
                   <Suspense fallback={<div>Loading component...</div>}>
-                    <BasicMarkdown source={subSectionNode.content} />
+                    <ViewContent source={subSectionNode.content} />
                   </Suspense>
                   <PageNodeSettings
                     node={subSectionNode}
@@ -190,7 +190,7 @@ const ParentNode = ({
         {parentNode.identity === 100 ? <NodeInfo node={parentNode} /> : null}
         <div style={{ marginTop: 16 }}>
           <Suspense fallback={<div>Loading component...</div>}>
-            <BasicMarkdown source={parentNode.content} />
+            <ViewContent source={parentNode.content} />
           </Suspense>
         </div>
       </div>

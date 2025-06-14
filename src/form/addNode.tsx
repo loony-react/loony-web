@@ -12,7 +12,7 @@ import type {
 import AppContext from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
 import type { Auth } from "loony-types"
-import BasicMarkdown from "../components/BasicMarkdown.tsx"
+import ViewContent from "../components/ViewContent.tsx"
 
 export default function AddNodeComponent(props: AddNodeComponentProps) {
   const {
@@ -33,6 +33,8 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   const { base_url } = appContext.env
 
   const { user } = authContext as Auth
+
+  const [contentType, setContentType] = useState("basic")
   const [formTitle, setFormTitle] = useState("")
   const [formContent, setFormContent] = useState("")
   const [theme, setTheme] = useState(11)
@@ -51,7 +53,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
     }
     const formData = {
       title: formTitle,
-      content: formContent,
+      content: `<${contentType}>` + " " + formContent,
       images: formImages ? formImages : [],
       tags: null,
       doc_id,
@@ -96,6 +98,8 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
             setFormContent={setFormContent}
             theme={theme}
             setTheme={setTheme}
+            setContentType={setContentType}
+            contentType={contentType}
           />
           <UploadImage
             baseUrl={base_url}
@@ -134,7 +138,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
         </button>
       </div>
       <div className="form-content">
-        <BasicMarkdown source={formContent} />
+        <ViewContent source={formContent} contentType={contentType} />
       </div>
     </div>
   )

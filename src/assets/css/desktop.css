@@ -538,4 +538,15 @@ code {
   padding: 10px;
 }
 
+.tab-con {
+  display: flex;
+  flex-direction: row;
+}
+.tab {
+  padding: 10px;
+}
+.active-tab {
+  text-decoration: underline;
+}
+
 @import url("navbar.css");

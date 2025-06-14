@@ -13,9 +13,9 @@ import {
   AuthContextProps,
   AuthStatus,
 } from "loony-types"
-import BasicMarkdown from "../../components/BasicMarkdown.tsx"
 import NodeInfo from "../../components/NodeInfo.tsx"
 import Nav from "../../nav/book/view/index.tsx"
+import ViewContent from "../../components/ViewContent.tsx"
 
 const View = (props: AppRouteProps) => {
   const { isMobile, appContext, authContext } = props
@@ -91,7 +91,7 @@ const View = (props: AppRouteProps) => {
                   />
                 </div>
               ) : null}
-              <BasicMarkdown source={subSectionNode.content} />
+              <ViewContent source={subSectionNode.content} />
             </div>
           )
         })}
@@ -141,7 +141,7 @@ const ParentNode = ({
       {parentNode.identity === 100 ? <NodeInfo node={parentNode} /> : null}
 
       <div style={{ marginTop: 16 }}>
-        <BasicMarkdown source={parentNode.content} />
+        <ViewContent source={parentNode.content} />
       </div>
     </div>
   )

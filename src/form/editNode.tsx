@@ -11,7 +11,7 @@ import { getUrl } from "loony-utils"
 import AppContext from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
 import type { Auth, UploadImageState } from "loony-types"
-import BasicMarkdown from "../components/BasicMarkdown.tsx"
+import ViewContent from "../components/ViewContent.tsx"
 
 export default function EditNodeComponent(props: EditNodeComponentProps) {
   const {
@@ -31,6 +31,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
 
   const { user } = authContext as Auth
 
+  const [contentType, setContentType] = useState("basic")
   const [formTitle, setFormTitle] = useState("")
   const [formContent, setFormContent] = useState("")
   const [formImages, setFormImages] = useState<UploadImageState[]>([])
@@ -40,7 +41,20 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
   useEffect(() => {
     if (editNode) {
       setFormTitle(editNode.title)
-      setFormContent(editNode.content)
+      if (editNode.content.startsWith("<basic>")) {
+        setFormContent(editNode.content.substring(8))
+      }
+
+      if (editNode.content.startsWith("<markdown>")) {
+        setContentType("markdown")
+        setFormContent(editNode.content.substring(11))
+      }
+
+      if (editNode.content.startsWith("<maths>")) {
+        setContentType("maths")
+        setFormContent(editNode.content.substring(8))
+      }
+
       if (typeof editNode.images === "string") {
         const __image = JSON.parse(editNode.images)
         if (__image.length > 0) {
@@ -72,7 +86,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
     }
     const submitData = {
       title: formTitle,
-      content: formContent,
+      content: `<${contentType}>` + " " + formContent,
       uid: editNode.uid,
       doc_id,
       identity: editNode.identity ? editNode.identity : null,
@@ -137,6 +151,8 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
             setFormContent={setFormContent}
             theme={theme}
             setTheme={setTheme}
+            setContentType={setContentType}
+            contentType={contentType}
           />
           <UploadImage
             baseUrl={base_url}
@@ -165,7 +181,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
       </div>
 
       <div className="form-content">
-        <BasicMarkdown source={formContent} />
+        <ViewContent source={formContent} contentType={contentType} />
       </div>
     </div>
   )

@@ -4,7 +4,7 @@ import { extractImage } from "loony-utils"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { getBlogNodes } from "loony-utils"
 import { AppRouteProps, ReadBlogState, PageStatus } from "loony-types"
-import BasicMarkdown from "../../components/BasicMarkdown.tsx"
+import ViewContent from "../../components/ViewContent.tsx"
 import NodeInfo from "../../components/NodeInfo.tsx"
 import Nav from "../../nav/blog/index.tsx"
 import RightNav from "../../nav/blog/RightNav.tsx"
@@ -59,7 +59,7 @@ const View = (props: AppRouteProps) => {
           <NodeInfo node={mainNode} />
 
           <div style={{ marginTop: 16 }}>
-            <BasicMarkdown source={mainNode.content} />
+            <ViewContent source={mainNode.content} />
           </div>
         </div>
         {childNodes.map((blogNode) => {
@@ -78,7 +78,7 @@ const View = (props: AppRouteProps) => {
                 </div>
               ) : null}
               <div>
-                <BasicMarkdown source={blogNode.content} />
+                <ViewContent source={blogNode.content} />
               </div>
             </div>
           )
