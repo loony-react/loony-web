@@ -77,11 +77,11 @@ const View = (props: AppRouteProps) => {
           doc_id={doc_id as number}
           base_url={base_url}
         />
-        {childNodes.map((subSectionNode) => {
-          const nodeImage = extractImage(subSectionNode.images)
+        {childNodes.map((childNode) => {
+          const nodeImage = extractImage(childNode.images)
           return (
-            <div className="page-section" key={subSectionNode.uid}>
-              <div className="section-title">{subSectionNode.title}</div>
+            <div className="page-section" key={childNode.uid}>
+              <div className="section-title">{childNode.title}</div>
               {nodeImage && nodeImage.name ? (
                 <div style={{ width: "100%", borderRadius: 5 }}>
                   <img
@@ -91,7 +91,7 @@ const View = (props: AppRouteProps) => {
                   />
                 </div>
               ) : null}
-              <ViewContent source={subSectionNode.content} />
+              <ViewContent source={childNode.content} />
             </div>
           )
         })}
@@ -140,9 +140,11 @@ const ParentNode = ({
 
       {parentNode.identity === 100 ? <NodeInfo node={parentNode} /> : null}
 
-      <div style={{ marginTop: 16 }}>
-        <ViewContent source={parentNode.content} />
-      </div>
+      {parentNode.content && (
+        <div style={{ marginTop: 16 }}>
+          <ViewContent source={parentNode.content} />
+        </div>
+      )}
     </div>
   )
 }

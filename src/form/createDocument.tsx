@@ -184,7 +184,10 @@ export default function CreateNewDocument({
         </div>
 
         <div style={{ padding: 24 }}>
-          <ViewContent source={formContent} contentType={contentType} />
+          <ViewContent
+            source={`<${contentType}>` + " " + formContent}
+            contentType={contentType}
+          />
         </div>
       </div>
     </div>

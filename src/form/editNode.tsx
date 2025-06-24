@@ -181,7 +181,10 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
       </div>
 
       <div className="form-content">
-        <ViewContent source={formContent} contentType={contentType} />
+        <ViewContent
+          source={`<${contentType}>` + " " + formContent}
+          contentType={contentType}
+        />
       </div>
     </div>
   )

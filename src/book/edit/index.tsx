@@ -190,7 +190,7 @@ const ParentNode = ({
         {parentNode.identity === 100 ? <NodeInfo node={parentNode} /> : null}
         <div style={{ marginTop: 16 }}>
           <Suspense fallback={<div>Loading component...</div>}>
-            <ViewContent source={parentNode.content} />
+            {parentNode.content && <ViewContent source={parentNode.content} />}
           </Suspense>
         </div>
       </div>
