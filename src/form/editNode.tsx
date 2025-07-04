@@ -113,7 +113,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
   if (!editNode || !mainNode) return null
 
   return (
-    <div className="con-sm-12 con-xxl-5 mar-hor-1">
+    <>
       <h2>{heading}</h2>
       <hr />
       <div>
@@ -186,6 +186,6 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
           contentType={contentType}
         />
       </div>
-    </div>
+    </>
   )
 }

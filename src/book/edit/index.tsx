@@ -22,6 +22,12 @@ import {
   PageState,
 } from "loony-types"
 import NodeInfo from "../../components/NodeInfo.tsx"
+import {
+  DocsBodyContainer,
+  DocsContentContainer,
+  DocsNavContainer,
+  DocsSettingsContainer,
+} from "../../components/Containers.tsx"
 
 export default function Edit(props: AppRouteProps) {
   const { isMobile, appContext } = props
@@ -76,14 +82,17 @@ export default function Edit(props: AppRouteProps) {
   if (!parentNode || !mainNode) return null
 
   return (
-    <div className="flex-row full-con">
-      <Nav
-        doc_id={doc_id as number}
-        setState={setState}
-        state={state}
-        viewFrontPage={viewFrontPage}
-        {...props}
-      />
+    <DocsBodyContainer>
+      <DocsNavContainer>
+        <Nav
+          doc_id={doc_id as number}
+          setState={setState}
+          state={state}
+          viewFrontPage={viewFrontPage}
+          {...props}
+        />
+      </DocsNavContainer>
+
       {state.modal && (
         <Modal
           state={state as EditBookState}
@@ -95,17 +104,19 @@ export default function Edit(props: AppRouteProps) {
         />
       )}
       {state.form && (
-        <EditComponent
-          state={state as EditBookState}
-          setState={setState as EditBookAction}
-          setAppContext={setAppContext}
-          doc_id={doc_id as number}
-          navigate={navigate}
-          isMobile={isMobile}
-        />
+        <DocsContentContainer>
+          <EditComponent
+            state={state as EditBookState}
+            setState={setState as EditBookAction}
+            setAppContext={setAppContext}
+            doc_id={doc_id as number}
+            navigate={navigate}
+            isMobile={isMobile}
+          />
+        </DocsContentContainer>
       )}
       {!state.form && (
-        <div className="con-sm-12 con-xxl-5 mar-hor-1">
+        <DocsContentContainer>
           <ParentNode
             parentNode={parentNode}
             doc_id={doc_id as number}
@@ -146,16 +157,18 @@ export default function Edit(props: AppRouteProps) {
               )
             })}
           </div>
-        </div>
+        </DocsContentContainer>
       )}
       {!isMobile ? (
-        <RightBookContainer
-          doc_id={doc_id as string}
-          setState={setState}
-          state={state}
-        />
+        <DocsSettingsContainer>
+          <RightBookContainer
+            doc_id={doc_id as string}
+            setState={setState}
+            state={state}
+          />
+        </DocsSettingsContainer>
       ) : null}
-    </div>
+    </DocsBodyContainer>
   )
 }
 
@@ -209,28 +222,26 @@ const RightBookContainer = ({
   state: EditBookState
 }) => {
   return (
-    <div className="doc-settings-container pad-ver-1">
-      <ul style={{ paddingLeft: 0, listStyle: "none" }} className="list-item">
-        <li>
-          <RxReader size={16} color="#2d2d2d" />
-          <Link to={`/view/book/${doc_id}`}>Read Book</Link>
-        </li>
-        <li
-          onClick={() => {
-            setState({
-              ...state,
-              modal: "delete_book",
-            })
-          }}
-        >
-          <AiOutlineDelete size={16} color="#2d2d2d" />
-          <Link to="#">Delete Book</Link>
-        </li>
-        <li>
-          <LuFileWarning size={16} color="#2d2d2d" />
-          <Link to="#">Report</Link>
-        </li>
-      </ul>
-    </div>
+    <ul style={{ paddingLeft: 0, listStyle: "none" }} className="list-item">
+      <li>
+        <RxReader size={16} color="#2d2d2d" />
+        <Link to={`/view/book/${doc_id}`}>Read Book</Link>
+      </li>
+      <li
+        onClick={() => {
+          setState({
+            ...state,
+            modal: "delete_book",
+          })
+        }}
+      >
+        <AiOutlineDelete size={16} color="#2d2d2d" />
+        <Link to="#">Delete Book</Link>
+      </li>
+      <li>
+        <LuFileWarning size={16} color="#2d2d2d" />
+        <Link to="#">Report</Link>
+      </li>
+    </ul>
   )
 }

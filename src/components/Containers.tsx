@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 export const ChapterNavContainer = ({
   children,
@@ -89,6 +89,76 @@ export const SectionsNavContainer = ({
 }) => {
   return (
     <div className="sections-nav" onClick={onClick}>
+      {children}
+    </div>
+  )
+}
+
+export const DocsBodyContainer = ({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode
+  onClick?: React.MouseEventHandler<HTMLDivElement>
+}) => {
+  return (
+    <div className="flex-row con-xxl-70 mar-hor-30" onClick={onClick}>
+      {children}
+    </div>
+  )
+}
+
+export const DocsContentContainer = ({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode
+  onClick?: React.MouseEventHandler<HTMLDivElement>
+}) => {
+  return (
+    <div className="con-xxl-50 mar-hor-auto" onClick={onClick}>
+      {children}
+    </div>
+  )
+}
+
+export const DocsNavContainer = ({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode
+  onClick?: React.MouseEventHandler<HTMLDivElement>
+}) => {
+  return (
+    <div className="con-xxl-20" onClick={onClick}>
+      {children}
+    </div>
+  )
+}
+
+export const HomeNavContainer = ({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode
+  onClick?: React.MouseEventHandler<HTMLDivElement>
+}) => {
+  return (
+    <div className="con-xxl-15" onClick={onClick}>
+      {children}
+    </div>
+  )
+}
+
+export const DocsSettingsContainer = ({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode
+  onClick?: React.MouseEventHandler<HTMLDivElement>
+}) => {
+  return (
+    <div className="con-xxl-20" onClick={onClick}>
       {children}
     </div>
   )

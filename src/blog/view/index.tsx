@@ -8,6 +8,12 @@ import ViewContent from "../../components/ViewContent.tsx"
 import NodeInfo from "../../components/NodeInfo.tsx"
 import Nav from "../../nav/blog/index.tsx"
 import RightNav from "../../nav/blog/RightNav.tsx"
+import {
+  DocsBodyContainer,
+  DocsContentContainer,
+  DocsNavContainer,
+  DocsSettingsContainer,
+} from "../../components/Containers.tsx"
 
 const View = (props: AppRouteProps) => {
   const { isMobile, appContext, authContext } = props
@@ -41,9 +47,11 @@ const View = (props: AppRouteProps) => {
   const image = extractImage(mainNode.images)
 
   return (
-    <div className="flex-row full-con">
-      <Nav state={state} {...props} />
-      <div className="con-sm-12 con-xxl-5 mar-hor-1">
+    <DocsBodyContainer>
+      <DocsNavContainer>
+        <Nav state={state} {...props} />
+      </DocsNavContainer>
+      <DocsContentContainer>
         <div style={{ marginBottom: 24 }}>
           <div className="page-heading">{mainNode.title}</div>
           {image && image.name ? (
@@ -84,17 +92,17 @@ const View = (props: AppRouteProps) => {
           )
         })}
         <div style={{ height: 50 }} />
-      </div>
+      </DocsContentContainer>
       {!isMobile ? (
-        <div style={{ width: "20%", paddingLeft: 15, paddingTop: 15 }}>
+        <DocsSettingsContainer>
           <RightNav
             doc_id={doc_id as number}
             authContext={authContext}
             mainNode={mainNode}
           />
-        </div>
+        </DocsSettingsContainer>
       ) : null}
-    </div>
+    </DocsBodyContainer>
   )
 }
 

@@ -23,6 +23,12 @@ import { AppendNodeResponse, EditBlogAction } from "loony-types"
 import { DocNode } from "loony-types"
 import NodeInfo from "../../components/NodeInfo.tsx"
 import Modal from "./modal.tsx"
+import {
+  DocsBodyContainer,
+  DocsContentContainer,
+  DocsNavContainer,
+  DocsSettingsContainer,
+} from "../../components/Containers.tsx"
 
 export default function Edit(props: AppRouteProps) {
   const { isMobile } = props
@@ -62,21 +68,25 @@ export default function Edit(props: AppRouteProps) {
     return <PageLoadingContainer isMobile={props.isMobile} />
 
   return (
-    <div className="flex-row full-con">
-      <Nav state={state} {...props} />
+    <DocsBodyContainer>
+      <DocsNavContainer>
+        <Nav state={state} {...props} />
+      </DocsNavContainer>
       {state.modal && (
         <Modal state={state} setState={setState} doc_id={doc_id as number} />
       )}
       {state.form && (
-        <ActivityComponent
-          state={state}
-          setState={setState}
-          doc_id={doc_id as number}
-          isMobile={isMobile}
-        />
+        <DocsContentContainer>
+          <ActivityComponent
+            state={state}
+            setState={setState}
+            doc_id={doc_id as number}
+            isMobile={isMobile}
+          />
+        </DocsContentContainer>
       )}
       {!state.form && (
-        <div className="con-sm-12 con-xxl-5 mar-hor-1">
+        <DocsContentContainer>
           <div>
             <div className="page-heading">{mainNode.title}</div>
             {image && image.name ? (
@@ -274,17 +284,19 @@ export default function Edit(props: AppRouteProps) {
                 )
               })}
           </div>
-        </div>
+        </DocsContentContainer>
       )}
 
       {!isMobile ? (
-        <RightBlogContainer
-          doc_id={doc_id as number}
-          setState={setState}
-          state={state}
-        />
+        <DocsSettingsContainer>
+          <RightBlogContainer
+            doc_id={doc_id as number}
+            setState={setState}
+            state={state}
+          />
+        </DocsSettingsContainer>
       ) : null}
-    </div>
+    </DocsBodyContainer>
   )
 }
 
@@ -385,7 +397,7 @@ const RightBlogContainer = ({
   state: EditBlogState
 }) => {
   return (
-    <div style={{ width: "20%", paddingLeft: 15, paddingTop: 15 }}>
+    <>
       <ul style={{ paddingLeft: 0, listStyle: "none" }} className="list-item">
         <li>
           <RxReader size={16} color="#2d2d2d" />
@@ -407,6 +419,6 @@ const RightBlogContainer = ({
           <Link to="#">Report</Link>
         </li>
       </ul>
-    </div>
+    </>
   )
 }

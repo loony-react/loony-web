@@ -12,6 +12,12 @@ import "react-easy-crop/react-easy-crop.css"
 import AppContext from "../context/AppContext.tsx"
 import type { Auth, UploadImageState } from "loony-types"
 import UploadImage from "./uploadImage.tsx"
+import {
+  DocsBodyContainer,
+  DocsContentContainer,
+  DocsNavContainer,
+  DocsSettingsContainer,
+} from "../components/Containers.tsx"
 
 export default function CreateNewDocument({
   url,
@@ -109,10 +115,12 @@ export default function CreateNewDocument({
   }
 
   return (
-    <div className="form-container flex-row">
-      <DesktopLeftNavbar isMobile={isMobile} />
+    <DocsBodyContainer>
+      <DocsNavContainer>
+        <DesktopLeftNavbar isMobile={isMobile} />
+      </DocsNavContainer>
 
-      <div className="con-sm-100 con-xxl-5 mar-hor-1">
+      <DocsContentContainer>
         <h2>{title}</h2>
         <hr />
         {error ? (
@@ -189,7 +197,10 @@ export default function CreateNewDocument({
             contentType={contentType}
           />
         </div>
-      </div>
-    </div>
+      </DocsContentContainer>
+      <DocsSettingsContainer>
+        <></>
+      </DocsSettingsContainer>
+    </DocsBodyContainer>
   )
 }

@@ -10,7 +10,7 @@ const PageLoadingContainer = ({
   return (
     <div className="full-con">
       <div style={{ display: "flex", flexDirection: "row" }}>
-        {isMobile ? null : <div className="con-xxl-2 bor-right pad-top-15" />}
+        {isMobile ? null : <div className="con-xxl-2 pad-top-15" />}
         <div className="con-sm-12 con-xxl-5 mar-hor-1">
           {title ? <h1>{title}</h1> : null}
           <PageLoader key_id={1} />

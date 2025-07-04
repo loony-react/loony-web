@@ -5,6 +5,7 @@ import { DesktopLeftNavbar } from "../common/index.tsx"
 import Card from "../components/Card.tsx"
 import { EmptyBlog, EmptyBook } from "../components/EmptyCard.tsx"
 import { useHomeBlogs, useHomeBooks } from "../hooks/home.ts"
+import { HomeNavContainer } from "../components/Containers.tsx"
 
 const Home = (props: AppRouteProps) => {
   const { isMobile, authContext, appContext } = props
@@ -15,8 +16,10 @@ const Home = (props: AppRouteProps) => {
 
   return (
     <div className="full-container flex-row">
-      <DesktopLeftNavbar isMobile={isMobile} />
-      <div className="con-xxl-11 con-sm-12">
+      <HomeNavContainer>
+        <DesktopLeftNavbar isMobile={isMobile} />
+      </HomeNavContainer>
+      <div className="con-xxl-80 con-sm-12">
         <Documents
           navigate={navigate}
           documents={blogs}

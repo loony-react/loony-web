@@ -73,7 +73,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   }
 
   return (
-    <div className="con-sm-12 con-xxl-5 mar-hor-1">
+    <>
       <div style={{}}>
         <h2>{heading}</h2>
         <div>
@@ -143,6 +143,6 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
           contentType={contentType}
         />
       </div>
-    </div>
+    </>
   )
 }

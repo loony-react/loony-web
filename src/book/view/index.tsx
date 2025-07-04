@@ -16,6 +16,12 @@ import {
 import NodeInfo from "../../components/NodeInfo.tsx"
 import Nav from "../../nav/book/view/index.tsx"
 import ViewContent from "../../components/ViewContent.tsx"
+import {
+  DocsBodyContainer,
+  DocsContentContainer,
+  DocsNavContainer,
+  DocsSettingsContainer,
+} from "../../components/Containers.tsx"
 
 const View = (props: AppRouteProps) => {
   const { isMobile, appContext, authContext } = props
@@ -62,16 +68,18 @@ const View = (props: AppRouteProps) => {
   if (!parentNode || !mainNode || !frontPage) return null
 
   return (
-    <div className="flex-row full-con">
-      <Nav
-        doc_id={doc_id as number}
-        setState={setState}
-        state={state}
-        viewFrontPage={viewFrontPage}
-        navNodes={navNodes}
-        {...props}
-      />
-      <div className="con-sm-12 con-xxl-5 mar-hor-1">
+    <DocsBodyContainer>
+      <DocsNavContainer>
+        <Nav
+          doc_id={doc_id as number}
+          setState={setState}
+          state={state}
+          viewFrontPage={viewFrontPage}
+          navNodes={navNodes}
+          {...props}
+        />
+      </DocsNavContainer>
+      <DocsContentContainer>
         <ParentNode
           parentNode={parentNode}
           doc_id={doc_id as number}
@@ -96,7 +104,7 @@ const View = (props: AppRouteProps) => {
           )
         })}
         <div style={{ height: 50 }} />
-      </div>
+      </DocsContentContainer>
 
       {/*
        * @Page End
@@ -107,7 +115,7 @@ const View = (props: AppRouteProps) => {
           authContext={authContext}
         />
       ) : null}
-    </div>
+    </DocsBodyContainer>
   )
 }
 
@@ -158,7 +166,7 @@ const RightBookContainer = ({
 }) => {
   const isAuth = authContext.status === AuthStatus.AUTHORIZED
   return (
-    <div className="doc-settings-container pad-ver-1">
+    <DocsSettingsContainer>
       <ul className="list-item" style={{ paddingLeft: 0, listStyle: "none" }}>
         {isAuth && (
           <li>
@@ -171,7 +179,7 @@ const RightBookContainer = ({
           <Link to="#">Report</Link>
         </li>
       </ul>
-    </div>
+    </DocsSettingsContainer>
   )
 }
 
