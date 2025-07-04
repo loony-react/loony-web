@@ -103,11 +103,12 @@ export const getChapter = (
           parentNode = n
         }
       })
-      const res = orderNodes(childNodes, parentNode)
+      // const res = orderNodes(childNodes, parentNode)
       setState((prevState) => ({
         ...prevState,
         ...resetState,
-        childNodes: res,
+        // childNodes: res,
+        childNodes: [],
         groupNodesById: {
           ...groupNodesById,
           [uid]: {
@@ -125,7 +126,8 @@ export const getChapter = (
     setState((prevState) => ({
       ...prevState,
       ...resetState,
-      childNodes: groupNodesById[uid].child,
+      // childNodes: groupNodesById[uid].child,
+      childNodes: [],
       page_id: __node.uid,
       parentNode: groupNodesById[uid],
     }))
