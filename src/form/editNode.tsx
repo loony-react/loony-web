@@ -114,7 +114,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
 
   return (
     <>
-      <h2>{heading}</h2>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-1">{heading}</h2>
       <hr />
       <div>
         <div>

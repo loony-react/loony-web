@@ -20,11 +20,11 @@ import Signup from "../auth/Signup.tsx"
 import Alert from "../components/Alert.tsx"
 import NotFound from "../error/NotFound.tsx"
 import UnAuthorized from "../error/UnAuthorized.tsx"
-import Create from "../form/createDocument.tsx"
 import Navigation from "../navigation/TopNavbar.tsx"
 import PageLoadingContainer from "../components/PageLoadingContainer.tsx"
 import ForgotPassword from "../auth/ForgotPassword.tsx"
 import ResetPassword from "auth/ResetPassword.tsx"
+import CreateNewDocument from "home/Form.tsx"
 const ContentPolicy = lazy(() => import("../static/ContentPolicy.tsx"))
 const PrivacyPolicy = lazy(() => import("../static/PrivacyPolicy.tsx"))
 const UserAgreement = lazy(() => import("../static/UserAgreement.tsx"))
@@ -80,13 +80,21 @@ const Route = ({
           <ReactRoute
             path="/create/book"
             element={
-              <Create url={CREATE_BOOK} title="Create Book" {...props} />
+              <CreateNewDocument
+                url={CREATE_BOOK}
+                title="Create Book"
+                {...props}
+              />
             }
           />
           <ReactRoute
             path="/create/blog"
             element={
-              <Create url={CREATE_BLOG} title="Create Blog" {...props} />
+              <CreateNewDocument
+                url={CREATE_BLOG}
+                title="Create Blog"
+                {...props}
+              />
             }
           />
           <ReactRoute

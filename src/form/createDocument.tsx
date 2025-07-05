@@ -3,21 +3,13 @@ import { useNavigate } from "react-router"
 import { axiosInstance } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
-// import MarkdownPreview from "@uiw/react-markdown-preview"
 import ViewContent from "../components/ViewContent.tsx"
-import { DesktopLeftNavbar } from "../common/index.tsx"
 import { stopWords } from "../utils/index.tsx"
 
 import "react-easy-crop/react-easy-crop.css"
 import AppContext from "../context/AppContext.tsx"
 import type { Auth, UploadImageState } from "loony-types"
 import UploadImage from "./uploadImage.tsx"
-import {
-  DocsBodyContainer,
-  DocsContentContainer,
-  DocsNavContainer,
-  DocsSettingsContainer,
-} from "../components/Containers.tsx"
 
 export default function CreateNewDocument({
   url,
@@ -115,14 +107,11 @@ export default function CreateNewDocument({
   }
 
   return (
-    <DocsBodyContainer>
-      <DocsNavContainer>
-        <DesktopLeftNavbar isMobile={isMobile} />
-      </DocsNavContainer>
+    <div className="w-[40%] ml-[15%]">
+      <div>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-1">{title}</h2>
+        <hr className="border-t border-gray-300 mb-4" />
 
-      <DocsContentContainer>
-        <h2>{title}</h2>
-        <hr />
         {error ? (
           <div
             style={{
@@ -134,73 +123,72 @@ export default function CreateNewDocument({
             {error}
           </div>
         ) : null}
+      </div>
+      <div style={{}}>
         <div style={{}}>
-          <div style={{}}>
-            <div className="form-section">
-              <input
-                type="text"
-                value={formTitle}
-                onChange={(e) => {
-                  setFormTitle(e.target.value)
-                }}
-                placeholder="Title"
-              />
-            </div>
-
-            <TextArea
-              formContent={formContent}
-              setFormContent={setFormContent}
-              theme={theme}
-              setTheme={setTheme}
-              setContentType={setContentType}
-              contentType={contentType}
+          <div className="my-4">
+            <input
+              type="text"
+              value={formTitle}
+              onChange={(e) => {
+                setFormTitle(e.target.value)
+              }}
+              placeholder="Title"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
-            <UploadImage
-              baseUrl={base_url}
-              user={user}
-              setFormImages={setFormImages}
-            />
-            <div className="form-section">
-              <input
-                type="text"
-                placeholder="Keywords"
-                value={tags}
-                onChange={(e) => {
-                  setTags(e.target.value)
-                }}
-              />
-            </div>
           </div>
-          <div className="flex-row" style={{ justifyContent: "flex-end" }}>
-            <button
-              className="black-bg shadow"
-              onClick={createDoc}
-              disabled={submitting}
-              style={{ marginRight: 10 }}
-            >
-              {submitting ? "Creating..." : "Create"}
-            </button>
-            <button
-              className="white-bg shadow"
-              data-id="/"
-              onClick={routeTo}
-              disabled={submitting}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
 
-        <div style={{ padding: 24 }}>
-          <ViewContent
-            source={`<${contentType}>` + " " + formContent}
+          <TextArea
+            formContent={formContent}
+            setFormContent={setFormContent}
+            theme={theme}
+            setTheme={setTheme}
+            setContentType={setContentType}
             contentType={contentType}
           />
+          {/* <UploadImage
+            baseUrl={base_url}
+            user={user}
+            setFormImages={setFormImages}
+          /> */}
+          <div className="my-4">
+            <input
+              type="text"
+              placeholder="Keywords"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              value={tags}
+              onChange={(e) => {
+                setTags(e.target.value)
+              }}
+            />
+          </div>
         </div>
-      </DocsContentContainer>
-      <DocsSettingsContainer>
-        <></>
-      </DocsSettingsContainer>
-    </DocsBodyContainer>
+        <div className="flex-row" style={{ justifyContent: "flex-end" }}>
+          <button
+            className="w-100 bg-zinc-700 text-white py-2 rounded-md hover:bg-zinc-800 transition"
+            onClick={createDoc}
+            disabled={submitting}
+            style={{ marginRight: 10 }}
+          >
+            {submitting ? "Creating..." : "Create"}
+          </button>
+          <button
+            className="w-100 bg-neutral-200 text-zinc py-2 rounded-md hover:bg-neutral-300 transition"
+            data-id="/"
+            onClick={routeTo}
+            disabled={submitting}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <div style={{ padding: 24 }}>
+        <ViewContent
+          source={`<${contentType}>` + " " + formContent}
+          contentType={contentType}
+        />
+      </div>
+    </div>
   )
 }

@@ -1,13 +1,7 @@
 import AddNode from "../../form/addNode.tsx"
 import EditDocument from "../../form/editNode.tsx"
 import { appendChapters, appendSections, appendSubSections } from "loony-utils"
-import {
-  AppDispatchAction,
-  EditBookAction,
-  EditBookState,
-  DocNode,
-} from "loony-types"
-import { NavigateFunction } from "react-router"
+import { EditBookAction, EditBookState, DocNode } from "loony-types"
 import { useCallback } from "react"
 
 export default function EditComponent({
@@ -18,9 +12,7 @@ export default function EditComponent({
 }: {
   state: EditBookState
   setState: EditBookAction
-  setAppContext: AppDispatchAction
   doc_id: number
-  navigate: NavigateFunction
   isMobile: boolean
 }) {
   const {

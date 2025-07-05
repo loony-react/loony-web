@@ -1,17 +1,10 @@
-// import MarkdownPreview from '@uiw/react-markdown-preview'
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 
 export default function BasicMarkdown({ source }: { source: string }) {
   return (
-    <div className="prose">
-      <Markdown
-        remarkPlugins={[remarkGfm]}
-        // source={source}
-        // wrapperElement={{ "data-color-mode": "light" }}
-      >
-        {source}
-      </Markdown>
+    <div className="prose max-w-[60ch] sm:max-w-[70ch] md:max-w-[80ch] lg:max-w-[90ch] xl:max-w-[100ch]">
+      <Markdown remarkPlugins={[remarkGfm]}>{source}</Markdown>
     </div>
   )
 }
