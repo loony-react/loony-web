@@ -4,12 +4,14 @@ import remarkGfm from "remark-gfm"
 
 export default function BasicMarkdown({ source }: { source: string }) {
   return (
-    <Markdown
-      remarkPlugins={[remarkGfm]}
-      // source={source}
-      // wrapperElement={{ "data-color-mode": "light" }}
-    >
-      {source}
-    </Markdown>
+    <div className="prose">
+      <Markdown
+        remarkPlugins={[remarkGfm]}
+        // source={source}
+        // wrapperElement={{ "data-color-mode": "light" }}
+      >
+        {source}
+      </Markdown>
+    </div>
   )
 }

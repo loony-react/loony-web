@@ -119,8 +119,8 @@ const Navigation = ({
   }, [])
 
   return (
-    <nav className="bg-white border-b border-gray-200 px-4 py-3">
-      <div className="w-[60%] mx-auto flex items-center justify-between">
+    <nav className="bg-white border-b border-gray-200 px-10 py-2">
+      <div className="mx-auto flex items-center justify-between">
         {/* Logo */}
         <a href="/" className="text-xl font-bold text-gray-900">
           Loony
@@ -160,7 +160,7 @@ const Navigation = ({
           className={`md:flex md:items-center ${isOpen ? "block" : "hidden"}`}
         >
           {authContext.status === AuthStatus.AUTHORIZED ? (
-            <AuthNavRight authContext={authContext} />
+            <AuthNavRight logoutUser={logoutUser} />
           ) : (
             <NotAuthNavRight />
           )}
@@ -175,7 +175,7 @@ const AuthNavRight = ({ logoutUser }: any) => {
     <>
       <ul className="flex flex-col md:flex-row md:space-x-6 mt-3 md:mt-0">
         <li>
-          <a href="#" className="block py-2 text-gray-700 hover:text-blue-600">
+          <a href="/" className="block py-2 text-gray-700 hover:text-blue-600">
             Home
           </a>
         </li>

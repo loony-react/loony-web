@@ -2,11 +2,11 @@ import { useState, useEffect } from "react"
 import { extractImage, getNav } from "loony-utils"
 import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
-import { AppRouteProps, DocNode, ReadBookState, PageStatus } from "loony-types"
-import NodeInfo from "../../components/NodeInfo.tsx"
+import { AppRouteProps, ReadBookState, PageStatus } from "loony-types"
+
 import Nav from "../../nav/book/view/index.tsx"
 import ViewContent from "../../components/ViewContent.tsx"
-import RightNavView from "nav/RightNavView.tsx"
+import { RightNavEdit } from "nav/RightNavView.tsx"
 
 const View = (props: AppRouteProps) => {
   const { isMobile, appContext, authContext } = props
@@ -67,7 +67,7 @@ const View = (props: AppRouteProps) => {
       </div>
 
       {/* Markdown Body */}
-      <div className="w-[60%] p-6 overflow-auto prose">
+      <div className="w-[60%]">
         <div className="w-[90%] mx-5">
           <div>{parentNode.title}</div>
           <ViewContent source={parentNode.content} />
@@ -93,51 +93,13 @@ const View = (props: AppRouteProps) => {
         </div>
       </div>
       <div className="w-[20%]">
-        <RightNavView
+        <RightNavEdit
           doc_id={doc_id as number}
           authContext={authContext}
           mainNode={mainNode}
           docType="book"
         />
       </div>
-    </div>
-  )
-}
-
-const ParentNode = ({
-  parentNode,
-  doc_id,
-  base_url,
-}: {
-  parentNode: DocNode
-  doc_id: number
-  base_url: string
-}) => {
-  const image = extractImage(parentNode.images)
-  return (
-    <div
-      style={{
-        marginBottom: 24,
-      }}
-    >
-      <div className="page-heading">{parentNode.title}</div>
-      {image && image.name ? (
-        <div style={{ width: "100%", borderRadius: 5 }}>
-          <img
-            src={`${base_url}/book/${doc_id}/720/${image.name}`}
-            alt=""
-            width="100%"
-          />
-        </div>
-      ) : null}
-
-      {parentNode.identity === 100 ? <NodeInfo node={parentNode} /> : null}
-
-      {parentNode.content && (
-        <div style={{ marginTop: 16 }}>
-          <ViewContent source={parentNode.content} />
-        </div>
-      )}
     </div>
   )
 }

@@ -30,7 +30,8 @@ const Login = ({
     setFormData({ ...formData, [name]: value })
   }
 
-  const onHandleLogin = () => {
+  const onHandleLogin = (e: any) => {
+    e.preventDefault()
     setFormError({ label: "", message: "" })
     onLogin({
       formData,
@@ -42,169 +43,55 @@ const Login = ({
   }
 
   return (
-    <div className="book-container">
-      <div className="login-body">
-        <div
-          style={{
-            width: "90%",
-            height: "90vh",
-            display: "flex",
-            flexDirection: "row",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          {!isMobile ? (
-            <div
-              style={{
-                width: "50%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "80%",
-                }}
-              >
-                {/* <img src={require('../../assets/images/login.png')} style={{ width: '100%' }} /> */}
-              </div>
-              <div style={{ marginBlock: 20 }}>
-                <div style={{ fontWeight: "bold", fontSize: 32 }}>Loony</div>
-              </div>
-            </div>
-          ) : null}
-          <div
-            style={{
-              width: isMobile ? "94%" : "50%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{
-                width: 380,
-                padding: 20,
-                borderRadius: 10,
-              }}
-              className="box-shadow-1"
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginBottom: 20,
-                }}
-              >
-                <h2>Log in</h2>
-              </div>
-
-              <div className="input-container">
-                <label htmlFor="phone">Email/Username</label>
-                <input
-                  name="username"
-                  type="text"
-                  value={formData.username}
-                  onChange={handleChange}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      onHandleLogin()
-                    }
-                  }}
-                  required
-                  autoFocus
-                />
-
-                {formError.label === "username" ? (
-                  <div style={{ marginBottom: 24 }}>
-                    <div style={{ color: "red" }}>{formError.message}</div>
-                  </div>
-                ) : null}
-              </div>
-
-              <div className="input-container">
-                <label htmlFor="password">Password</label>
-                <input
-                  name="password"
-                  type={viewPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={handleChange}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      onHandleLogin()
-                    }
-                  }}
-                  required
-                />
-
-                {formError.label === "password" ? (
-                  <div style={{ marginBottom: 24 }}>
-                    <div style={{ color: "red" }}>{formError.message}</div>
-                  </div>
-                ) : null}
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginBlock: 10,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div>
-                    <input
-                      style={{ width: 16, height: 16 }}
-                      type="checkbox"
-                      onChange={() => {
-                        setViewPassword(!viewPassword)
-                      }}
-                    />
-                    <span style={{ marginLeft: 10 }}>Show password</span>
-                  </div>
-                  <div>
-                    <Link
-                      to="/forgotPassword"
-                      style={{ color: "rgb(15, 107, 228)", marginLeft: 5 }}
-                    >
-                      Forgot password
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                style={{ width: "100%", marginTop: 30 }}
-                onClick={onHandleLogin}
-                className="shadow black-bg"
-              >
-                Log In
-              </button>
-              <div
-                style={{
-                  marginBlock: 10,
-                  fontSize: 14,
-                  display: "flex",
-                  flexDirection: "row",
-                }}
-              >
-                <span style={{ color: "#6d6d6d" }}>Dont have an account? </span>
-                <Link
-                  to="/signup"
-                  style={{ color: "rgb(15, 107, 228)", marginLeft: 5 }}
-                >
-                  Create Account
-                </Link>
-              </div>
-            </div>
-          </div>
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+      <h2 className="text-2xl font-semibold mb-6 text-gray-800">Login</h2>
+      <form onSubmit={onHandleLogin} className="space-y-4">
+        {/* Username / Email Input */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Username or Email
+          </label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
         </div>
+
+        {/* Password Input */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+        >
+          Sign In
+        </button>
+      </form>
+      <div className="mt-4 text-center text-sm text-gray-600">
+        <span>Dont have an account?</span>
+        <a
+          href="/signup"
+          className="ml-1 font-medium text-blue-600 hover:underline"
+        >
+          Register
+        </a>
       </div>
     </div>
   )

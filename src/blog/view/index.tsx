@@ -131,7 +131,7 @@ const View = (props: AppRouteProps) => {
       </div>
 
       {/* Markdown Body */}
-      <div className="w-[60%] p-6 overflow-auto prose">
+      <div className="w-[60%]">
         <ViewContent source={mainNode.content} />
         {childNodes.map((node, id) => {
           return <ViewContent key={id} source={node.content} />
