@@ -7,7 +7,7 @@ import { AppRouteProps, ReadBlogState, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
 import NodeInfo from "../../components/NodeInfo.tsx"
 import Nav from "../../nav/blog/index.tsx"
-import RightNav from "../../nav/blog/RightNav.tsx"
+import RightNavView from "../../nav/RightNavView.tsx"
 import {
   DocsBodyContainer,
   DocsContentContainer,
@@ -95,10 +95,11 @@ const View = (props: AppRouteProps) => {
       </DocsContentContainer>
       {!isMobile ? (
         <DocsSettingsContainer>
-          <RightNav
+          <RightNavView
             doc_id={doc_id as number}
             authContext={authContext}
             mainNode={mainNode}
+            docType="blog"
           />
         </DocsSettingsContainer>
       ) : null}

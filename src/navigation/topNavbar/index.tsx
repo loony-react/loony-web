@@ -22,10 +22,10 @@ const Logo = () => {
 const CreateDocument = (authContext: Auth) => {
   if (authContext.status === AuthStatus.AUTHORIZED) {
     return (
-      <div className="create-button">
+      <div className="menu">
         <button style={{ fontWeight: "bold" }}>Create</button>
-        <div className="dropdown-content">
-          <div className="dropdown-content-items">
+        <div className="dropdown-con">
+          <div className="dropdown-con-items">
             <div className="nav-list-items">
               <ul>
                 <li>
@@ -56,10 +56,10 @@ const Profile = ({
   if (authContext.status === AuthStatus.AUTHORIZED && authContext.user) {
     const { fname, lname } = authContext.user
     return (
-      <div className="profile-button">
-        <LiaUserSolid size={32} />
-        <div className="profile-content">
-          <div className="profile-content-items">
+      <div className="menu">
+        <LiaUserSolid size={32} color="white" />
+        <div className="dropdown-con">
+          <div className="dropdown-con-items">
             <div className="nav-list-items">
               <ul>
                 <li>
@@ -136,11 +136,11 @@ const Navigation = ({
               <Logo />
             </div>
           </div>
-          <div className="con-50 flex-end">
+          <div className="con-50 flex-end" style={{ paddingTop: 8 }}>
             <div className="app-menu">
               <CreateDocument {...auth} />
             </div>
-            <div className="app-menu">
+            <div className="app-menu" style={{ marginLeft: 24 }}>
               <Profile
                 authContext={authContext}
                 logoutUser={logoutUser}

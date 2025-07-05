@@ -5,7 +5,7 @@ import {
   VoidReturnFunction,
   BooleanDispatchAction,
 } from "loony-types"
-import DesktopNav from "./DesktopNav"
+import { PageNavigation } from "./editPageNavigation"
 const MobileNav = lazy(() => import("./MobileNav"))
 
 export default function Nav(props: {
@@ -25,5 +25,5 @@ export default function Nav(props: {
     )
   }
 
-  return <DesktopNav {...props} />
+  return <PageNavigation {...props} />
 }

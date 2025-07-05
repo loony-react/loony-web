@@ -1,18 +1,8 @@
 import { useState, useEffect } from "react"
-import { LuFileWarning } from "react-icons/lu"
-import { FiEdit2 } from "react-icons/fi"
 import { extractImage, getNav } from "loony-utils"
-
-import { useParams, Link } from "react-router"
+import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
-import {
-  AppRouteProps,
-  DocNode,
-  ReadBookState,
-  PageStatus,
-  AuthContextProps,
-  AuthStatus,
-} from "loony-types"
+import { AppRouteProps, DocNode, ReadBookState, PageStatus } from "loony-types"
 import NodeInfo from "../../components/NodeInfo.tsx"
 import Nav from "../../nav/book/view/index.tsx"
 import ViewContent from "../../components/ViewContent.tsx"
@@ -22,6 +12,7 @@ import {
   DocsNavContainer,
   DocsSettingsContainer,
 } from "../../components/Containers.tsx"
+import RightNavView from "nav/RightNavView.tsx"
 
 const View = (props: AppRouteProps) => {
   const { isMobile, appContext, authContext } = props
@@ -110,10 +101,14 @@ const View = (props: AppRouteProps) => {
        * @Page End
        */}
       {isDesktop ? (
-        <RightBookContainer
-          doc_id={doc_id as number}
-          authContext={authContext}
-        />
+        <DocsSettingsContainer>
+          <RightNavView
+            doc_id={doc_id as number}
+            authContext={authContext}
+            mainNode={mainNode}
+            docType="book"
+          />
+        </DocsSettingsContainer>
       ) : null}
     </DocsBodyContainer>
   )
@@ -154,32 +149,6 @@ const ParentNode = ({
         </div>
       )}
     </div>
-  )
-}
-
-const RightBookContainer = ({
-  doc_id,
-  authContext,
-}: {
-  doc_id: number
-  authContext: AuthContextProps
-}) => {
-  const isAuth = authContext.status === AuthStatus.AUTHORIZED
-  return (
-    <DocsSettingsContainer>
-      <ul className="list-item" style={{ paddingLeft: 0, listStyle: "none" }}>
-        {isAuth && (
-          <li>
-            <FiEdit2 color="#2d2d2d" size={16} />
-            <Link to={`/edit/book/${doc_id}`}>Edit this page</Link>
-          </li>
-        )}
-        <li>
-          <LuFileWarning color="#2d2d2d" size={16} />
-          <Link to="#">Report</Link>
-        </li>
-      </ul>
-    </DocsSettingsContainer>
   )
 }
 

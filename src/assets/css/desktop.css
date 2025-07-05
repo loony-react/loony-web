@@ -309,8 +309,7 @@ button:hover {
   color: black;
   display: block;
 }
-.create-button,
-.profile-button,
+
 .login-button {
   color: white;
   text-decoration: none;
@@ -320,15 +319,7 @@ button:hover {
   justify-content: center;
   width: 120px;
 }
-.profile-button {
-  width: 80px;
-}
-.create-button:hover .dropdown-content {
-  display: block;
-}
-.profile-button:hover .profile-content {
-  display: block;
-}
+
 .book-right-nav ul li {
   padding-top: 5px;
   padding-bottom: 5px;

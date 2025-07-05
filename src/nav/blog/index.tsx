@@ -4,8 +4,8 @@ import {
   ReadBlogState,
   EditBlogState,
 } from "loony-types"
-import DesktopNav from "./DesktopNav"
 const MobileNav = lazy(() => import("./MobileNav"))
+import { Chapters } from "./BlogPageNavigation.tsx"
 
 export default function Nav(props: {
   isMobile: boolean
@@ -21,5 +21,5 @@ export default function Nav(props: {
     )
   }
 
-  return <DesktopNav {...props} />
+  return <Chapters {...props} />
 }

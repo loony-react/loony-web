@@ -1,10 +1,7 @@
 import { useState, useEffect, useContext, Suspense } from "react"
 
 import { extractImage, getNav } from "loony-utils"
-import { RxReader } from "react-icons/rx"
-import { AiOutlineDelete } from "react-icons/ai"
-import { useParams, Link, useNavigate } from "react-router"
-import { LuFileWarning } from "react-icons/lu"
+import { useParams, useNavigate } from "react-router"
 import EditComponent from "./edit.tsx"
 import Nav from "../../nav/book/edit/index.tsx"
 import { PageNodeSettings } from "./pageNodeSettings.tsx"
@@ -28,6 +25,7 @@ import {
   DocsNavContainer,
   DocsSettingsContainer,
 } from "../../components/Containers.tsx"
+import RightNavEdit from "nav/RightNavEdit.tsx"
 
 export default function Edit(props: AppRouteProps) {
   const { isMobile, appContext } = props
@@ -161,10 +159,15 @@ export default function Edit(props: AppRouteProps) {
       )}
       {!isMobile ? (
         <DocsSettingsContainer>
-          <RightBookContainer
-            doc_id={doc_id as string}
-            setState={setState}
-            state={state}
+          <RightNavEdit
+            doc_id={doc_id as number}
+            onDeleteDoc={() => {
+              setState({
+                ...state,
+                modal: "delete_book",
+              })
+            }}
+            docType="book"
           />
         </DocsSettingsContainer>
       ) : null}
@@ -209,39 +212,5 @@ const ParentNode = ({
       </div>
       <PageNodeSettings node={parentNode} setState={setState} state={state} />
     </>
-  )
-}
-
-const RightBookContainer = ({
-  doc_id,
-  setState,
-  state,
-}: {
-  doc_id: string
-  setState: EditBookAction
-  state: EditBookState
-}) => {
-  return (
-    <ul style={{ paddingLeft: 0, listStyle: "none" }} className="list-item">
-      <li>
-        <RxReader size={16} color="#2d2d2d" />
-        <Link to={`/view/book/${doc_id}`}>Read Book</Link>
-      </li>
-      <li
-        onClick={() => {
-          setState({
-            ...state,
-            modal: "delete_book",
-          })
-        }}
-      >
-        <AiOutlineDelete size={16} color="#2d2d2d" />
-        <Link to="#">Delete Book</Link>
-      </li>
-      <li>
-        <LuFileWarning size={16} color="#2d2d2d" />
-        <Link to="#">Report</Link>
-      </li>
-    </ul>
   )
 }
