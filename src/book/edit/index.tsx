@@ -26,9 +26,10 @@ import {
   DocsSettingsContainer,
 } from "../../components/Containers.tsx"
 import RightNavEdit from "nav/RightNavEdit.tsx"
+import RightNavView from "nav/RightNavView.tsx"
 
 export default function Edit(props: AppRouteProps) {
-  const { isMobile, appContext } = props
+  const { isMobile, appContext, authContext } = props
   const { base_url } = appContext.env
   const { bookId } = useParams()
   const doc_id = bookId && parseInt(bookId)
@@ -79,9 +80,104 @@ export default function Edit(props: AppRouteProps) {
   const { parentNode, childNodes, mainNode } = state
   if (!parentNode || !mainNode) return null
 
+  // return (
+  //   <DocsBodyContainer>
+  //     <DocsNavContainer>
+  //       <Nav
+  //         doc_id={doc_id as number}
+  //         setState={setState}
+  //         state={state}
+  //         viewFrontPage={viewFrontPage}
+  //         {...props}
+  //       />
+  //     </DocsNavContainer>
+
+  //     {state.modal && (
+  //       <Modal
+  //         state={state as EditBookState}
+  //         setState={setState as EditBookAction}
+  //         setAppContext={setAppContext}
+  //         doc_id={doc_id as number}
+  //         navigate={navigate}
+  //         isMobile={isMobile}
+  //       />
+  //     )}
+  //     {state.form && (
+  //       <DocsContentContainer>
+  //         <EditComponent
+  //           state={state as EditBookState}
+  //           setState={setState as EditBookAction}
+  //           setAppContext={setAppContext}
+  //           doc_id={doc_id as number}
+  //           navigate={navigate}
+  //           isMobile={isMobile}
+  //         />
+  //       </DocsContentContainer>
+  //     )}
+  //     {!state.form && (
+  //       <DocsContentContainer>
+  //         <ParentNode
+  //           parentNode={parentNode}
+  //           doc_id={doc_id as number}
+  //           base_url={base_url}
+  //           setState={setState}
+  //           state={state}
+  //         />
+
+  //         <div
+  //           style={{
+  //             marginTop: 16,
+  //           }}
+  //         >
+  //           {childNodes.map((subSectionNode) => {
+  //             const subSectionNodeImage = extractImage(subSectionNode.images)
+
+  //             return (
+  //               <div className="page-section" key={subSectionNode.uid}>
+  //                 <div className="section-title">{subSectionNode.title}</div>
+  //                 {subSectionNodeImage && subSectionNodeImage.name ? (
+  //                   <div style={{ width: "100%", borderRadius: 5 }}>
+  //                     <img
+  //                       src={`${base_url}/book/${doc_id}/720/${subSectionNodeImage.name}`}
+  //                       alt=""
+  //                       width="100%"
+  //                     />
+  //                   </div>
+  //                 ) : null}
+  //                 <Suspense fallback={<div>Loading component...</div>}>
+  //                   <ViewContent source={subSectionNode.content} />
+  //                 </Suspense>
+  //                 <PageNodeSettings
+  //                   node={subSectionNode}
+  //                   setState={setState}
+  //                   state={state}
+  //                 />
+  //               </div>
+  //             )
+  //           })}
+  //         </div>
+  //       </DocsContentContainer>
+  //     )}
+  //     {!isMobile ? (
+  //       <DocsSettingsContainer>
+  //         <RightNavEdit
+  //           doc_id={doc_id as number}
+  //           onDeleteDoc={() => {
+  //             setState({
+  //               ...state,
+  //               modal: "delete_book",
+  //             })
+  //           }}
+  //           docType="book"
+  //         />
+  //       </DocsSettingsContainer>
+  //     ) : null}
+  //   </DocsBodyContainer>
+  // )
   return (
-    <DocsBodyContainer>
-      <DocsNavContainer>
+    <div className="w-[70%] mx-auto mt-5 flex">
+      {/* Left Navbar */}
+      <div className="w-[20%] p-4">
         <Nav
           doc_id={doc_id as number}
           setState={setState}
@@ -89,89 +185,43 @@ export default function Edit(props: AppRouteProps) {
           viewFrontPage={viewFrontPage}
           {...props}
         />
-      </DocsNavContainer>
+      </div>
 
-      {state.modal && (
-        <Modal
-          state={state as EditBookState}
-          setState={setState as EditBookAction}
-          setAppContext={setAppContext}
-          doc_id={doc_id as number}
-          navigate={navigate}
-          isMobile={isMobile}
-        />
-      )}
-      {state.form && (
-        <DocsContentContainer>
-          <EditComponent
-            state={state as EditBookState}
-            setState={setState as EditBookAction}
-            setAppContext={setAppContext}
-            doc_id={doc_id as number}
-            navigate={navigate}
-            isMobile={isMobile}
-          />
-        </DocsContentContainer>
-      )}
-      {!state.form && (
-        <DocsContentContainer>
-          <ParentNode
-            parentNode={parentNode}
-            doc_id={doc_id as number}
-            base_url={base_url}
-            setState={setState}
-            state={state}
-          />
-
-          <div
-            style={{
-              marginTop: 16,
-            }}
-          >
-            {childNodes.map((subSectionNode) => {
-              const subSectionNodeImage = extractImage(subSectionNode.images)
-
+      {/* Markdown Body */}
+      <div className="w-[60%] p-6 overflow-auto prose">
+        <div className="w-[90%] mx-5">
+          <div>{parentNode.title}</div>
+          <ViewContent source={parentNode.content} />
+          {childNodes &&
+            childNodes.map((childNode) => {
+              const nodeImage = extractImage(childNode.images)
               return (
-                <div className="page-section" key={subSectionNode.uid}>
-                  <div className="section-title">{subSectionNode.title}</div>
-                  {subSectionNodeImage && subSectionNodeImage.name ? (
+                <div className="page-section" key={childNode.uid}>
+                  <div className="section-title">{childNode.title}</div>
+                  {nodeImage && nodeImage.name ? (
                     <div style={{ width: "100%", borderRadius: 5 }}>
                       <img
-                        src={`${base_url}/book/${doc_id}/720/${subSectionNodeImage.name}`}
+                        src={`${base_url}/book/${doc_id}/720/${nodeImage.name}`}
                         alt=""
                         width="100%"
                       />
                     </div>
                   ) : null}
-                  <Suspense fallback={<div>Loading component...</div>}>
-                    <ViewContent source={subSectionNode.content} />
-                  </Suspense>
-                  <PageNodeSettings
-                    node={subSectionNode}
-                    setState={setState}
-                    state={state}
-                  />
+                  <ViewContent source={childNode.content} />
                 </div>
               )
             })}
-          </div>
-        </DocsContentContainer>
-      )}
-      {!isMobile ? (
-        <DocsSettingsContainer>
-          <RightNavEdit
-            doc_id={doc_id as number}
-            onDeleteDoc={() => {
-              setState({
-                ...state,
-                modal: "delete_book",
-              })
-            }}
-            docType="book"
-          />
-        </DocsSettingsContainer>
-      ) : null}
-    </DocsBodyContainer>
+        </div>
+      </div>
+      <div className="w-[20%]">
+        <RightNavView
+          doc_id={doc_id as number}
+          authContext={authContext}
+          mainNode={mainNode}
+          docType="book"
+        />
+      </div>
+    </div>
   )
 }
 

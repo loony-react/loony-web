@@ -14,6 +14,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
     "axios": "^1.6.7",
     "katex": "^0.16.22",
     "loony-api": "0.1.0",
@@ -28,7 +29,8 @@
     "react-router": "^7.4.1",
     "rehype-katex": "^7.0.1",
     "remark-gfm": "^4.0.1",
-    "remark-math": "^6.0.0"
+    "remark-math": "^6.0.0",
+    "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
@@ -43,6 +45,7 @@
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.1.0",
     "globals": "^16.0.0",
+    "postcss": "^8.5.6",
     "prettier": "^3.5.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.24.1"

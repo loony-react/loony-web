@@ -21,7 +21,7 @@ import Alert from "../components/Alert.tsx"
 import NotFound from "../error/NotFound.tsx"
 import UnAuthorized from "../error/UnAuthorized.tsx"
 import Create from "../form/createDocument.tsx"
-import Navigation from "../navigation/topNavbar/index.tsx"
+import Navigation from "../navigation/TopNavbar.tsx"
 import PageLoadingContainer from "../components/PageLoadingContainer.tsx"
 import ForgotPassword from "../auth/ForgotPassword.tsx"
 import ResetPassword from "auth/ResetPassword.tsx"
@@ -57,7 +57,7 @@ const Route = ({
   }
 
   return (
-    <>
+    <div className="h-screen flex flex-col">
       {notificationContext.alert && (
         <Alert alert={notificationContext.alert} onClose={onCloseAlert} />
       )}
@@ -200,7 +200,7 @@ const Route = ({
           <ReactRoute path="*" element={<NotFound />} />
         </Routes>
       )}
-    </>
+    </div>
   )
 }
 

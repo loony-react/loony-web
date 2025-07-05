@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react"
-const LazyDestopLeftNavbar = lazy(() => import("./HomeLeftNavbar"))
+const LazyDestopLeftNavbar = lazy(() => import("../navigation/HomeLeftNavbar"))
 
 export const DesktopLeftNavbar = ({ isMobile }: { isMobile: boolean }) => {
   if (isMobile) return null
