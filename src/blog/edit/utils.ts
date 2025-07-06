@@ -71,25 +71,27 @@ const deleteBlog = ({
   })
 }
 
-const deleteNode = ({ state, childNodes, setState, mainNode }: any) => {
+const deleteNode = ({ state, setState }: any) => {
   if (!state.deleteNode) return
-  const delete_node = state.deleteNode
+  const { deleteNode, childNodes, mainNode } = state
+
   if (childNodes) {
+    console.log("deleteNode", state)
     let updateNode: DocNode | undefined
     childNodes.forEach((r: any) => {
-      if (r.parent_id === delete_node.uid) {
+      if (r.parent_id === deleteNode.uid) {
         updateNode = r
       }
     })
 
     const submitData = {
       delete_node: {
-        identity: delete_node.identity,
-        uid: delete_node.uid,
+        identity: deleteNode.identity,
+        uid: deleteNode.uid,
       },
       update_node: updateNode
         ? {
-            parent_id: delete_node.parent_id,
+            parent_id: deleteNode.parent_id,
             uid: updateNode ? updateNode.uid : null,
           }
         : null,
@@ -100,11 +102,10 @@ const deleteNode = ({ state, childNodes, setState, mainNode }: any) => {
       .then(() => {
         const nodesAfterDelete = deleteBlogNode(childNodes, submitData)
         const orderChildNodes = orderBlogChildNodes(nodesAfterDelete, mainNode)
-
         setState({
           ...state,
           childNodes: orderChildNodes,
-          form: STATE_VALUES.form,
+          modal: STATE_VALUES.modal,
         })
       })
       .catch((err) => {

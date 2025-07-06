@@ -122,12 +122,12 @@ export default function Edit(props: AppRouteProps) {
               {mainNode.title}
             </h2>
             <ViewContent source={mainNode.content} />
-            {/* <NodeSettings
+            <NodeSettings
               state={state}
               setState={setState}
               node={mainNode}
               nodeIndex={null}
-            /> */}
+            />
 
             {childNodes.map((node, id) => {
               return (
