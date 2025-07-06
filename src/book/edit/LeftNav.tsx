@@ -1,7 +1,7 @@
 import { getChapter, getSection } from "loony-utils"
 import { EditBookAction, EditBookState, VoidReturnFunction } from "loony-types"
 
-export const PageNavigation = ({
+export const LeftNav = ({
   setState,
   state,
   doc_id,
@@ -36,7 +36,10 @@ export const PageNavigation = ({
                   ...prevState,
                   topNode: frontPage,
                   page_id: frontPage.uid,
-                  form: "add_chapter",
+                  form: {
+                    method: "create",
+                    nodeType: 101,
+                  },
                 }))
               }}
             >
@@ -63,7 +66,10 @@ export const PageNavigation = ({
                       ...state,
                       topNode: chapter,
                       page_id: frontPage.uid,
-                      form: "add_chapter",
+                      form: {
+                        method: "create",
+                        nodeType: 101,
+                      },
                     })
                   }}
                 >
@@ -76,7 +82,10 @@ export const PageNavigation = ({
                       ...state,
                       topNode: chapter,
                       page_id: chapter.uid,
-                      form: "add_section",
+                      form: {
+                        method: "create",
+                        nodeType: 102,
+                      },
                     })
                   }}
                 >
@@ -112,7 +121,10 @@ export const PageNavigation = ({
                               ...state,
                               topNode: section,
                               page_id: chapter.uid,
-                              form: "add_section",
+                              form: {
+                                method: "create",
+                                nodeType: 102,
+                              },
                             })
                             e.stopPropagation()
                           }}

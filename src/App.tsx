@@ -1,5 +1,5 @@
 import { AuthContext, AuthProvider } from "./context/AuthContext.tsx"
-import AppContext, { AppProvider } from "./context/AppContext.tsx"
+import { AppContext, AppProvider } from "./context/AppContext.tsx"
 import NotificationContext, {
   NotificationProvider,
 } from "./context/NotificationContext.tsx"

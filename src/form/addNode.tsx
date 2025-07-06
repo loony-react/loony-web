@@ -9,7 +9,7 @@ import type {
   AddNodeComponentProps,
   UploadImageState,
 } from "loony-types"
-import AppContext from "../context/AppContext.tsx"
+import { AppContext } from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
 import type { Auth } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"

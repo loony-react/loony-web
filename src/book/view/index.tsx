@@ -3,10 +3,9 @@ import { extractImage, getNav } from "loony-utils"
 import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { AppRouteProps, ReadBookState, PageStatus } from "loony-types"
-
-import Nav from "../../nav/book/view/index.tsx"
 import ViewContent from "../../components/ViewContent.tsx"
 import { RightNavEdit } from "nav/RightNav.tsx"
+import { LeftNav } from "./pageNavigation.tsx"
 
 const View = (props: AppRouteProps) => {
   const { isMobile, appContext, authContext } = props
@@ -56,7 +55,7 @@ const View = (props: AppRouteProps) => {
     <div className="w-[70%] mx-auto mt-5 flex">
       {/* Left Navbar */}
       <div className="w-[20%] p-4">
-        <Nav
+        <LeftNav
           doc_id={doc_id as number}
           setState={setState}
           state={state}

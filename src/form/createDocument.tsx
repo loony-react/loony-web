@@ -7,7 +7,7 @@ import ViewContent from "../components/ViewContent.tsx"
 import { stopWords } from "../utils/index.tsx"
 
 import "react-easy-crop/react-easy-crop.css"
-import AppContext from "../context/AppContext.tsx"
+import { AppContext } from "../context/AppContext.tsx"
 import type { Auth, UploadImageState } from "loony-types"
 import UploadImage from "./uploadImage.tsx"
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useState, ReactNode, useEffect } from "react"
 import { AppContextProps, AppState } from "loony-types"
 import config from "../../config/app.config.json"
@@ -7,7 +8,7 @@ const env: string = config.env
 const currentConfig: any = appConfig[env]
 const { API_URL } = currentConfig
 
-const AppContext = createContext<AppContextProps>({
+export const AppContext = createContext<AppContextProps>({
   env: {
     base_url: API_URL,
   },
@@ -45,5 +46,3 @@ export function AppProvider({ children }: { children: ReactNode }) {
     </AppContext.Provider>
   )
 }
-
-export default AppContext

@@ -8,7 +8,7 @@ import {
   VoidReturnFunction,
 } from "loony-types"
 
-export const PageNavigation = ({
+export const LeftNav = ({
   setState,
   navNodes,
   state,

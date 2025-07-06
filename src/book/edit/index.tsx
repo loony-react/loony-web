@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { extractImage, getNav } from "loony-utils"
-import { useParams } from "react-router"
-import Nav from "../../nav/book/edit/index.tsx"
+import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import ViewContent from "../../components/ViewContent.tsx"
 import {
@@ -12,18 +11,22 @@ import {
   DocNode,
   EditBookAction,
 } from "loony-types"
-import { RightNavView } from "nav/RightNav.tsx"
 import EditComponent from "./edit.tsx"
 import { Plus, Pencil, Trash2 } from "lucide-react"
 import { STATE_VALUES } from "../../utils/const.ts"
+import DeleteModal from "../../components/Modal.tsx"
+import { AppContext } from "context/AppContext.tsx"
+import { onDeleteNode, onCancel, deleteBook } from "./utils.ts"
+import { LeftNav } from "./LeftNav.tsx"
+import { RightNavView } from "nav/RightNav.tsx"
 
 export default function Edit(props: AppRouteProps) {
   const { isMobile, appContext, authContext } = props
   const { base_url } = appContext.env
   const { bookId } = useParams()
   const doc_id = bookId && parseInt(bookId)
-  // const navigate = useNavigate()
-  // const { setAppContext } = useContext(AppContext)
+  const navigate = useNavigate()
+  const { setAppContext } = useContext(AppContext)
   const [status, setStatus] = useState<PageState>({
     status: PageStatus.IDLE,
     error: "",
@@ -73,7 +76,7 @@ export default function Edit(props: AppRouteProps) {
     <div className="w-[70%] mx-auto mt-5 flex">
       {/* Left Navbar */}
       <div className="w-[20%] p-4">
-        <Nav
+        <LeftNav
           doc_id={doc_id as number}
           setState={setState}
           state={state}
@@ -83,7 +86,22 @@ export default function Edit(props: AppRouteProps) {
       </div>
 
       {/* Markdown Body */}
-      <div className="w-[60%]">
+      <div className="w-[60%] mb-50">
+        {state.modal.method === "delete" && (
+          <DeleteModal
+            confirm={
+              state.modal.nodeType > 100
+                ? () => onDeleteNode({ state, setState })
+                : () =>
+                    deleteBook({
+                      doc_id: doc_id as number,
+                      setAppContext,
+                      navigate,
+                    })
+            }
+            cancel={() => onCancel({ state, setState })}
+          />
+        )}
         {!state.form.method && (
           <div className="w-[90%]">
             <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
@@ -159,7 +177,7 @@ const NodeSettings = ({
             topNode: node,
             form: {
               method: "create",
-              nodeType: node.identity,
+              nodeType: node.identity + 1,
             },
           })
           e.stopPropagation()

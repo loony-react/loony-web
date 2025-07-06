@@ -8,7 +8,7 @@ import type {
   AppContextProps,
 } from "loony-types"
 import { getUrl } from "loony-utils"
-import AppContext from "../context/AppContext.tsx"
+import { AppContext } from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
 import type { Auth, UploadImageState } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"

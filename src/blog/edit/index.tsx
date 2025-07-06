@@ -64,7 +64,7 @@ export default function Edit(props: AppRouteProps) {
 
   return (
     <div className="w-[70%] mx-auto mt-10 flex">
-      {state.modal && (
+      {state.modal.method === "delete" && (
         <DeleteModal
           state={state}
           doc_id={doc_id as number}
@@ -73,7 +73,7 @@ export default function Edit(props: AppRouteProps) {
       )}
       <div className="w-[20%]" />
       <div className="w-[60%] mb-50">
-        {!state.form && (
+        {!state.form.method && (
           <div className="w-[90%] mx-[5%]">
             <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
               {mainNode.title}
@@ -101,7 +101,7 @@ export default function Edit(props: AppRouteProps) {
             })}
           </div>
         )}
-        {state.form && (
+        {state.form.method && (
           <div className="w-[90%] mx-[5%]">
             <EditComponent
               state={state}

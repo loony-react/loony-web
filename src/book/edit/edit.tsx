@@ -231,7 +231,7 @@ export default function EditComponent({
           doc_id={doc_id as number}
           parent_identity={topNode.identity}
           onCancel={onCancel}
-          {...nodeTypes[topNode.identity]}
+          {...nodeTypes[form.nodeType]}
         />
       ) : null}
 
