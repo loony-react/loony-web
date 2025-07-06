@@ -1,8 +1,14 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
-import { extractImage, getBlogNodes } from "loony-utils"
-import { AppRouteProps, EditBlogState, PageStatus } from "loony-types"
+import { createImageUrl, extractImage, getBlogNodes } from "loony-utils"
+import {
+  AppRouteProps,
+  Auth,
+  AuthContextProps,
+  EditBlogState,
+  PageStatus,
+} from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
 import { useCallback } from "react"
 import {
@@ -18,12 +24,15 @@ import { Plus, Pencil, Trash2 } from "lucide-react"
 import { RightNavView } from "components/RightNav.tsx"
 import DeleteModal from "./modal.tsx"
 import { STATE_VALUES } from "../../utils/const.ts"
+import { AuthContext } from "context/AuthContext.tsx"
 
 export default function Edit(props: AppRouteProps) {
-  // const { isMobile } = props
   const { blogId } = useParams()
+  const authContext = useContext<AuthContextProps>(AuthContext)
+
   const doc_id = blogId && parseInt(blogId)
   const base_url = props.appContext.env.base_url
+  const { user } = authContext as Auth
 
   const [state, setState] = useState<EditBlogState>({
     mainNode: null,
@@ -56,14 +65,18 @@ export default function Edit(props: AppRouteProps) {
   }, [doc_id])
   const { mainNode, childNodes } = state
 
-  if (!mainNode) return null
-  const parsedImage = extractImage(mainNode.images)
-  const image =
-    parsedImage && parsedImage.name
-      ? `${base_url}/blog/${mainNode.uid}/340/${parsedImage.name}`
-      : undefined
+  if (!mainNode || !user) return null
+
+  const image = createImageUrl({
+    docType: "blog",
+    baseUrl: base_url,
+    nodeId: mainNode.uid,
+    image: extractImage(mainNode.images),
+    size: 720,
+  })
+
   if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
-  console.log(parsedImage)
+
   return (
     <div className="w-[70%] mx-auto mt-10 flex">
       {state.modal.method === "delete" && (
@@ -81,7 +94,7 @@ export default function Edit(props: AppRouteProps) {
               <img
                 src={image}
                 alt="Video Thumbnail"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover mb-4"
               />
             )}
             <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
@@ -98,6 +111,9 @@ export default function Edit(props: AppRouteProps) {
             {childNodes.map((node, id) => {
               return (
                 <div key={id}>
+                  <h2 className="text-2xl font-semibold my-4 border-b border-gray-300">
+                    {node.title}
+                  </h2>
                   <ViewContent source={node.content} />
                   <NodeSettings
                     state={state}
@@ -194,7 +210,7 @@ const EditComponent = ({
           FnCallback={addNodeCbFn}
           url="/blog/append/node"
           isMobile={isMobile}
-          docIdName="blog"
+          docType="blog"
           doc_id={doc_id}
           parent_id={state.addNode.uid}
           identity={101}
@@ -208,7 +224,7 @@ const EditComponent = ({
         <EditNodeForm
           heading="Edit Node"
           state={state}
-          docIdName="blog"
+          docType="blog"
           doc_id={doc_id}
           FnCallback={editFnCallback}
           onCancel={onCancel}

@@ -1,19 +1,19 @@
-export * from './app'
-export * from './doc'
-export * from './user'
-export * from './notification'
-export * from './form'
-export * from './common'
+export * from "./app"
+export * from "./doc"
+export * from "./user"
+export * from "./notification"
+export * from "./form"
+export * from "./common"
 
-import { VoidReturnFunction, ApiEvent } from './common'
-import { AppState } from './app'
+import { VoidReturnFunction, ApiEvent } from "./common"
+import { AppState } from "./app"
 import {
   ReadBookState,
   EditBlogState,
   EditBookState,
   ReadBlogState,
   DocNode,
-} from './doc'
+} from "./doc"
 
 export const APP_CSS = {
   // linearGradient: 'linear-gradient(to right, #ffffff, #F6F8FC)',
@@ -25,13 +25,13 @@ export type ApiStatus = {
 }
 
 export enum PageStatus {
-  IDLE = 'IDLE',
-  FETCHING = 'FETCHING',
-  ERROR = 'ERROR',
-  VIEW_PAGE = 'VIEW_PAGE',
-  CREATE_NODE = 'CREATE_NODE',
-  EDIT_NODE = 'EDIT_NODE',
-  DELETE_NODE = 'DELETE_NODE',
+  IDLE = "IDLE",
+  FETCHING = "FETCHING",
+  ERROR = "ERROR",
+  VIEW_PAGE = "VIEW_PAGE",
+  CREATE_NODE = "CREATE_NODE",
+  EDIT_NODE = "EDIT_NODE",
+  DELETE_NODE = "DELETE_NODE",
 }
 
 export type PageState = {
@@ -48,7 +48,7 @@ export type PageStatusDispatchAction = React.Dispatch<
 export type EditNodeComponentProps = {
   heading: string
   state: EditBlogState | EditBookState
-  docIdName: string
+  docType: string
   doc_id: number
   FnCallback: (data: DocNode) => void
   onCancel: VoidReturnFunction

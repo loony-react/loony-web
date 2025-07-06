@@ -10,15 +10,18 @@ import "react-easy-crop/react-easy-crop.css"
 import { AppContext } from "../context/AppContext.tsx"
 import type { Auth, UploadImageState } from "loony-types"
 import UploadImage from "./uploadImage.tsx"
+import { HR } from "components/index.tsx"
+import { createTmpImageUrl } from "loony-utils"
 
 export default function CreateNewDocument({
   url,
   title,
-  isMobile,
+  docType,
 }: {
   url: string
   title: string
   isMobile: boolean
+  docType: string
 }) {
   const navigate = useNavigate()
   const authContext = useContext(AuthContext)
@@ -106,12 +109,23 @@ export default function CreateNewDocument({
     navigate("/", { replace: true })
   }
 
+  if (!user) return null
+
+  const image =
+    formImages.length > 0 &&
+    createTmpImageUrl({
+      docType,
+      baseUrl: base_url,
+      userId: user.uid,
+      image: formImages[0],
+      size: 720,
+    })
+
   return (
     <div className="w-[40%] ml-[15%]">
       <div>
         <h2 className="text-2xl font-semibold text-gray-800 mb-1">{title}</h2>
-        <hr className="border-t border-gray-300 mb-4" />
-
+        {HR}
         {error ? (
           <div
             style={{
@@ -124,7 +138,7 @@ export default function CreateNewDocument({
           </div>
         ) : null}
       </div>
-      <div style={{}}>
+      <div className="mb-8">
         <div style={{}}>
           <div className="my-4">
             <input
@@ -146,11 +160,11 @@ export default function CreateNewDocument({
             setContentType={setContentType}
             contentType={contentType}
           />
-          {/* <UploadImage
+          <UploadImage
             baseUrl={base_url}
             user={user}
             setFormImages={setFormImages}
-          /> */}
+          />
           <div className="my-4">
             <input
               type="text"
@@ -163,31 +177,38 @@ export default function CreateNewDocument({
             />
           </div>
         </div>
-        <div className="flex-row" style={{ justifyContent: "flex-end" }}>
-          <button
-            className="w-100 bg-zinc-700 text-white py-2 rounded-md hover:bg-zinc-800 transition"
-            onClick={createDoc}
-            disabled={submitting}
-            style={{ marginRight: 10 }}
-          >
-            {submitting ? "Creating..." : "Create"}
-          </button>
-          <button
-            className="w-100 bg-neutral-200 text-zinc py-2 rounded-md hover:bg-neutral-300 transition"
-            data-id="/"
-            onClick={routeTo}
-            disabled={submitting}
-          >
-            Cancel
-          </button>
-        </div>
       </div>
 
-      <div style={{ padding: 24 }}>
+      {HR}
+
+      <div className="mt-10 border border-gray-300 p-12 rounded-md mb-8">
+        {image && <img key={image} src={image} alt="tmp file upload" />}
+        <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 mt-4">
+          {formTitle}
+        </h2>
         <ViewContent
           source={`<${contentType}>` + " " + formContent}
           contentType={contentType}
         />
+      </div>
+
+      <div className="flex-row" style={{ justifyContent: "flex-end" }}>
+        <button
+          className="w-100 bg-zinc-700 text-white py-2 rounded-md hover:bg-zinc-800 transition"
+          onClick={createDoc}
+          disabled={submitting}
+          style={{ marginRight: 10 }}
+        >
+          {submitting ? "Creating..." : "Create"}
+        </button>
+        <button
+          className="w-100 bg-neutral-200 text-zinc py-2 rounded-md hover:bg-neutral-300 transition"
+          data-id="/"
+          onClick={routeTo}
+          disabled={submitting}
+        >
+          Cancel
+        </button>
       </div>
     </div>
   )

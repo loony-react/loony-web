@@ -24,18 +24,35 @@ export const extractImage = (
 
 export const createImageUrl = ({
   baseUrl,
-  uid,
   image,
   size,
   docType,
+  nodeId,
 }: {
   baseUrl: string
-  uid: number
   image: { name: string } | null
   size: number
   docType: string
+  nodeId?: number
 }) => {
   return image && image.name
-    ? `${baseUrl}/${docType}/${uid}/${size || "340"}/${image.name}`
+    ? `${baseUrl}/${docType}/${nodeId}/${size || "340"}/${image.name}`
+    : null
+}
+
+export const createTmpImageUrl = ({
+  baseUrl,
+  image,
+  size,
+  userId,
+}: {
+  baseUrl: string
+  image: { name: string } | null
+  size: number
+  docType: string
+  userId?: number
+}) => {
+  return image && image.name
+    ? `${baseUrl}/tmp/${userId}/${size || "340"}/${image.name}`
     : null
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, useContext } from "react"
 import { axiosInstance } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
@@ -7,23 +8,19 @@ import type {
   AuthContextProps,
   AppContextProps,
 } from "loony-types"
-import { getUrl } from "loony-utils"
+import {
+  createImageUrl,
+  createTmpImageUrl,
+  extractImage,
+  getUrl,
+} from "loony-utils"
 import { AppContext } from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
 import type { Auth, UploadImageState } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"
 
 export default function EditNodeComponent(props: EditNodeComponentProps) {
-  const {
-    state,
-    FnCallback,
-    onCancel,
-    docIdName,
-    doc_id,
-    url,
-    // isMobile,
-    heading,
-  } = props
+  const { state, FnCallback, onCancel, docType, doc_id, url, heading } = props
   const { editNode, mainNode } = state
   const authContext = useContext<AuthContextProps>(AuthContext)
   const appContext = useContext<AppContextProps>(AppContext)
@@ -34,7 +31,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
   const [contentType, setContentType] = useState("basic")
   const [formTitle, setFormTitle] = useState("")
   const [formContent, setFormContent] = useState("")
-  const [formImages, setFormImages] = useState<UploadImageState[]>([])
+  const [formImages, setFormImages] = useState<UploadImageState[] | null>(null)
   const [theme, setTheme] = useState(11)
   const [error, setError] = useState("")
 
@@ -55,15 +52,6 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
         setFormContent(editNode.content.substring(8))
       }
 
-      if (typeof editNode.images === "string") {
-        const __image = JSON.parse(editNode.images)
-        if (__image.length > 0) {
-          setFormImages(__image)
-        }
-      }
-      if (Array.isArray(editNode.images) && editNode.images.length > 0) {
-        setFormImages(editNode.images)
-      }
       if (editNode.theme) {
         setTheme(editNode.theme)
       }
@@ -90,7 +78,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
       uid: editNode.uid,
       doc_id,
       identity: editNode.identity ? editNode.identity : null,
-      images: formImages,
+      images: formImages || [],
       theme,
     }
     axiosInstance
@@ -108,9 +96,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
     onCancel()
   }
 
-  const imageName = docIdName === "book" ? "book" : "blog"
-
-  if (!editNode || !mainNode) return null
+  if (!editNode || !mainNode || !user) return null
 
   return (
     <>
@@ -123,17 +109,6 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
               {error}
             </div>
           ) : null}
-          {formImages && formImages.length > 0
-            ? formImages.map((image) => {
-                return (
-                  <img
-                    key={image.name}
-                    src={`${base_url}/${imageName}/${editNode.uid}/340/${image.name}`}
-                    alt="tmp file upload"
-                  />
-                )
-              })
-            : null}
           <div className="my-4">
             <input
               type="text"
@@ -159,28 +134,75 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
             setFormImages={setFormImages}
           />
         </div>
-        <div className="my-4">
-          <button
-            onClick={updateNode}
-            className="w-50 bg-zinc-700 text-white py-2 rounded-md hover:bg-zinc-800 transition"
-          >
-            Update
-          </button>
-          <button
-            onClick={onCloseModal}
-            className="ml-4 w-50 bg-neutral-200 text-zinc py-2 rounded-md hover:bg-neutral-300 transition"
-          >
-            Cancel
-          </button>
-        </div>
       </div>
 
       <div className="mt-10 border border-gray-300 p-12 rounded-md">
+        <RenderImage
+          formImages={formImages}
+          nodeImages={editNode.images}
+          docType={docType}
+          baseUrl={base_url}
+          node={editNode}
+          userId={user.uid}
+        />
+        <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+          {formTitle}
+        </h2>
         <ViewContent
           source={`<${contentType}>` + " " + formContent}
           contentType={contentType}
         />
       </div>
+
+      <div className="my-4">
+        <button
+          onClick={updateNode}
+          className="w-50 bg-zinc-700 text-white py-2 rounded-md hover:bg-zinc-800 transition"
+        >
+          Update
+        </button>
+        <button
+          onClick={onCloseModal}
+          className="ml-4 w-50 bg-neutral-200 text-zinc py-2 rounded-md hover:bg-neutral-300 transition"
+        >
+          Cancel
+        </button>
+      </div>
     </>
   )
+}
+
+const RenderImage = ({
+  formImages,
+  nodeImages,
+  docType,
+  baseUrl,
+  node,
+  userId,
+}: any) => {
+  if (formImages) {
+    console.log(formImages, "formImages")
+    const image = createTmpImageUrl({
+      docType,
+      baseUrl,
+      userId,
+      image: extractImage(formImages),
+      size: 720,
+    })
+    if (!image) return null
+    return <img src={image} alt="Uploaded file" />
+  } else if (nodeImages) {
+    console.log(nodeImages, "nodeImages")
+    const image = createImageUrl({
+      docType,
+      baseUrl,
+      nodeId: node.uid,
+      image: extractImage(nodeImages),
+      size: 720,
+    })
+    if (!image) return null
+    return <img src={image} alt="Uploaded file" />
+  }
+
+  return null
 }

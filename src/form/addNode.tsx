@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useContext } from "react"
 import { axiosInstance } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
@@ -13,6 +14,7 @@ import { AppContext } from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
 import type { Auth } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"
+import { createImageUrl, createTmpImageUrl, extractImage } from "loony-utils"
 
 export default function AddNodeComponent(props: AddNodeComponentProps) {
   const {
@@ -25,7 +27,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
     page_id,
     onCancel,
     parent_identity,
-    // isMobile,
+    docType,
   } = props
 
   const authContext = useContext<AuthContextProps>(AuthContext)
@@ -40,7 +42,6 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   const [theme, setTheme] = useState(11)
   const [error, setError] = useState("")
   const [formImages, setFormImages] = useState<UploadImageState[]>([])
-  // const [tags, setTags] = useState("")
 
   const onCreateAction = () => {
     if (!formTitle) {
@@ -71,6 +72,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
         console.log(e)
       })
   }
+  if (!user) return null
 
   return (
     <>
@@ -119,6 +121,24 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
           </div> */}
         </div>
       </div>
+      <div className="mt-10 border border-gray-300 p-12 rounded-md">
+        <RenderImage
+          formImages={formImages}
+          nodeImages={null}
+          docType={docType}
+          baseUrl={base_url}
+          node={null}
+          userId={user.uid}
+        />
+        <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+          {formTitle}
+        </h2>
+        <ViewContent
+          source={`<${contentType}>` + " " + formContent}
+          contentType={contentType}
+        />
+      </div>
+
       <div className="my-4">
         <button
           onClick={onCreateAction}
@@ -134,12 +154,41 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
           Cancel
         </button>
       </div>
-      <div className="form-content">
-        <ViewContent
-          source={`<${contentType}>` + " " + formContent}
-          contentType={contentType}
-        />
-      </div>
     </>
   )
+}
+
+const RenderImage = ({
+  formImages,
+  nodeImages,
+  docType,
+  baseUrl,
+  node,
+  userId,
+}: any) => {
+  if (formImages) {
+    console.log(formImages, "formImages")
+    const image = createTmpImageUrl({
+      docType,
+      baseUrl,
+      userId,
+      image: extractImage(formImages),
+      size: 720,
+    })
+    if (!image) return null
+    return <img src={image} alt="Uploaded file" />
+  } else if (nodeImages) {
+    console.log(nodeImages, "nodeImages")
+    const image = createImageUrl({
+      docType,
+      baseUrl,
+      nodeId: node.uid,
+      image: extractImage(nodeImages),
+      size: 720,
+    })
+    if (!image) return null
+    return <img src={image} alt="Uploaded file" />
+  }
+
+  return null
 }

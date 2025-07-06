@@ -10,6 +10,7 @@ const View = (props: AppRouteProps) => {
   const { authContext, appContext } = props
   const { base_url } = appContext.env
   const { blogId } = useParams()
+  const { user } = authContext
   const doc_id = blogId && parseInt(blogId)
 
   const [state, setState] = useState<ReadBlogState>({
@@ -32,12 +33,12 @@ const View = (props: AppRouteProps) => {
   if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
 
   const { childNodes, mainNode } = state
-  if (!mainNode || !mainNode) return null
+  if (!mainNode || !mainNode || !user) return null
 
   const image = createImageUrl({
     docType: "blog",
     baseUrl: base_url,
-    uid: mainNode.uid,
+    nodeId: mainNode.uid,
     image: extractImage(mainNode.images),
     size: 720,
   })
@@ -53,16 +54,20 @@ const View = (props: AppRouteProps) => {
             <img
               src={image}
               alt="Video Thumbnail"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover mb-4"
             />
           )}
-          <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
-            {mainNode.title}
-          </h2>
-
+          <h2 className="text-4xl font-semibold my-4">{mainNode.title}</h2>
           <ViewContent source={mainNode.content} />
           {childNodes.map((node, id) => {
-            return <ViewContent key={id} source={node.content} />
+            return (
+              <>
+                <h2 className="text-2xl font-semibold my-4 border-b border-gray-300">
+                  {node.title}
+                </h2>
+                <ViewContent key={id} source={node.content} />
+              </>
+            )
           })}
         </div>
       </div>

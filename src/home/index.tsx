@@ -65,7 +65,7 @@ const Card = ({
 }) => {
   const image = createImageUrl({
     baseUrl: base_url,
-    uid: node.uid,
+    nodeId: node.uid,
     image: extractImage(node.images),
     docType,
     size: 340,
