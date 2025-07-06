@@ -46,7 +46,7 @@ const View = (props: AppRouteProps) => {
   if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
 
   return (
-    <div className="w-[70%] mx-auto mt-10 flex">
+    <div className="w-[70%] mx-auto mt-4 flex">
       <div className="w-[20%]" />
       <div className="w-[60%] mb-50">
         <div className="w-[90%] mx-[5%]">
@@ -71,13 +71,15 @@ const View = (props: AppRouteProps) => {
           })}
         </div>
       </div>
-      <div className="w-[18%] border-l border-gray-300 h-18">
-        <RightNavEdit
-          doc_id={doc_id as number}
-          authContext={authContext}
-          mainNode={mainNode}
-          docType="blog"
-        />
+      <div className="w-[18%]">
+        <div className="border-l border-gray-300">
+          <RightNavEdit
+            doc_id={doc_id as number}
+            authContext={authContext}
+            mainNode={mainNode}
+            docType="blog"
+          />
+        </div>
       </div>
     </div>
   )

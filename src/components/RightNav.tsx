@@ -20,18 +20,18 @@ export const RightNavView = ({
       {authContext.status === AuthStatus.AUTHORIZED &&
       authContext.user?.uid === mainNode.user_id ? (
         <>
-          <li className="flex items-center gap-2 text-gray-800 hover:bg-gray-100 px-3 py-1 rounded transition">
+          <li className="flex items-center gap-2 text-gray-800 hover:text-blue-500 px-3 py-1 rounded transition">
             <Link to={`/view/${docType}/${doc_id}`}>View</Link>
           </li>
           <li
             onClick={deleteDoc}
-            className="flex items-center gap-2 text-gray-800 hover:bg-gray-100 px-3 py-1 rounded transition"
+            className="flex items-center gap-2 text-gray-800 hover:text-blue-500 px-3 py-1 rounded transition"
           >
-            Delete
+            <Link to="#">Delete</Link>
           </li>
         </>
       ) : null}
-      <li className="flex items-center gap-2 text-gray-800 hover:bg-gray-100 px-3 py-1 rounded transition">
+      <li className="flex items-center gap-2 text-gray-800 hover:text-blue-500 px-3 py-1 rounded transition">
         <Link to="#">Report</Link>
       </li>
     </ul>
@@ -53,11 +53,11 @@ export const RightNavEdit = ({
     <ul>
       {authContext.status === AuthStatus.AUTHORIZED &&
       authContext.user?.uid === mainNode.user_id ? (
-        <li className="flex items-center gap-2 text-gray-800 hover:bg-gray-100 px-3 py-1 rounded transition">
+        <li className="flex items-center gap-2 text-gray-800 hover:text-blue-500 px-3 py-1 rounded transition">
           <Link to={`/edit/${docType}/${doc_id}`}>Edit</Link>
         </li>
       ) : null}
-      <li className="flex items-center gap-2 text-gray-800 hover:bg-gray-100 px-3 py-1 rounded transition">
+      <li className="flex items-center gap-2 text-gray-800 hover:text-blue-500 px-3 py-1 rounded transition">
         <Link to="#">Report</Link>
       </li>
     </ul>

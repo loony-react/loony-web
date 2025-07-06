@@ -89,7 +89,7 @@ export default function Edit(props: AppRouteProps) {
   if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
 
   return (
-    <div className="w-[70%] mx-auto mt-10 flex">
+    <div className="w-[70%] mx-auto mt-4 flex">
       {state.modal.method === "delete" && (
         <DeleteModal
           cancel={() => {
@@ -158,16 +158,18 @@ export default function Edit(props: AppRouteProps) {
           </div>
         )}
       </div>
-      <div className="w-[18%] border-l border-gray-300 h-18">
-        <RightNavView
-          authContext={props.authContext}
-          doc_id={doc_id as number}
-          mainNode={mainNode}
-          docType="blog"
-          deleteDoc={(e: any) => {
-            showModalToConfirmDeleteDoc(e, setState, mainNode.title)
-          }}
-        />
+      <div className="w-[18%]">
+        <div className="border-l border-gray-300">
+          <RightNavView
+            authContext={props.authContext}
+            doc_id={doc_id as number}
+            mainNode={mainNode}
+            docType="blog"
+            deleteDoc={(e: any) => {
+              showModalToConfirmDeleteDoc(e, setState, mainNode.title)
+            }}
+          />
+        </div>
       </div>
     </div>
   )
@@ -312,25 +314,27 @@ const NodeSettings = ({
       </button>
 
       {/* Delete */}
-      <button
-        className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
-        title="Delete"
-        onClick={(e) => {
-          setState({
-            ...state,
-            deleteNode: node,
-            nodeIndex,
-            modal: {
-              method: "delete",
-              nodeType: 101,
-              title: node.title,
-            },
-          })
-          e.stopPropagation()
-        }}
-      >
-        <Trash2 className="w-4 h-4" />
-      </button>
+      {node.identity > 100 && (
+        <button
+          className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
+          title="Delete"
+          onClick={(e) => {
+            setState({
+              ...state,
+              deleteNode: node,
+              nodeIndex,
+              modal: {
+                method: "delete",
+                nodeType: 101,
+                title: node.title,
+              },
+            })
+            e.stopPropagation()
+          }}
+        >
+          <Trash2 className="w-4 h-4" />
+        </button>
+      )}
     </div>
   )
 }

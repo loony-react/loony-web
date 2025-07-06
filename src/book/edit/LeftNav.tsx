@@ -17,8 +17,8 @@ export const LeftNav = ({
   if (!frontPage || !parentNode) return null
 
   return (
-    <div className="flex h-screen bg-white">
-      <aside className="w-64 border-r border-gray-200 overflow-y-auto px-4 py-6">
+    <div className="w-full flex h-screen bg-white">
+      <aside className="w-full border-r border-gray-200 overflow-y-auto px-4 py-4">
         <nav className="text-sm">
           <div>
             <div

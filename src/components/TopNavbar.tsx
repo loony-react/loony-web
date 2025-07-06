@@ -95,15 +95,7 @@ const Profile = ({
     </div>
   )
 }
-const Navigation = ({
-  auth,
-  setMobileNavOpen,
-  isMobile,
-}: {
-  auth: Auth
-  setMobileNavOpen: BooleanDispatchAction
-  isMobile: boolean
-}) => {
+const Navigation = () => {
   const navigate: NavigateFunction = useNavigate()
   const authContext = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState(false)

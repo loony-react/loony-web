@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useContext } from "react"
-import { extractImage, getNav } from "loony-utils"
+import { createImageUrl, extractImage, getNav } from "loony-utils"
 import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import ViewContent from "../../components/ViewContent.tsx"
@@ -73,14 +73,21 @@ export default function Edit(props: AppRouteProps) {
   if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
 
   const { parentNode, childNodes, mainNode } = state
-  if (!parentNode || !mainNode) return null
+  if (!parentNode || !mainNode || !doc_id) return null
+  const image = createImageUrl({
+    docType: "book",
+    baseUrl: base_url,
+    nodeId: doc_id,
+    image: extractImage(parentNode.images),
+    size: 720,
+  })
 
   return (
-    <div className="w-[70%] mx-auto mt-5 flex">
+    <div className="w-[70%] mx-auto flex">
       {/* Left Navbar */}
-      <div className="w-[20%] p-4">
+      <div className="w-[20%]">
         <LeftNav
-          doc_id={doc_id as number}
+          doc_id={doc_id}
           setState={setState}
           state={state}
           viewFrontPage={viewFrontPage}
@@ -89,7 +96,7 @@ export default function Edit(props: AppRouteProps) {
       </div>
 
       {/* Markdown Body */}
-      <div className="w-[60%] mb-50">
+      <div className="w-[60%] mx-[5%] pt-4">
         {state.modal.method === "delete" && (
           <DeleteModal
             cancel={() => {
@@ -100,7 +107,7 @@ export default function Edit(props: AppRouteProps) {
                 state,
                 setState,
                 navigate,
-                doc_id: doc_id as number,
+                doc_id: doc_id,
                 setAppContext,
               })
             }
@@ -109,6 +116,9 @@ export default function Edit(props: AppRouteProps) {
         )}
         {!state.form.method && (
           <div className="w-[90%]">
+            {parentNode && image ? (
+              <img src={image} alt="" width="100%" className="mb-4" />
+            ) : null}
             <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
               {parentNode.title}
             </h2>
@@ -116,18 +126,20 @@ export default function Edit(props: AppRouteProps) {
             <NodeSettings state={state} setState={setState} node={parentNode} />
             {childNodes &&
               childNodes.map((childNode) => {
-                const nodeImage = extractImage(childNode.images)
+                const nodeImage = createImageUrl({
+                  docType: "book",
+                  baseUrl: base_url,
+                  nodeId: doc_id,
+                  image: extractImage(childNode.images),
+                  size: 720,
+                })
                 return (
                   <div key={childNode.uid}>
                     <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
                       {childNode.title}
                     </h2>
-                    {nodeImage && nodeImage.name ? (
-                      <img
-                        src={`${base_url}/book/${doc_id}/720/${nodeImage.name}`}
-                        alt=""
-                        width="100%"
-                      />
+                    {nodeImage && nodeImage ? (
+                      <img src={nodeImage} alt="" width="100%" />
                     ) : null}
                     <ViewContent source={childNode.content} />
                     <NodeSettings
@@ -144,21 +156,23 @@ export default function Edit(props: AppRouteProps) {
           <EditComponent
             state={state}
             setState={setState}
-            doc_id={doc_id as number}
+            doc_id={doc_id}
             isMobile={isMobile}
           />
         )}
       </div>
-      <div className="w-[18%] border-l border-gray-300 h-18">
-        <RightNavView
-          doc_id={doc_id as number}
-          authContext={authContext}
-          mainNode={mainNode}
-          docType="book"
-          deleteDoc={(e: any) => {
-            showModalToConfirmDeleteDoc(e, setState, mainNode.title)
-          }}
-        />
+      <div className="w-[18%] mt-4">
+        <div className="border-l border-gray-300">
+          <RightNavView
+            doc_id={doc_id}
+            authContext={authContext}
+            mainNode={mainNode}
+            docType="book"
+            deleteDoc={(e: any) => {
+              showModalToConfirmDeleteDoc(e, setState, mainNode.title)
+            }}
+          />
+        </div>
       </div>
     </div>
   )
