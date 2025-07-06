@@ -5,7 +5,7 @@ import NotificationContext, {
 } from "./context/NotificationContext.tsx"
 
 import { BrowserRouter } from "react-router"
-import Route from "./routes/index.tsx"
+import Routes from "./Routes.tsx"
 import { AuthContextProps } from "loony-types"
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
                         <AuthContext.Consumer>
                           {(authContext: AuthContextProps) => {
                             return (
-                              <Route
+                              <Routes
                                 authContext={authContext}
                                 appContext={appContext}
                                 notificationContext={notificationContext}
