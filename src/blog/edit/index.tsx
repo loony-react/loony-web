@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
-import { getBlogNodes } from "loony-utils"
+import { extractImage, getBlogNodes } from "loony-utils"
 import { AppRouteProps, EditBlogState, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
 import { useCallback } from "react"
@@ -15,7 +15,7 @@ import EditNodeForm from "../../form/editNode.tsx"
 import { AppendNodeResponse, EditBlogAction } from "loony-types"
 import { DocNode } from "loony-types"
 import { Plus, Pencil, Trash2 } from "lucide-react"
-import { RightNavView } from "nav/RightNav.tsx"
+import { RightNavView } from "components/RightNav.tsx"
 import DeleteModal from "./modal.tsx"
 import { STATE_VALUES } from "../../utils/const.ts"
 
@@ -23,7 +23,7 @@ export default function Edit(props: AppRouteProps) {
   // const { isMobile } = props
   const { blogId } = useParams()
   const doc_id = blogId && parseInt(blogId)
-  // const base_url = props.appContext.env.base_url
+  const base_url = props.appContext.env.base_url
 
   const [state, setState] = useState<EditBlogState>({
     mainNode: null,
@@ -57,11 +57,13 @@ export default function Edit(props: AppRouteProps) {
   const { mainNode, childNodes } = state
 
   if (!mainNode) return null
-  // const image = extractImage(mainNode.images)
-
-  if (status.status !== PageStatus.VIEW_PAGE)
-    return <PageLoadingContainer isMobile={props.isMobile} />
-
+  const parsedImage = extractImage(mainNode.images)
+  const image =
+    parsedImage && parsedImage.name
+      ? `${base_url}/blog/${mainNode.uid}/340/${parsedImage.name}`
+      : undefined
+  if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
+  console.log(parsedImage)
   return (
     <div className="w-[70%] mx-auto mt-10 flex">
       {state.modal.method === "delete" && (
@@ -75,6 +77,13 @@ export default function Edit(props: AppRouteProps) {
       <div className="w-[60%] mb-50">
         {!state.form.method && (
           <div className="w-[90%] mx-[5%]">
+            {image && (
+              <img
+                src={image}
+                alt="Video Thumbnail"
+                className="w-full h-full object-cover"
+              />
+            )}
             <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
               {mainNode.title}
             </h2>

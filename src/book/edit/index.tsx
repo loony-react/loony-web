@@ -18,7 +18,7 @@ import DeleteModal from "../../components/Modal.tsx"
 import { AppContext } from "context/AppContext.tsx"
 import { onDeleteNode, onCancel, deleteBook } from "./utils.ts"
 import { LeftNav } from "./LeftNav.tsx"
-import { RightNavView } from "nav/RightNav.tsx"
+import { RightNavView } from "components/RightNav.tsx"
 
 export default function Edit(props: AppRouteProps) {
   const { isMobile, appContext, authContext } = props
@@ -66,8 +66,7 @@ export default function Edit(props: AppRouteProps) {
     })
   }
 
-  if (status.status !== PageStatus.VIEW_PAGE)
-    return <PageLoadingContainer isMobile={isMobile} />
+  if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
 
   const { parentNode, childNodes, mainNode } = state
   if (!parentNode || !mainNode) return null

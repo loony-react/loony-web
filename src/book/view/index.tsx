@@ -4,12 +4,11 @@ import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { AppRouteProps, ReadBookState, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
-import { RightNavEdit } from "nav/RightNav.tsx"
+import { RightNavEdit } from "components/RightNav.tsx"
 import { LeftNav } from "./pageNavigation.tsx"
 
 const View = (props: AppRouteProps) => {
-  const { isMobile, appContext, authContext } = props
-  const isDesktop = !isMobile
+  const { appContext, authContext } = props
   const { base_url } = appContext.env
   const { bookId } = useParams()
   const doc_id = bookId && parseInt(bookId)
@@ -47,7 +46,7 @@ const View = (props: AppRouteProps) => {
   const { parentNode, navNodes, frontPage, childNodes, mainNode } = state
 
   if (pageStatus.status !== PageStatus.VIEW_PAGE)
-    return <PageLoadingContainer isMobile={isMobile} />
+    return <PageLoadingContainer />
 
   if (!parentNode || !mainNode || !frontPage) return null
 

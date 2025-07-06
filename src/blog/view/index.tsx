@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router"
-import { extractImage } from "loony-utils"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
-import { getBlogNodes } from "loony-utils"
+import { createImageUrl, extractImage, getBlogNodes } from "loony-utils"
 import { AppRouteProps, ReadBlogState, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
-import { RightNavEdit } from "nav/RightNav.tsx"
+import { RightNavEdit } from "components/RightNav.tsx"
 
 const View = (props: AppRouteProps) => {
-  const { isMobile, appContext, authContext } = props
+  const { authContext, appContext } = props
   const { base_url } = appContext.env
   const { blogId } = useParams()
   const doc_id = blogId && parseInt(blogId)
@@ -30,19 +29,33 @@ const View = (props: AppRouteProps) => {
     }
   }, [doc_id])
 
-  if (status.status !== PageStatus.VIEW_PAGE)
-    return <PageLoadingContainer isMobile={isMobile} />
+  if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
 
   const { childNodes, mainNode } = state
   if (!mainNode || !mainNode) return null
 
-  const image = extractImage(mainNode.images)
+  const image = createImageUrl({
+    docType: "blog",
+    baseUrl: base_url,
+    uid: mainNode.uid,
+    image: extractImage(mainNode.images),
+    size: 720,
+  })
+
+  if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
 
   return (
     <div className="w-[70%] mx-auto mt-10 flex">
       <div className="w-[20%]" />
       <div className="w-[60%] mb-50">
         <div className="w-[90%] mx-[5%]">
+          {image && (
+            <img
+              src={image}
+              alt="Video Thumbnail"
+              className="w-full h-full object-cover"
+            />
+          )}
           <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
             {mainNode.title}
           </h2>
