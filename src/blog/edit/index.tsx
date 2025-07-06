@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useContext } from "react"
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { createImageUrl, extractImage, getBlogNodes } from "loony-utils"
 import {
@@ -25,11 +26,19 @@ import { RightNavView } from "components/RightNav.tsx"
 import DeleteModal from "./modal.tsx"
 import { STATE_VALUES } from "../../utils/const.ts"
 import { AuthContext } from "context/AuthContext.tsx"
+import {
+  showModalToConfirmDeleteDoc,
+  onConfirmDelete,
+  onCancel,
+} from "./utils.ts"
+import { AppContext } from "context/AppContext.tsx"
 
 export default function Edit(props: AppRouteProps) {
   const { blogId } = useParams()
   const authContext = useContext<AuthContextProps>(AuthContext)
+  const { setAppContext } = useContext(AppContext)
 
+  const navigate = useNavigate()
   const doc_id = blogId && parseInt(blogId)
   const base_url = props.appContext.env.base_url
   const { user } = authContext as Auth
@@ -50,6 +59,7 @@ export default function Edit(props: AppRouteProps) {
     modal: {
       method: "",
       nodeType: 0,
+      title: "",
     },
     deleteNode: null,
   })
@@ -63,6 +73,7 @@ export default function Edit(props: AppRouteProps) {
       getBlogNodes(doc_id, setState, setStatus)
     }
   }, [doc_id])
+
   const { mainNode, childNodes } = state
 
   if (!mainNode || !user) return null
@@ -81,9 +92,19 @@ export default function Edit(props: AppRouteProps) {
     <div className="w-[70%] mx-auto mt-10 flex">
       {state.modal.method === "delete" && (
         <DeleteModal
-          state={state}
-          doc_id={doc_id as number}
-          setState={setState}
+          cancel={() => {
+            onCancel({ setState })
+          }}
+          confirm={() => {
+            onConfirmDelete({
+              state,
+              setState,
+              setAppContext,
+              navigate,
+              doc_id: doc_id as number,
+            })
+          }}
+          title={state.modal.title}
         />
       )}
       <div className="w-[20%]" />
@@ -101,12 +122,12 @@ export default function Edit(props: AppRouteProps) {
               {mainNode.title}
             </h2>
             <ViewContent source={mainNode.content} />
-            <NodeSettings
+            {/* <NodeSettings
               state={state}
               setState={setState}
               node={mainNode}
               nodeIndex={null}
-            />
+            /> */}
 
             {childNodes.map((node, id) => {
               return (
@@ -137,12 +158,15 @@ export default function Edit(props: AppRouteProps) {
           </div>
         )}
       </div>
-      <div className="w-[20%]">
+      <div className="w-[18%] border-l border-gray-300 h-18">
         <RightNavView
           authContext={props.authContext}
           doc_id={doc_id as number}
           mainNode={mainNode}
           docType="blog"
+          deleteDoc={(e: any) => {
+            showModalToConfirmDeleteDoc(e, setState, mainNode.title)
+          }}
         />
       </div>
     </div>
@@ -299,6 +323,7 @@ const NodeSettings = ({
             modal: {
               method: "delete",
               nodeType: 101,
+              title: node.title,
             },
           })
           e.stopPropagation()

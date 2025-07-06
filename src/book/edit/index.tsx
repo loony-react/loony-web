@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useContext } from "react"
 import { extractImage, getNav } from "loony-utils"
 import { useNavigate, useParams } from "react-router"
@@ -16,7 +17,11 @@ import { Plus, Pencil, Trash2 } from "lucide-react"
 import { STATE_VALUES } from "../../utils/const.ts"
 import DeleteModal from "../../components/Modal.tsx"
 import { AppContext } from "context/AppContext.tsx"
-import { onDeleteNode, onCancel, deleteBook } from "./utils.ts"
+import {
+  onCancel,
+  onConfirmDelete,
+  showModalToConfirmDeleteDoc,
+} from "./utils.ts"
 import { LeftNav } from "./LeftNav.tsx"
 import { RightNavView } from "components/RightNav.tsx"
 
@@ -65,7 +70,6 @@ export default function Edit(props: AppRouteProps) {
       form: STATE_VALUES.form,
     })
   }
-
   if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
 
   const { parentNode, childNodes, mainNode } = state
@@ -88,21 +92,18 @@ export default function Edit(props: AppRouteProps) {
       <div className="w-[60%] mb-50">
         {state.modal.method === "delete" && (
           <DeleteModal
-            confirm={
-              state.modal.nodeType > 100
-                ? () =>
-                    onDeleteNode({
-                      state,
-                      setState,
-                    })
-                : () =>
-                    deleteBook({
-                      doc_id: doc_id as number,
-                      setAppContext,
-                      navigate,
-                    })
+            cancel={() => {
+              onCancel({ setState })
+            }}
+            confirm={() =>
+              onConfirmDelete({
+                state,
+                setState,
+                navigate,
+                doc_id: doc_id as number,
+                setAppContext,
+              })
             }
-            cancel={() => onCancel({ state, setState })}
             title={state.modal.title}
           />
         )}
@@ -148,12 +149,15 @@ export default function Edit(props: AppRouteProps) {
           />
         )}
       </div>
-      <div className="w-[20%]">
+      <div className="w-[18%] border-l border-gray-300 h-18">
         <RightNavView
           doc_id={doc_id as number}
           authContext={authContext}
           mainNode={mainNode}
           docType="book"
+          deleteDoc={(e: any) => {
+            showModalToConfirmDeleteDoc(e, setState, mainNode.title)
+          }}
         />
       </div>
     </div>

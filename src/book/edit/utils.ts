@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { deleteOne, deleteSubSection, deleteSection } from "loony-utils"
 import { axiosInstance } from "loony-api"
 import { STATE_VALUES } from "utils/const.ts"
@@ -9,7 +10,37 @@ import {
 } from "loony-types"
 import { NavigateFunction } from "react-router"
 
-export const deleteBook = ({
+export const showModalToConfirmDeleteDoc = (
+  e: any,
+  setState: any,
+  title?: string,
+) => {
+  e.preventDefault()
+  setState((prevState: any) => ({
+    ...prevState,
+    modal: {
+      method: "delete",
+      nodeType: 100,
+      title: title || "",
+    },
+  }))
+}
+
+export const onConfirmDelete = (props: {
+  state: EditBookState
+  setState: EditBookAction
+  doc_id: number
+  navigate: NavigateFunction
+  setAppContext: AppDispatchAction
+}) => {
+  if (props.state.modal.nodeType === 100) {
+    deleteBook(props)
+  } else {
+    deleteNode(props)
+  }
+}
+
+const deleteBook = ({
   navigate,
   doc_id,
   setAppContext,
@@ -31,22 +62,16 @@ export const deleteBook = ({
   })
 }
 
-export const onCancel = ({
-  state,
-  setState,
-}: {
-  state: EditBookState
-  setState: EditBookAction
-}) => {
-  setState({
+export const onCancel = ({ setState }: { setState: EditBookAction }) => {
+  setState((state) => ({
     ...state,
     modal: STATE_VALUES.modal,
     editNode: null,
     addNode: null,
-  })
+  }))
 }
 
-export const onDeleteNode = ({
+const deleteNode = ({
   state,
   setState,
 }: {
