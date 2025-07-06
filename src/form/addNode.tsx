@@ -75,22 +75,22 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   return (
     <>
       <div style={{}}>
-        <h2>{heading}</h2>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-1">{heading}</h2>
         <div>
           {error ? (
             <div style={{ color: "#ff4949", fontWeight: "bold", fontSize: 14 }}>
               {error}
             </div>
           ) : null}
-          <div className="form-section">
-            <label>Title</label>
-            <br />
+          <div className="my-4">
             <input
               type="text"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
               value={formTitle}
               onChange={(e) => {
                 setFormTitle(e.target.value)
               }}
+              placeholder="Title"
             />
           </div>
           <TextArea
@@ -119,22 +119,19 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
           </div> */}
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-end",
-        }}
-      >
+      <div className="my-4">
+        <button
+          onClick={onCreateAction}
+          className="w-50 bg-zinc-700 text-white py-2 rounded-md hover:bg-zinc-800 transition"
+        >
+          Submit
+        </button>
         <button
           onClick={onCancel}
-          className="white-bg shadow"
+          className="ml-4 w-50 bg-neutral-200 text-zinc py-2 rounded-md hover:bg-neutral-300 transition"
           style={{ marginRight: 10 }}
         >
           Cancel
-        </button>
-        <button onClick={onCreateAction} className="black-bg shadow">
-          Submit
         </button>
       </div>
       <div className="form-content">

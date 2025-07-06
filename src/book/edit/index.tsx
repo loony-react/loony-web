@@ -9,10 +9,13 @@ import {
   EditBookState,
   PageStatus,
   PageState,
+  DocNode,
+  EditBookAction,
 } from "loony-types"
-import { RightNavView } from "nav/RightNavView.tsx"
+import { RightNavView } from "nav/RightNav.tsx"
 import EditComponent from "./edit.tsx"
 import { Plus, Pencil, Trash2 } from "lucide-react"
+import { STATE_VALUES } from "../../utils/const.ts"
 
 export default function Edit(props: AppRouteProps) {
   const { isMobile, appContext, authContext } = props
@@ -28,8 +31,8 @@ export default function Edit(props: AppRouteProps) {
   const [state, setState] = useState<EditBookState>({
     mainNode: null,
     childNodes: [],
-    form: "",
-    modal: "",
+    form: STATE_VALUES.form,
+    modal: STATE_VALUES.modal,
     parentNode: null,
     topNode: null,
     page_id: null,
@@ -56,7 +59,7 @@ export default function Edit(props: AppRouteProps) {
       parentNode: state?.frontPage,
       editNode: null,
       addNode: null,
-      form: "",
+      form: STATE_VALUES.form,
     })
   }
 
@@ -81,11 +84,13 @@ export default function Edit(props: AppRouteProps) {
 
       {/* Markdown Body */}
       <div className="w-[60%]">
-        {!state.form && (
+        {!state.form.method && (
           <div className="w-[90%]">
-            <div>{parentNode.title}</div>
+            <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+              {parentNode.title}
+            </h2>
             <ViewContent source={parentNode.content} />
-            <NodeSettings />
+            <NodeSettings state={state} setState={setState} node={parentNode} />
             {childNodes &&
               childNodes.map((childNode) => {
                 const nodeImage = extractImage(childNode.images)
@@ -102,13 +107,17 @@ export default function Edit(props: AppRouteProps) {
                       </div>
                     ) : null}
                     <ViewContent source={childNode.content} />
-                    <NodeSettings />
+                    <NodeSettings
+                      state={state}
+                      setState={setState}
+                      node={childNode}
+                    />
                   </div>
                 )
               })}
           </div>
         )}
-        {state.form && (
+        {state.form.method && (
           <EditComponent
             state={state}
             setState={setState}
@@ -129,13 +138,32 @@ export default function Edit(props: AppRouteProps) {
   )
 }
 
-const NodeSettings = () => {
+const NodeSettings = ({
+  setState,
+  node,
+  state,
+}: {
+  setState: EditBookAction
+  node: DocNode
+  state: EditBookState
+}) => {
   return (
     <div className="flex gap-1">
       {/* Create */}
       <button
         className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
         title="Create"
+        onClick={(e) => {
+          setState({
+            ...state,
+            topNode: node,
+            form: {
+              method: "create",
+              nodeType: node.identity,
+            },
+          })
+          e.stopPropagation()
+        }}
       >
         <Plus className="w-4 h-4" />
       </button>
@@ -144,6 +172,18 @@ const NodeSettings = () => {
       <button
         className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
         title="Edit"
+        onClick={(e) => {
+          setState({
+            ...state,
+            topNode: node,
+            editNode: node,
+            form: {
+              method: "update",
+              nodeType: node.identity,
+            },
+          })
+          e.stopPropagation()
+        }}
       >
         <Pencil className="w-4 h-4" />
       </button>
@@ -152,6 +192,17 @@ const NodeSettings = () => {
       <button
         className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
         title="Delete"
+        onClick={(e) => {
+          setState({
+            ...state,
+            deleteNode: node,
+            modal: {
+              method: "delete",
+              nodeType: node.identity,
+            },
+          })
+          e.stopPropagation()
+        }}
       >
         <Trash2 className="w-4 h-4" />
       </button>

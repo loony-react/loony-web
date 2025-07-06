@@ -134,13 +134,12 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
                 )
               })
             : null}
-          <div className="form-section">
-            <label>Title</label>
-            <br />
+          <div className="my-4">
             <input
               type="text"
               placeholder="Title"
               value={formTitle}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
               onChange={(e) => {
                 setFormTitle(e.target.value)
               }}
@@ -160,27 +159,23 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
             setFormImages={setFormImages}
           />
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-end",
-          }}
-        >
-          <button onClick={onCloseModal} className="white-bg shadow">
-            Cancel
-          </button>
+        <div className="my-4">
           <button
             onClick={updateNode}
-            className="black-bg shadow"
-            style={{ marginLeft: 15 }}
+            className="w-50 bg-zinc-700 text-white py-2 rounded-md hover:bg-zinc-800 transition"
           >
             Update
+          </button>
+          <button
+            onClick={onCloseModal}
+            className="ml-4 w-50 bg-neutral-200 text-zinc py-2 rounded-md hover:bg-neutral-300 transition"
+          >
+            Cancel
           </button>
         </div>
       </div>
 
-      <div className="form-content">
+      <div className="mt-10 border border-gray-300 p-12 rounded-md">
         <ViewContent
           source={`<${contentType}>` + " " + formContent}
           contentType={contentType}

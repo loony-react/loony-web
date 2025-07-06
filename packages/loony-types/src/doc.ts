@@ -44,9 +44,19 @@ type ReadDocState = {
   childNodes: DocNode[]
 } & CommonDocState
 
+type ModalState = {
+  method: string
+  nodeType: number
+}
+
+type FormState = {
+  method: string // create, update
+  nodeType: number
+}
+
 type EditDocState = {
-  form: string
-  modal: string
+  form: FormState
+  modal: ModalState
   addNode: DocNode | null
   editNode: DocNode | null
   parentNode: DocNode | null

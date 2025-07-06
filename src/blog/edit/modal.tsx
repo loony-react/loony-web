@@ -3,11 +3,11 @@ import { useCallback } from "react"
 import { deleteBlogNode, orderBlogChildNodes } from "loony-utils"
 import { useNavigate } from "react-router"
 import { axiosInstance } from "loony-api"
-import ConfirmAction from "../../components/ConfirmAction.tsx"
 import { EditBlogState } from "loony-types"
 import { DocNode } from "loony-types"
+import { STATE_VALUES } from "../../utils/const"
 
-export default function EditModal({
+export default function DeleteModal({
   state,
   doc_id,
   setState,
@@ -29,7 +29,7 @@ export default function EditModal({
   const onCancel = useCallback(() => {
     setState({
       ...state,
-      modal: "",
+      modal: STATE_VALUES.modal,
       editNode: null,
       addNode: null,
     })
@@ -73,7 +73,7 @@ export default function EditModal({
           setState({
             ...state,
             childNodes: orderChildNodes,
-            form: "",
+            form: STATE_VALUES.form,
           })
         })
         .catch((err) => {
@@ -82,24 +82,52 @@ export default function EditModal({
     }
   }
 
+  // return (
+  //   <>
+  //     {modal === "delete_node" && state.deleteNode ? (
+  //       <ConfirmAction
+  //         confirmTitle="Are you sure you want to delete Node?"
+  //         confirmAction={onDeleteNode}
+  //         title="Delete Node"
+  //         onCancel={onCancel}
+  //       />
+  //     ) : null}
+  //     {modal === "delete_blog" ? (
+  //       <ConfirmAction
+  //         confirmTitle="Are you sure you want to delete Blog?"
+  //         confirmAction={deleteBlog}
+  //         title="Delete Blog"
+  //         onCancel={onCancel}
+  //       />
+  //     ) : null}
+  //   </>
+  // )
+
   return (
-    <>
-      {modal === "delete_node" && state.deleteNode ? (
-        <ConfirmAction
-          confirmTitle="Are you sure you want to delete Node?"
-          confirmAction={onDeleteNode}
-          title="Delete Node"
-          onCancel={onCancel}
-        />
-      ) : null}
-      {modal === "delete_blog" ? (
-        <ConfirmAction
-          confirmTitle="Are you sure you want to delete Blog?"
-          confirmAction={deleteBlog}
-          title="Delete Blog"
-          onCancel={onCancel}
-        />
-      ) : null}
-    </>
+    <div className="fixed inset-0 flex items-center justify-center bg-black/60">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-sm p-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">
+          Confirm Deletion
+        </h2>
+        <p className="text-gray-600 mb-6">
+          Are you sure you want to delete this item? This action cannot be
+          undone.
+        </p>
+        <div className="flex justify-end space-x-2">
+          <button
+            onClick={onCancel}
+            className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onDeleteNode}
+            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }

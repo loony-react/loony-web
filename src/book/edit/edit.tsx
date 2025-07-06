@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import AddNode from "../../form/addNode.tsx"
 import EditDocument from "../../form/editNode.tsx"
 import { appendChapters, appendSections, appendSubSections } from "loony-utils"
 import { EditBookAction, EditBookState, DocNode } from "loony-types"
 import { useCallback } from "react"
+import { STATE_VALUES } from "utils/const.ts"
 
 export default function EditComponent({
   state,
@@ -46,7 +48,7 @@ export default function EditComponent({
       ...state,
       parentNode: __parentNode,
       navNodes: __navNodes,
-      form: "",
+      form: STATE_VALUES.form,
     })
   }
   const editSection = (data: DocNode) => {
@@ -61,7 +63,7 @@ export default function EditComponent({
         },
       },
       parentNode: data,
-      form: "",
+      form: STATE_VALUES.form,
       editNode: null,
     })
   }
@@ -89,7 +91,7 @@ export default function EditComponent({
         },
       },
       childNodes: child,
-      form: "",
+      form: STATE_VALUES.form,
       editNode: null,
     })
   }
@@ -103,7 +105,7 @@ export default function EditComponent({
       ...state,
       parentNode: __parentNode,
       page_id: __parentNode.uid,
-      form: "",
+      form: STATE_VALUES.form,
     })
   }
 
@@ -135,7 +137,7 @@ export default function EditComponent({
       navNodes: newNavNodes,
       childNodes: [],
       addNode: null,
-      form: "",
+      form: STATE_VALUES.form,
     })
   }
 
@@ -161,7 +163,7 @@ export default function EditComponent({
           child: [],
         },
       },
-      form: "",
+      form: STATE_VALUES.form,
     })
   }
 
@@ -183,70 +185,57 @@ export default function EditComponent({
       },
       childNodes: newChildNodes,
       addNode: null,
-      form: "",
+      form: STATE_VALUES.form,
     })
   }
 
   const onCancel = useCallback(() => {
     setState({
       ...state,
-      form: "",
+      form: STATE_VALUES.form,
       editNode: null,
       addNode: null,
     })
   }, [setState, state])
 
+  const nodeTypes: any = {
+    101: {
+      FnCallback: addChapterFnCb,
+      url: "/book/append/node",
+      identity: 101,
+      heading: "Add Chapter",
+      page_id: page_id,
+    },
+    102: {
+      FnCallback: addSectionFnCb,
+      url: "/book/append/node",
+      identity: 102,
+      heading: "Add Section",
+      page_id: page_id,
+    },
+    103: {
+      FnCallback: addSubSectionFnCb,
+      url: "/book/append/node",
+      identity: 103,
+      heading: "Add Sub-Section",
+      page_id: section_id,
+    },
+  }
+
   return (
     <>
-      {form && form === "add_chapter" && topNode ? (
+      {form.method === "create" && topNode ? (
         <AddNode
-          FnCallback={addChapterFnCb}
-          url="/book/append/node"
           isMobile={isMobile}
           docIdName="book"
           doc_id={doc_id as number}
-          parent_id={topNode.uid}
-          identity={101}
           parent_identity={topNode.identity}
-          page_id={page_id}
           onCancel={onCancel}
-          heading="Add Chapter"
+          {...nodeTypes[topNode.identity]}
         />
       ) : null}
 
-      {form && form === "add_section" && topNode ? (
-        <AddNode
-          FnCallback={addSectionFnCb}
-          url="/book/append/node"
-          isMobile={isMobile}
-          docIdName="book"
-          doc_id={doc_id}
-          parent_id={topNode.uid}
-          parent_identity={topNode.identity}
-          identity={102}
-          page_id={page_id}
-          onCancel={onCancel}
-          heading="Add Section"
-        />
-      ) : null}
-
-      {form && form === "add_sub_section" && topNode ? (
-        <AddNode
-          FnCallback={addSubSectionFnCb}
-          url="/book/append/node"
-          isMobile={isMobile}
-          docIdName="book"
-          doc_id={doc_id}
-          parent_id={topNode.uid}
-          parent_identity={topNode.identity}
-          identity={103}
-          page_id={section_id}
-          onCancel={onCancel}
-          heading="Add Sub Section"
-        />
-      ) : null}
-
-      {form && form === "edit_node" ? (
+      {form.method === "update" ? (
         <EditDocument
           docIdName="book"
           doc_id={doc_id}

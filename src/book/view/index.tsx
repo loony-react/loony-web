@@ -6,7 +6,7 @@ import { AppRouteProps, ReadBookState, PageStatus } from "loony-types"
 
 import Nav from "../../nav/book/view/index.tsx"
 import ViewContent from "../../components/ViewContent.tsx"
-import { RightNavEdit } from "nav/RightNavView.tsx"
+import { RightNavEdit } from "nav/RightNav.tsx"
 
 const View = (props: AppRouteProps) => {
   const { isMobile, appContext, authContext } = props
@@ -69,7 +69,9 @@ const View = (props: AppRouteProps) => {
       {/* Markdown Body */}
       <div className="w-[60%]">
         <div className="w-[90%] mx-5">
-          <div>{parentNode.title}</div>
+          <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+            {parentNode.title}
+          </h2>
           <ViewContent source={parentNode.content} />
           {childNodes &&
             childNodes.map((childNode) => {

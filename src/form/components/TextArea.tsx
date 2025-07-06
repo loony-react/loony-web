@@ -1,5 +1,3 @@
-import { useState } from "react"
-
 type TextAreaProps = {
   formContent: string
   setFormContent: (_: string) => void
@@ -9,13 +7,11 @@ type TextAreaProps = {
   contentType: string
 }
 const modes = [
+  { id: "basic", label: "Basic" },
   { id: "markdown", label: "Markdown" },
-  { id: "katex", label: "KaTeX" },
-  { id: "wysiwyg", label: "WYSIWYG" },
+  { id: "maths", label: "Maths" },
 ]
 export const TextArea = (props: TextAreaProps) => {
-  const [mode, setMode] = useState("markdown")
-
   return (
     <div className="">
       <div className="bg-muted border border-gray-300 rounded-2xl p-4">
@@ -24,9 +20,9 @@ export const TextArea = (props: TextAreaProps) => {
           {modes.map((m) => (
             <button
               key={m.id}
-              onClick={() => setMode(m.id)}
+              onClick={() => props.setContentType(m.id)}
               className={`flex-1 text-sm font-medium px-4 py-2 text-center transition-colors duration-200 ${
-                mode === m.id
+                props.contentType === m.id
                   ? "border-b-2 border-primary text-primary"
                   : "text-muted-foreground hover:text-foreground"
               }`}
@@ -38,9 +34,13 @@ export const TextArea = (props: TextAreaProps) => {
 
         {/* Textarea */}
         <textarea
-          rows={5}
-          placeholder={`Send a message... (${mode})`}
+          rows={12}
+          value={props.formContent}
+          placeholder={`Send a message... (${props.contentType})`}
           className="w-full bg-transparent resize-none outline-none text-sm text-foreground placeholder:text-muted-foreground"
+          onChange={(event) => {
+            props.setFormContent(event.target.value)
+          }}
         />
       </div>
     </div>

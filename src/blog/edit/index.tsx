@@ -1,40 +1,29 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
-import { extractImage, getBlogNodes } from "loony-utils"
+import { getBlogNodes } from "loony-utils"
 import { AppRouteProps, EditBlogState, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
-import { Suspense, useCallback } from "react"
+import { useCallback } from "react"
 import {
   updateBlogNode,
   appendBlogNode,
   orderBlogChildNodes,
 } from "loony-utils"
-import { RxReader } from "react-icons/rx"
-import { AiOutlineDelete } from "react-icons/ai"
-import { LuFileWarning } from "react-icons/lu"
-import { MdAdd, MdOutlineEdit, MdContentCopy } from "react-icons/md"
-import { Link } from "react-router"
 import AddNode from "../../form/addNode.tsx"
 import EditNodeForm from "../../form/editNode.tsx"
-import Nav from "../../nav/blog/index.tsx"
-
 import { AppendNodeResponse, EditBlogAction } from "loony-types"
 import { DocNode } from "loony-types"
-import NodeInfo from "../../components/NodeInfo.tsx"
-import Modal from "./modal.tsx"
-import {
-  DocsBodyContainer,
-  DocsContentContainer,
-  DocsNavContainer,
-  DocsSettingsContainer,
-} from "../../components/Containers.tsx"
+import { Plus, Pencil, Trash2 } from "lucide-react"
+import { RightNavView } from "nav/RightNav.tsx"
+import DeleteModal from "./modal.tsx"
+import { STATE_VALUES } from "../../utils/const.ts"
 
 export default function Edit(props: AppRouteProps) {
-  const { isMobile } = props
+  // const { isMobile } = props
   const { blogId } = useParams()
   const doc_id = blogId && parseInt(blogId)
-  const base_url = props.appContext.env.base_url
+  // const base_url = props.appContext.env.base_url
 
   const [state, setState] = useState<EditBlogState>({
     mainNode: null,
@@ -45,8 +34,14 @@ export default function Edit(props: AppRouteProps) {
     topNode: null,
     doc_id: doc_id as number,
     childNodes: [],
-    form: "",
-    modal: "",
+    form: {
+      method: "",
+      nodeType: 0,
+    },
+    modal: {
+      method: "",
+      nodeType: 0,
+    },
     deleteNode: null,
   })
   const [status, setStatus] = useState({
@@ -62,245 +57,74 @@ export default function Edit(props: AppRouteProps) {
   const { mainNode, childNodes } = state
 
   if (!mainNode) return null
-  const image = extractImage(mainNode.images)
+  // const image = extractImage(mainNode.images)
 
   if (status.status !== PageStatus.VIEW_PAGE)
     return <PageLoadingContainer isMobile={props.isMobile} />
 
   return (
-    <DocsBodyContainer>
-      <DocsNavContainer>
-        <Nav state={state} {...props} />
-      </DocsNavContainer>
+    <div className="w-[70%] mx-auto mt-10 flex">
       {state.modal && (
-        <Modal state={state} setState={setState} doc_id={doc_id as number} />
+        <DeleteModal
+          state={state}
+          doc_id={doc_id as number}
+          setState={setState}
+        />
       )}
-      {state.form && (
-        <DocsContentContainer>
-          <ActivityComponent
-            state={state}
-            setState={setState}
-            doc_id={doc_id as number}
-            isMobile={isMobile}
-          />
-        </DocsContentContainer>
-      )}
-      {!state.form && (
-        <DocsContentContainer>
-          <div>
-            <div className="page-heading">{mainNode.title}</div>
-            {image && image.name ? (
-              <div style={{ width: "100%", borderRadius: 5 }}>
-                <img
-                  src={`${base_url}/blog/${doc_id}/720/${image.name}`}
-                  alt=""
-                  width="100%"
-                />
-              </div>
-            ) : null}
+      <div className="w-[20%]" />
+      <div className="w-[60%] mb-50">
+        {!state.form && (
+          <div className="w-[90%] mx-[5%]">
+            <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+              {mainNode.title}
+            </h2>
+            <ViewContent source={mainNode.content} />
+            <NodeSettings
+              state={state}
+              setState={setState}
+              node={mainNode}
+              nodeIndex={null}
+            />
 
-            <NodeInfo node={mainNode} />
-
-            <div style={{ marginTop: 16 }}>
-              {/* {mainNode.theme === 11 ? (
-                  mainNode.content
-                ) : mainNode.theme === 24 ? (
-                  <MarkdownPreview
-                    source={mainNode.content}
-                    wrapperElement={{ 'data-color-mode': 'light' }}
+            {childNodes.map((node, id) => {
+              return (
+                <div key={id}>
+                  <ViewContent source={node.content} />
+                  <NodeSettings
+                    state={state}
+                    setState={setState}
+                    node={node}
+                    nodeIndex={id}
                   />
-                ) : mainNode.theme === 41 ? (
-                  <Suspense fallback={<div>Loading component...</div>}>
-                    <MathsMarkdown source={mainNode.content} />
-                  </Suspense>
-                ) : null} */}
-              <Suspense fallback={<div>Loading component...</div>}>
-                <ViewContent
-                  source={mainNode.content}
-                  // wrapperElement={{ "data-color-mode": "light" }}
-                />
-              </Suspense>
-            </div>
+                </div>
+              )
+            })}
           </div>
-          {/* Main node settings */}
-          <div className="flex-row" style={{ marginTop: 24 }}>
-            <div
-              className="button-none cursor"
-              onClick={() => {
-                setState({
-                  ...state,
-                  // status: DocStatus.CreateNode,
-                  addNode: mainNode,
-                  form: "add_node",
-                })
-              }}
-              style={{ marginRight: 10 }}
-            >
-              <div className="btn-action">
-                <MdAdd size={16} color="#9c9c9c" />
-              </div>
-            </div>
-            <div
-              className="button-none cursor"
-              onClick={() => {
-                setState({
-                  ...state,
-                  // status: DocStatus.DeleteNode,
-                  editNode: mainNode,
-                  form: "edit_node",
-                })
-              }}
-              style={{ marginRight: 16 }}
-            >
-              <div className="btn-action">
-                <MdOutlineEdit size={16} color="#9c9c9c" />
-              </div>
-            </div>
-            <div
-              className="button-none cursor"
-              onClick={(e) => {
-                navigator.clipboard.writeText(mainNode.content)
-                e.stopPropagation()
-              }}
-              style={{ marginRight: 16 }}
-            >
-              <div className="btn-action">
-                <MdContentCopy size={16} color="#9c9c9c" />
-              </div>
-            </div>
+        )}
+        {state.form && (
+          <div className="w-[90%] mx-[5%]">
+            <EditComponent
+              state={state}
+              setState={setState}
+              doc_id={doc_id as number}
+              isMobile={false}
+            />
           </div>
-          {/* End main node settings */}
-
-          <div
-            style={{
-              marginTop: 16,
-            }}
-          >
-            {mainNode.identity !== 101 &&
-              childNodes.map((node, nodeIndex) => {
-                const parseImage = JSON.parse(node.images as string)
-                const nodeImage =
-                  parseImage.length > 0 ? parseImage[0].name : null
-                return (
-                  <div
-                    style={{ marginBottom: 50, marginTop: 50 }}
-                    key={node.uid}
-                  >
-                    <div className="section-title">{node.title}</div>
-                    {nodeImage ? (
-                      <div style={{ width: "100%", borderRadius: 5 }}>
-                        <img
-                          src={`${base_url}/blog/${doc_id}/720/${nodeImage}`}
-                          alt=""
-                          width="100%"
-                        />
-                      </div>
-                    ) : null}
-                    <div>
-                      {/* {node.theme === 11 ? (
-                          node.content
-                        ) : node.theme === 24 ? (
-                          <MarkdownPreview
-                            source={node.content}
-                            wrapperElement={{ 'data-color-mode': 'light' }}
-                          />
-                        ) : node.theme === 41 ? (
-                          <Suspense fallback={<div>Loading component...</div>}>
-                            <MathsMarkdown source={node.content} />
-                          </Suspense>
-                        ) : null} */}
-                      <Suspense fallback={<div>Loading component...</div>}>
-                        <ViewContent
-                          source={node.content}
-                          // wrapperElement={{ "data-color-mode": "light" }}
-                        />
-                      </Suspense>
-                    </div>
-
-                    {/* Node settings */}
-                    <div className="flex-row" style={{ marginTop: 24 }}>
-                      <div
-                        className="button-none cursor"
-                        onClick={() => {
-                          setState({
-                            ...state,
-                            addNode: node,
-                            form: "add_node",
-                          })
-                        }}
-                        style={{ marginRight: 16 }}
-                      >
-                        <div className="btn-action">
-                          <MdAdd size={16} color="#9c9c9c" />
-                        </div>
-                      </div>
-                      <div
-                        className="button-none cursor"
-                        onClick={() => {
-                          setState({
-                            ...state,
-                            editNode: node,
-                            form: "edit_node",
-                          })
-                        }}
-                        style={{ marginRight: 16 }}
-                      >
-                        <div className="btn-action">
-                          <MdOutlineEdit size={16} color="#9c9c9c" />
-                        </div>
-                      </div>
-                      <div
-                        className="delete-button-none cursor"
-                        onClick={() => {
-                          setState({
-                            ...state,
-                            deleteNode: node,
-                            nodeIndex,
-                            modal: "delete_node",
-                          })
-                        }}
-                        style={{ marginRight: 16 }}
-                      >
-                        <div className="btn-action">
-                          <AiOutlineDelete size={16} color="#9c9c9c" />
-                        </div>
-                      </div>
-                      <div
-                        className="button-none cursor"
-                        onClick={(e) => {
-                          navigator.clipboard.writeText(node.content)
-                          e.stopPropagation()
-                        }}
-                        style={{ marginRight: 16 }}
-                      >
-                        <div className="btn-action">
-                          <MdContentCopy size={16} color="#9c9c9c" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Node settings end */}
-                  </div>
-                )
-              })}
-          </div>
-        </DocsContentContainer>
-      )}
-
-      {!isMobile ? (
-        <DocsSettingsContainer>
-          <RightBlogContainer
-            doc_id={doc_id as number}
-            setState={setState}
-            state={state}
-          />
-        </DocsSettingsContainer>
-      ) : null}
-    </DocsBodyContainer>
+        )}
+      </div>
+      <div className="w-[20%]">
+        <RightNavView
+          authContext={props.authContext}
+          doc_id={doc_id as number}
+          mainNode={mainNode}
+          docType="blog"
+        />
+      </div>
+    </div>
   )
 }
 
-const ActivityComponent = ({
+const EditComponent = ({
   state,
   setState,
   doc_id,
@@ -323,7 +147,7 @@ const ActivityComponent = ({
       setState({
         ...state,
         childNodes: newChildNodes,
-        form: "",
+        form: STATE_VALUES.form,
       })
     },
     [setState, childNodes, mainNode, state],
@@ -338,14 +162,14 @@ const ActivityComponent = ({
       ...state,
       addNode: null,
       childNodes: newChildNodes,
-      form: "",
+      form: STATE_VALUES.form,
     })
   }
 
   const onCancel = useCallback(() => {
     setState({
       ...state,
-      form: "",
+      form: STATE_VALUES.form,
       editNode: null,
       addNode: null,
     })
@@ -355,7 +179,7 @@ const ActivityComponent = ({
 
   return (
     <>
-      {form === "add_node" && state.addNode ? (
+      {form.method === "create" && state.addNode ? (
         <AddNode
           heading="Add Node"
           FnCallback={addNodeCbFn}
@@ -371,7 +195,7 @@ const ActivityComponent = ({
         />
       ) : null}
 
-      {form === "edit_node" && state.editNode ? (
+      {form.method === "update" && state.editNode ? (
         <EditNodeForm
           heading="Edit Node"
           state={state}
@@ -387,38 +211,76 @@ const ActivityComponent = ({
   )
 }
 
-const RightBlogContainer = ({
-  doc_id,
+const NodeSettings = ({
   setState,
+  node,
   state,
+  nodeIndex,
 }: {
-  doc_id: number
   setState: EditBlogAction
+  node: DocNode
   state: EditBlogState
+  nodeIndex: number | null
 }) => {
   return (
-    <>
-      <ul style={{ paddingLeft: 0, listStyle: "none" }} className="list-item">
-        <li>
-          <RxReader size={16} color="#2d2d2d" />
-          <Link to={`/view/blog/${doc_id}`}>Read Blog</Link>
-        </li>
-        <li
-          onClick={() => {
-            setState({
-              ...state,
-              modal: "delete_blog",
-            })
-          }}
-        >
-          <AiOutlineDelete size={16} color="#2d2d2d" />
-          <Link to="#">Delete Blog</Link>
-        </li>
-        <li>
-          <LuFileWarning size={16} color="#2d2d2d" />
-          <Link to="#">Report</Link>
-        </li>
-      </ul>
-    </>
+    <div className="flex gap-1 mb-12">
+      {/* Create */}
+      <button
+        className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
+        title="Create"
+        onClick={(e) => {
+          e.stopPropagation()
+          setState({
+            ...state,
+            addNode: node,
+            form: {
+              method: "create",
+              nodeType: 101,
+            },
+          })
+        }}
+      >
+        <Plus className="w-4 h-4" />
+      </button>
+
+      {/* Edit */}
+      <button
+        className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
+        title="Edit"
+        onClick={(e) => {
+          setState({
+            ...state,
+            editNode: node,
+            form: {
+              method: "update",
+              nodeType: 101,
+            },
+          })
+          e.stopPropagation()
+        }}
+      >
+        <Pencil className="w-4 h-4" />
+      </button>
+
+      {/* Delete */}
+      <button
+        className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
+        title="Delete"
+        onClick={(e) => {
+          setState({
+            ...state,
+            deleteNode: node,
+            nodeIndex,
+            modal: {
+              method: "delete",
+              nodeType: 101,
+            },
+          })
+          e.stopPropagation()
+        }}
+      >
+        <Trash2 className="w-4 h-4" />
+      </button>
+    </div>
   )
 }
