@@ -90,7 +90,11 @@ export default function Edit(props: AppRouteProps) {
           <DeleteModal
             confirm={
               state.modal.nodeType > 100
-                ? () => onDeleteNode({ state, setState })
+                ? () =>
+                    onDeleteNode({
+                      state,
+                      setState,
+                    })
                 : () =>
                     deleteBook({
                       doc_id: doc_id as number,
@@ -99,6 +103,7 @@ export default function Edit(props: AppRouteProps) {
                     })
             }
             cancel={() => onCancel({ state, setState })}
+            title={state.modal.title}
           />
         )}
         {!state.form.method && (
@@ -112,16 +117,16 @@ export default function Edit(props: AppRouteProps) {
               childNodes.map((childNode) => {
                 const nodeImage = extractImage(childNode.images)
                 return (
-                  <div className="page-section" key={childNode.uid}>
-                    <div className="section-title">{childNode.title}</div>
+                  <div key={childNode.uid}>
+                    <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+                      {childNode.title}
+                    </h2>
                     {nodeImage && nodeImage.name ? (
-                      <div style={{ width: "100%", borderRadius: 5 }}>
-                        <img
-                          src={`${base_url}/book/${doc_id}/720/${nodeImage.name}`}
-                          alt=""
-                          width="100%"
-                        />
-                      </div>
+                      <img
+                        src={`${base_url}/book/${doc_id}/720/${nodeImage.name}`}
+                        alt=""
+                        width="100%"
+                      />
                     ) : null}
                     <ViewContent source={childNode.content} />
                     <NodeSettings
@@ -165,7 +170,7 @@ const NodeSettings = ({
   state: EditBookState
 }) => {
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1 mb-8">
       {/* Create */}
       <button
         className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
@@ -216,6 +221,7 @@ const NodeSettings = ({
             modal: {
               method: "delete",
               nodeType: node.identity,
+              title: node.title,
             },
           })
           e.stopPropagation()

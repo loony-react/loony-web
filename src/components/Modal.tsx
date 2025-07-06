@@ -1,9 +1,11 @@
 export default function DeleteModal({
   cancel,
   confirm,
+  title,
 }: {
   cancel: () => void
   confirm: () => void
+  title?: string
 }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60">
@@ -11,10 +13,8 @@ export default function DeleteModal({
         <h2 className="text-lg font-semibold text-gray-800 mb-4">
           Confirm Deletion
         </h2>
-        <p className="text-gray-600 mb-6">
-          Are you sure you want to delete this item? This action cannot be
-          undone.
-        </p>
+        <p className="text-gray-600 mb-6">Are you sure you want to delete?</p>
+        <p className="text-blue-600 text-lg mb-6">{title}</p>
         <div className="flex justify-end space-x-2">
           <button
             onClick={cancel}

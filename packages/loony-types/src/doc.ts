@@ -47,6 +47,7 @@ type ReadDocState = {
 type ModalState = {
   method: string
   nodeType: number
+  title?: string
 }
 
 type FormState = {

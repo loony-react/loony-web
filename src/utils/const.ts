@@ -6,5 +6,6 @@ export const STATE_VALUES = {
   modal: {
     method: "",
     nodeType: 0,
+    title: "",
   },
 }

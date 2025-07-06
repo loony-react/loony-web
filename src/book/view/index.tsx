@@ -75,16 +75,16 @@ const View = (props: AppRouteProps) => {
             childNodes.map((childNode) => {
               const nodeImage = extractImage(childNode.images)
               return (
-                <div className="page-section" key={childNode.uid}>
-                  <div className="section-title">{childNode.title}</div>
+                <div key={childNode.uid}>
+                  <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+                    {childNode.title}
+                  </h2>
                   {nodeImage && nodeImage.name ? (
-                    <div style={{ width: "100%", borderRadius: 5 }}>
-                      <img
-                        src={`${base_url}/book/${doc_id}/720/${nodeImage.name}`}
-                        alt=""
-                        width="100%"
-                      />
-                    </div>
+                    <img
+                      src={`${base_url}/book/${doc_id}/720/${nodeImage.name}`}
+                      alt=""
+                      width="100%"
+                    />
                   ) : null}
                   <ViewContent source={childNode.content} />
                 </div>

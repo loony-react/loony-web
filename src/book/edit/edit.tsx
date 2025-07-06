@@ -200,6 +200,7 @@ export default function EditComponent({
 
   const nodeTypes: any = {
     101: {
+      parent_id: topNode?.uid,
       FnCallback: addChapterFnCb,
       url: "/book/append/node",
       identity: 101,
@@ -207,6 +208,7 @@ export default function EditComponent({
       page_id: page_id,
     },
     102: {
+      parent_id: topNode?.uid,
       FnCallback: addSectionFnCb,
       url: "/book/append/node",
       identity: 102,
@@ -214,6 +216,7 @@ export default function EditComponent({
       page_id: page_id,
     },
     103: {
+      parent_id: topNode?.uid,
       FnCallback: addSubSectionFnCb,
       url: "/book/append/node",
       identity: 103,
@@ -227,17 +230,17 @@ export default function EditComponent({
       {form.method === "create" && topNode ? (
         <AddNode
           isMobile={isMobile}
-          docIdName="book"
           doc_id={doc_id as number}
           parent_identity={topNode.identity}
           onCancel={onCancel}
+          docType="book"
           {...nodeTypes[form.nodeType]}
         />
       ) : null}
 
       {form.method === "update" ? (
         <EditDocument
-          docIdName="book"
+          docType="book"
           doc_id={doc_id}
           state={state}
           FnCallback={editFnCallback}
