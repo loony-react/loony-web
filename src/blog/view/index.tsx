@@ -30,7 +30,8 @@ const View = (props: AppRouteProps) => {
     }
   }, [doc_id])
 
-  if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
+  if (status.status !== PageStatus.VIEW_PAGE)
+    return <PageLoadingContainer title="" />
 
   const { childNodes, mainNode } = state
   if (!mainNode || !mainNode || !user) return null
@@ -43,7 +44,8 @@ const View = (props: AppRouteProps) => {
     size: 720,
   })
 
-  if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
+  if (status.status !== PageStatus.VIEW_PAGE)
+    return <PageLoadingContainer title="" />
 
   return (
     <div className="w-[70%] mx-auto mt-4 flex">

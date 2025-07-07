@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// import { LuMenu } from "react-icons/lu"
 import { LiaUserSolid } from "react-icons/lia"
 import { Link, useNavigate, NavigateFunction } from "react-router"
-import { useCallback, useContext, useState } from "react"
+import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import { AuthStatus } from "loony-types"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { axiosInstance } from "loony-api"
 import type {
   Auth,
+  AuthContextProps,
   BooleanDispatchAction,
   VoidReturnFunction,
 } from "loony-types"
@@ -19,31 +19,6 @@ const Logo = () => {
       LOONY
     </Link>
   )
-}
-
-const CreateDocument = (authContext: Auth) => {
-  if (authContext.status === AuthStatus.AUTHORIZED) {
-    return (
-      <div className="create-button">
-        <button style={{ fontWeight: "bold" }}>Create</button>
-        <div className="dropdown-content">
-          <div className="dropdown-content-items">
-            <div className="nav-list-items">
-              <ul>
-                <li>
-                  <Link to="/create/book">Create Book</Link>
-                </li>
-                <li>
-                  <Link to="/create/blog">Create Blog</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-  return null
 }
 
 const Profile = ({
@@ -95,9 +70,8 @@ const Profile = ({
     </div>
   )
 }
-const Navigation = () => {
+const Navigation = ({ authContext }: { authContext: AuthContextProps }) => {
   const navigate: NavigateFunction = useNavigate()
-  const authContext = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState(false)
 
   const logoutUser = useCallback(() => {
@@ -163,13 +137,69 @@ const Navigation = () => {
 }
 
 const AuthNavRight = ({ logoutUser }: any) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef<any>(null)
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
   return (
     <>
       <ul className="flex flex-col md:flex-row md:space-x-6 mt-3 md:mt-0">
-        <li>
-          <a href="/" className="block py-2 text-gray-700 hover:text-blue-600">
-            Home
-          </a>
+        <li className="relative" ref={dropdownRef}>
+          {/* Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-600 rounded-sm hover:bg-gray-700 transition duration-200"
+          >
+            Create
+            <svg
+              className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          {/* Dropdown */}
+          {isOpen && (
+            <div className="absolute right-0 mt-2 w-56 rounded-md px-1 bg-white shadow-xl ring-1 ring-gray-200 z-50 animate-fade-in">
+              <ul className="py-2 text-sm text-gray-700">
+                <li>
+                  <a
+                    href="/create/book"
+                    className="block px-4 py-2 rounded-md hover:bg-gray-100 hover:text-blue-600 transition duration-150"
+                  >
+                    Book
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/create/blog"
+                    className="block px-4 py-2 rounded-md hover:bg-gray-100 hover:text-blue-600 transition duration-150"
+                  >
+                    Blog
+                  </a>
+                </li>
+              </ul>
+            </div>
+          )}
         </li>
         <li>
           <a

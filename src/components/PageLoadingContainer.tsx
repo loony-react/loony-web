@@ -1,4 +1,5 @@
-const PageLoadingContainer = () => {
+/* eslint-disable @typescript-eslint/no-unused-vars */
+const PageLoadingContainer = ({ title }: { title: string }) => {
   return (
     <div className="full-con">
       <div style={{ display: "flex", flexDirection: "row" }}>

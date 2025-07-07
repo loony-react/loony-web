@@ -14,7 +14,7 @@ export default function DesktopLeftNavbar() {
             🏠 Dashboard
           </a>
           <a
-            href="#"
+            href="/profile"
             className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
           >
             👤 Profile
@@ -30,39 +30,6 @@ export default function DesktopLeftNavbar() {
             className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
           >
             📄 Reports
-          </a>
-        </nav>
-      </div>
-
-      {/* External Links */}
-      <div>
-        <h2 className="text-sm font-semibold text-gray-500 uppercase mb-2">
-          Explore
-        </h2>
-        <nav className="space-y-1">
-          <a
-            href="https://www.reddit.com"
-            target="_blank"
-            className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
-            rel="noreferrer"
-          >
-            👽 Reddit
-          </a>
-          <a
-            href="https://www.youtube.com"
-            target="_blank"
-            className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
-            rel="noreferrer"
-          >
-            📺 YouTube
-          </a>
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
-            rel="noreferrer"
-          >
-            🐦 Twitter
           </a>
         </nav>
       </div>

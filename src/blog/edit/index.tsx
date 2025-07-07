@@ -86,7 +86,8 @@ export default function Edit(props: AppRouteProps) {
     size: 720,
   })
 
-  if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
+  if (status.status !== PageStatus.VIEW_PAGE)
+    return <PageLoadingContainer title="" />
 
   return (
     <div className="w-[70%] mx-auto mt-4 flex">

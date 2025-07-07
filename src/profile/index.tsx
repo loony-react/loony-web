@@ -1,238 +1,77 @@
-import { useState, useEffect } from "react"
-import LeftNavbar from "../components/HomeLeftNavbar.tsx"
 import { NavigateFunction, useNavigate } from "react-router"
-import { axiosInstance } from "loony-api"
-import { User, AppRouteProps, DocNode } from "loony-types"
-import { EmptyBlog, EmptyBook } from "../components/EmptyCard.tsx"
-import NodeInfo from "../components/NodeInfo.tsx"
+import { AppRouteProps, DocNode } from "loony-types"
+import { User } from "lucide-react"
+import { useUserBlogs, useUserBooks } from "../hooks/home.ts"
+import DocumentCard from "components/DocumentCard.tsx"
 
 const Profile = (props: AppRouteProps) => {
-  const { isMobile, authContext, appContext } = props
+  const { authContext, appContext } = props
   const { base_url } = appContext.env
   const { user } = authContext
   const navigate = useNavigate()
 
-  const { fname, lname, uid } = user as User
+  const [blogs] = useUserBlogs(user?.uid as number)
+  const [books] = useUserBooks(user?.uid as number)
 
   return (
-    <div className="flex-row">
-      {!isMobile ? <LeftNavbar /> : null}
-      <div className="con-sm-12 con-xxl-11">
-        <div
-          className="profile-info"
-          style={{
-            width: isMobile ? "90%" : "90%",
-            height: 150,
-            paddingLeft: isMobile ? "5%" : "5%",
-            paddingRight: isMobile ? "5%" : "5%",
-          }}
-        >
-          <div
-            className="flex-row"
-            style={{
-              marginTop: 5,
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div
-              className="avatar"
-              style={{
-                width: 80,
-                height: 80,
-                backgroundColor: "#ccc",
-                borderRadius: 80,
-                marginRight: 10,
-              }}
-            ></div>
-            <div style={{ fontSize: 12 }}>
-              <div className="username">
-                {fname} {lname}
-              </div>
-            </div>
+    <div className="flex flex-col items-center">
+      {/* Profile Header */}
+      <div className="w-[60%] h-60 bg-gray-200 relative">
+        <img
+          src="https://via.placeholder.com/1200x300?text=Channel+Banner"
+          alt="Banner"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute -bottom-12 left-6 flex items-center gap-4">
+          <div className="w-24 h-24 mr-2 rounded-full bg-gray-200 flex items-center justify-center">
+            <User className="w-14 h-14 text-gray-600" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold">
+              {user?.fname} {user?.lname}
+            </h1>
+            <p className="text-sm text-gray-600">1.23M subscribers</p>
           </div>
         </div>
-        <hr style={{ marginTop: 25, marginBottom: 25, width: "90%" }} />
-        <div
-          style={{
-            width: isMobile ? "100%" : "90%",
-            paddingLeft: isMobile ? "0%" : "5%",
-            paddingRight: isMobile ? "0%" : "5%",
-          }}
-        >
-          <Blogs
-            user_id={uid}
+      </div>
+
+      {/* Padding to make space for avatar overlap */}
+      <div className="h-16" />
+
+      {/* Posts Section */}
+      <main className="w-[60%]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+          <Documents
             navigate={navigate}
-            isMobile={isMobile}
+            documents={blogs}
             base_url={base_url}
-          />
-          <Books
-            user_id={uid}
-            navigate={navigate}
-            isMobile={isMobile}
-            base_url={base_url}
+            docType="blog"
           />
         </div>
-      </div>
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+          <Documents
+            navigate={navigate}
+            documents={books}
+            base_url={base_url}
+            docType="book"
+          />
+        </div>
+      </main>
     </div>
   )
 }
 
-const Blogs = ({
-  navigate,
-  isMobile,
-  user_id,
-  base_url,
-}: {
+const Documents = (props: {
   navigate: NavigateFunction
-  isMobile: boolean
-  user_id: number
+  documents: DocNode[] | null
   base_url: string
+  docType: string
 }) => {
-  const [blogs, setBlogs] = useState<DocNode[] | null>(null)
-
-  useEffect(() => {
-    axiosInstance
-      .get(`/blog/get/${user_id}/user_blogs`)
-      .then(({ data }) => {
-        setBlogs(data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [])
   return (
-    <>
-      <div
-        className="flex-row"
-        style={{
-          flexWrap: "wrap",
-          marginTop: 20,
-          display: "flex",
-          gap: 16,
-        }}
-      >
-        {!blogs ? <EmptyBlog navigate={navigate} /> : null}
-        {blogs &&
-          blogs.map((node) => {
-            return (
-              <Card
-                key={node.uid}
-                node={node}
-                navigate={navigate}
-                nodeType="blog"
-                nodeIdType="uid"
-                isMobile={isMobile}
-                base_url={base_url}
-              />
-            )
-          })}
-      </div>
-    </>
-  )
-}
-
-const Books = ({
-  navigate,
-  isMobile,
-  user_id,
-  base_url,
-}: {
-  navigate: NavigateFunction
-  isMobile: boolean
-  user_id: number
-  base_url: string
-}) => {
-  const [books, setBooks] = useState<DocNode[] | null>(null)
-  useEffect(() => {
-    axiosInstance
-      .get(`/book/get/${user_id}/user_books`)
-      .then(({ data }) => {
-        setBooks(data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [])
-
-  return (
-    <>
-      <div
-        className="flex-row"
-        style={{
-          flexWrap: "wrap",
-          marginTop: 20,
-          display: "flex",
-          gap: 16,
-        }}
-      >
-        {!books ? <EmptyBook navigate={navigate} /> : null}
-        {books &&
-          books.map((node: DocNode) => {
-            return (
-              <Card
-                key={node.uid}
-                node={node}
-                navigate={navigate}
-                nodeType="book"
-                nodeIdType="uid"
-                isMobile={isMobile}
-                base_url={base_url}
-              />
-            )
-          })}
-      </div>
-    </>
-  )
-}
-
-const Card = ({
-  node,
-  navigate,
-  nodeType,
-  nodeIdType,
-  base_url,
-}: {
-  navigate: NavigateFunction
-  isMobile: boolean
-  nodeIdType: string
-  nodeType: string
-  node: DocNode
-  base_url: string
-}) => {
-  const image = JSON.parse(node.images)[0]
-
-  return (
-    <div className="card" key={node[nodeIdType]}>
-      <div
-        className="card-image"
-        style={{
-          backgroundImage:
-            image && image.name
-              ? `url("${base_url}/${nodeType}/${node[nodeIdType]}/340/${image.name}")`
-              : undefined,
-          overflow: "hidden",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          borderTopLeftRadius: 3,
-          borderTopRightRadius: 3,
-        }}
-        onClick={() => {
-          navigate(`/view/${nodeType}/${node[nodeIdType]}`)
-        }}
-      />
-      <div className="card-body">
-        <div
-          className="card-title cursor"
-          onClick={() => {
-            navigate(`/view/${nodeType}/${node[nodeIdType]}`)
-          }}
-        >
-          {node.title}
-        </div>
-        <NodeInfo node={node} />
-      </div>
-    </div>
+    Array.isArray(props.documents) &&
+    props.documents.map((node: DocNode, i) => (
+      <DocumentCard key={i} {...props} node={node} />
+    ))
   )
 }
 
