@@ -8,7 +8,7 @@ import { RightNavEdit } from "components/RightNav.tsx"
 import { LeftNav } from "./pageNavigation.tsx"
 
 const View = (props: AppRouteProps) => {
-  const { appContext, authContext } = props
+  const { appContext, authContext, mobileNavOpen } = props
   const { base_url } = appContext.env
   const { bookId } = useParams()
   const doc_id = bookId && parseInt(bookId)
@@ -46,7 +46,7 @@ const View = (props: AppRouteProps) => {
   const { parentNode, navNodes, frontPage, childNodes, mainNode } = state
 
   if (pageStatus.status !== PageStatus.VIEW_PAGE)
-    return <PageLoadingContainer />
+    return <PageLoadingContainer title="" />
 
   if (!parentNode || !mainNode || !frontPage || !doc_id) return null
 
@@ -59,9 +59,9 @@ const View = (props: AppRouteProps) => {
   })
 
   return (
-    <div className="w-[70%] mx-auto flex">
+    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex">
       {/* Left Navbar */}
-      <div className="w-[20%]">
+      <div className={`${mobileNavOpen ? "" : "hidden"} md:block md:w-[20%]`}>
         <LeftNav
           doc_id={doc_id}
           setState={setState}
@@ -73,7 +73,7 @@ const View = (props: AppRouteProps) => {
       </div>
 
       {/* Markdown Body */}
-      <div className="w-[60%]">
+      <div className="md-w-[60%]">
         <div className="w-[90%] mx-[5%] pt-4">
           {parentNode && image ? (
             <img src={image} alt="" width="100%" className="mb-4" />
@@ -105,7 +105,7 @@ const View = (props: AppRouteProps) => {
             })}
         </div>
       </div>
-      <div className="w-[18%] pt-4">
+      <div className="hidden md:block w-[18%] pt-4">
         <div className="border-l border-gray-300">
           <RightNavEdit
             doc_id={doc_id}

@@ -48,9 +48,9 @@ const View = (props: AppRouteProps) => {
     return <PageLoadingContainer title="" />
 
   return (
-    <div className="w-[70%] mx-auto mt-4 flex">
-      <div className="w-[20%]" />
-      <div className="w-[60%] mb-50">
+    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex">
+      <div className="hidden md:block w-[20%]" />
+      <div className="sm:w-[90%] md:w-[60%] mb-50">
         <div className="w-[90%] mx-[5%]">
           {image && (
             <img
@@ -73,7 +73,7 @@ const View = (props: AppRouteProps) => {
           })}
         </div>
       </div>
-      <div className="w-[18%]">
+      <div className="hidden md:block md:w-[18%]">
         <div className="border-l border-gray-300">
           <RightNavEdit
             doc_id={doc_id as number}

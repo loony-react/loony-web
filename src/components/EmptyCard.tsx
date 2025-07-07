@@ -3,9 +3,11 @@ import { NavigateFunction } from "react-router"
 const EmptyCard = ({
   title,
   navigate,
+  docType,
 }: {
   title: string
   navigate: NavigateFunction
+  docType: string
 }) => {
   return (
     <div className="rounded-2xl shadow-md overflow-hidden bg-white hover:shadow-xl transition-shadow duration-300">
@@ -15,7 +17,7 @@ const EmptyCard = ({
           <button
             className="px-6 py-2.5 bg-black text-white font-medium rounded-full shadow hover:bg-gray-800 transition duration-200"
             onClick={() => {
-              navigate("/create/blog")
+              navigate(`/create/${docType}`)
             }}
           >
             Get Started

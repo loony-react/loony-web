@@ -2,12 +2,12 @@ import { NavigateFunction, useNavigate } from "react-router"
 import { AppRouteProps, DocNode } from "loony-types"
 import DocumentCard from "components/DocumentCard.tsx"
 
-import { DesktopLeftNavbar } from "../common/index.tsx"
+import HomeLeftNavbar from "../components/HomeLeftNavbar.tsx"
 import { useHomeBlogs, useHomeBooks } from "../hooks/home.ts"
 import { EmptyCard } from "components/EmptyCard.tsx"
 
 const Home = (props: AppRouteProps) => {
-  const { isMobile, authContext, appContext } = props
+  const { authContext, appContext, mobileNavOpen } = props
   const { base_url } = appContext.env
   const navigate = useNavigate()
   const [blogs] = useHomeBlogs(authContext)
@@ -15,7 +15,7 @@ const Home = (props: AppRouteProps) => {
 
   return (
     <div className="flex flex-1 overflow-hidden">
-      <DesktopLeftNavbar isMobile={isMobile} />
+      <HomeLeftNavbar mobileNavOpen={mobileNavOpen} />
       <main className="flex-1 bg-gray-50 p-6 overflow-y-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           <Documents
@@ -49,6 +49,7 @@ const Documents = (props: {
       <EmptyCard
         title={`Create your first ${props.docType}`}
         navigate={props.navigate}
+        docType={props.docType}
       />
     )
   }

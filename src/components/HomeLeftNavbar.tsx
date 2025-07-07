@@ -1,36 +1,55 @@
-export default function DesktopLeftNavbar() {
+import {
+  Home,
+  User,
+  Settings,
+  FileText,
+  Contact,
+  Book,
+  Scale,
+} from "lucide-react"
+
+const navItems = [
+  { href: "/", label: "Home", icon: Home },
+  { href: "/profile", label: "Profile", icon: User },
+  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/reports", label: "Reports", icon: FileText },
+]
+
+const about = [
+  { href: "#", label: "Privacy Policy", icon: Scale },
+  { href: "#", label: "About", icon: Book },
+  { href: "#", label: "Contact", icon: Contact },
+]
+
+export default function DesktopLeftNavbar({
+  mobileNavOpen,
+}: {
+  mobileNavOpen: boolean
+}) {
+  // `fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ${
+  //         isOpen ? "translate-x-0" : "-translate-x-full"
+  //       } md:relative md:translate-x-0 md:block`
+
   return (
-    <div className="w-64 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto border-r border-gray-200">
+    <div
+      className={`${mobileNavOpen ? "" : "hidden"} md:block w-64 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto border-r border-gray-200`}
+    >
       {/* App Navigation */}
       <div>
         <h2 className="text-sm font-semibold text-gray-500 uppercase mb-2">
           Navigation
         </h2>
         <nav className="space-y-1">
-          <a
-            href="#"
-            className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
-          >
-            🏠 Dashboard
-          </a>
-          <a
-            href="/profile"
-            className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
-          >
-            👤 Profile
-          </a>
-          <a
-            href="#"
-            className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
-          >
-            ⚙️ Settings
-          </a>
-          <a
-            href="#"
-            className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
-          >
-            📄 Reports
-          </a>
+          {navItems.map(({ href, label, icon: Icon }) => (
+            <a
+              key={label}
+              href={href}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+            >
+              <Icon className="w-4 h-4 text-gray-500" />
+              <span className="text-sm">{label}</span>
+            </a>
+          ))}
         </nav>
       </div>
 
@@ -58,24 +77,16 @@ export default function DesktopLeftNavbar() {
           Info
         </h2>
         <nav className="space-y-1">
-          <a
-            href="#"
-            className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
-          >
-            🔒 Privacy Policy
-          </a>
-          <a
-            href="#"
-            className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
-          >
-            ℹ️ About
-          </a>
-          <a
-            href="#"
-            className="block py-2 px-3 rounded hover:bg-gray-100 text-gray-800"
-          >
-            📬 Contact
-          </a>
+          {about.map(({ href, label, icon: Icon }) => (
+            <a
+              key={label}
+              href={href}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+            >
+              <Icon className="w-4 h-4 text-gray-500" />
+              <span className="text-sm">{label}</span>
+            </a>
+          ))}
         </nav>
       </div>
     </div>

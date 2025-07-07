@@ -1,76 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { LiaUserSolid } from "react-icons/lia"
-import { Link, useNavigate, NavigateFunction } from "react-router"
-import { useCallback, useContext, useEffect, useRef, useState } from "react"
+import { useNavigate, NavigateFunction } from "react-router"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { AuthStatus } from "loony-types"
-import { AuthContext } from "../context/AuthContext.tsx"
 import { axiosInstance } from "loony-api"
-import type {
-  Auth,
-  AuthContextProps,
-  BooleanDispatchAction,
-  VoidReturnFunction,
-} from "loony-types"
+import type { AuthContextProps } from "loony-types"
+import { Menu } from "lucide-react"
 
-const Logo = () => {
-  return (
-    <Link className="nav-item" to="/" style={{ color: "white" }}>
-      LOONY
-    </Link>
-  )
-}
-
-const Profile = ({
+const Navigation = ({
   authContext,
-  logoutUser,
-  navigate,
+  setMobileNavOpen,
 }: {
-  authContext: Auth
-  logoutUser: VoidReturnFunction
-  navigate: NavigateFunction
+  authContext: AuthContextProps
+  setMobileNavOpen: any
 }) => {
-  if (authContext.status === AuthStatus.AUTHORIZED && authContext.user) {
-    const { fname, lname } = authContext.user
-    return (
-      <div className="profile-button">
-        <LiaUserSolid size={32} />
-        <div className="profile-content">
-          <div className="profile-content-items">
-            <div className="nav-list-items">
-              <ul>
-                <li>
-                  <Link to="/profile">
-                    {fname} {lname}
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#" onClick={logoutUser}>
-                    Logout
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="login-button">
-      <button
-        style={{ fontWeight: "bold" }}
-        onClick={() => {
-          navigate("/login", { replace: true })
-        }}
-      >
-        Login
-      </button>
-    </div>
-  )
-}
-const Navigation = ({ authContext }: { authContext: AuthContextProps }) => {
   const navigate: NavigateFunction = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -85,46 +28,23 @@ const Navigation = ({ authContext }: { authContext: AuthContextProps }) => {
   }, [])
 
   return (
-    <nav className="bg-white border-b border-gray-200 px-10 py-2">
+    <nav className="bg-white border-b border-gray-200 py-2">
       <div className="mx-auto flex items-center justify-between">
         {/* Logo */}
-        <a href="/" className="text-xl font-bold text-gray-900">
-          Loony
-        </a>
-
-        {/* Hamburger button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-gray-600 hover:text-gray-900 focus:outline-none"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            {isOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
-        </button>
+        <div className="flex items-center pl-5">
+          <Menu
+            className="block lg:hidden mr-2"
+            onClick={() => {
+              setMobileNavOpen((prevState: boolean) => !prevState)
+            }}
+          />
+          <a href="/" className="text-xl font-bold text-gray-900">
+            Loony
+          </a>
+        </div>
 
         {/* Menu */}
-        <div
-          className={`md:flex md:items-center ${isOpen ? "block" : "hidden"}`}
-        >
+        <div className="hidden md:flex md:items-center pr-10">
           {authContext.status === AuthStatus.AUTHORIZED ? (
             <AuthNavRight logoutUser={logoutUser} />
           ) : (
