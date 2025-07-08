@@ -70,7 +70,8 @@ export default function Edit(props: AppRouteProps) {
       form: STATE_VALUES.form,
     })
   }
-  if (status.status !== PageStatus.VIEW_PAGE) return <PageLoadingContainer />
+  if (status.status !== PageStatus.VIEW_PAGE)
+    return <PageLoadingContainer title="" />
 
   const { parentNode, childNodes, mainNode } = state
   if (!parentNode || !mainNode || !doc_id) return null

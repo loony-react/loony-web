@@ -17,19 +17,19 @@ export const LeftNav = ({
   if (!frontPage || !parentNode) return null
 
   return (
-    <div className="w-full flex h-screen bg-white">
-      <aside className="w-full border-r border-gray-200 overflow-y-auto px-4 py-4">
+    <div className="w-full flex h-screen">
+      <aside className="w-full border-r border-gray-200 dark:border-stone-900 overflow-y-auto px-4 py-4">
         <nav className="text-sm">
           <div>
             <div
-              className="text-xs font-semibold text-gray-500 uppercase tracking-wide"
+              className="text-xs font-semibold uppercase tracking-wide"
               onClick={viewFrontPage}
               // isActive={parentNode.uid === frontPage.uid}
             >
               {frontPage.title}
             </div>
             <button
-              className="block px-2 py-1 rounded text-blue-700 hover:bg-blue-100"
+              className="block px-2 py-1 rounded text-blue-700 dark:text-gray-500 hover:bg-blue-100"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault()
                 setState((prevState) => ({
@@ -50,7 +50,7 @@ export const LeftNav = ({
             return (
               <div key={chapter.uid}>
                 <h2
-                  className="text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                  className="text-xs font-semibold uppercase tracking-wide"
                   onClick={(e) => {
                     e.stopPropagation()
                     getChapter(chapter, setState, groupNodesById, doc_id)
@@ -60,7 +60,7 @@ export const LeftNav = ({
                   <div style={{ width: "90%" }}>{chapter.title}</div>
                 </h2>
                 <button
-                  className="block py-1 rounded text-blue-700 hover:bg-gray-100"
+                  className="block py-1 rounded text-blue-700 dark:text-gray-500 hover:bg-gray-100"
                   onClick={() => {
                     setState({
                       ...state,
@@ -76,7 +76,7 @@ export const LeftNav = ({
                   Add Chapter
                 </button>
                 <button
-                  className="block ml-2 rounded text-blue-700 hover:bg-gray-100"
+                  className="block ml-2 rounded text-blue-700 dark:text-gray-500 hover:bg-gray-100"
                   onClick={() => {
                     setState({
                       ...state,
@@ -100,7 +100,7 @@ export const LeftNav = ({
                     return (
                       <li key={section.uid}>
                         <a
-                          className="block px-2 rounded text-gray-700 hover:bg-gray-100"
+                          className="block px-2 rounded hover:bg-gray-100"
                           onClick={(e) => {
                             e.stopPropagation()
                             getSection(
@@ -115,7 +115,7 @@ export const LeftNav = ({
                           {section.title}
                         </a>
                         <button
-                          className="block px-2 py-1 rounded text-blue-700 hover:bg-gray-100"
+                          className="block px-2 py-1 rounded text-blue-700 dark:text-gray-500 hover:bg-gray-100"
                           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                             setState({
                               ...state,

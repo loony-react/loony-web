@@ -48,7 +48,7 @@ const View = (props: AppRouteProps) => {
     return <PageLoadingContainer title="" />
 
   return (
-    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex bg-stone-50 text-stone-900 dark:bg-stone-900 dark:text-stone-50">
+    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex bg-stone-50 text-stone-800 dark:bg-stone-800 dark:text-stone-50">
       <div className="hidden md:block w-[20%]" />
       <div className="sm:w-[90%] md:w-[60%] mb-50">
         <div className="w-[90%] mx-[5%]">

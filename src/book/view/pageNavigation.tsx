@@ -26,12 +26,12 @@ export const LeftNav = ({
   if (!frontPage || !parentNode) return null
 
   return (
-    <div className="w-full flex h-screen bg-white">
+    <div className="w-full flex h-screen">
       <aside className="w-full border-r border-gray-200 overflow-y-auto px-[10%] pt-4">
         <nav className="space-y-4 text-sm">
           <div>
             <h2
-              className="text-xs font-semibold text-gray-500 uppercase tracking-wide"
+              className="text-xs font-semibold uppercase tracking-wide"
               onClick={viewFrontPage}
               // isActive={parentNode.uid === frontPage.uid}
             >
@@ -42,7 +42,7 @@ export const LeftNav = ({
             return (
               <div key={chapter.uid}>
                 <h2
-                  className="text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                  className="text-xs font-semibold uppercase tracking-wide"
                   onClick={(e) => {
                     e.stopPropagation()
                     getChapter(chapter, setState, groupNodesById, doc_id)
@@ -64,7 +64,7 @@ export const LeftNav = ({
                       <li key={section.uid}>
                         <a
                           href="#"
-                          className="block px-2 py-1 rounded text-gray-700 hover:bg-gray-100"
+                          className="block px-2 py-1 rounded text-gray-700 dark:text-white hover:bg-gray-100 hover:bg-stone-900"
                           // className="block px-2 py-1 rounded bg-gray-100 text-sky-600 font-medium"
                           onClick={(e) => {
                             e.stopPropagation()

@@ -16,7 +16,7 @@ const Home = (props: AppRouteProps) => {
   return (
     <div className="flex flex-1 overflow-hidden">
       <HomeLeftNavbar mobileNavOpen={mobileNavOpen} appContext={appContext} />
-      <main className="flex-1 bg-stone-50 dark:bg-stone-900 p-6 overflow-y-auto">
+      <main className="flex-1 bg-stone-50 dark:bg-stone-800 p-6 overflow-y-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           <Documents
             navigate={navigate}

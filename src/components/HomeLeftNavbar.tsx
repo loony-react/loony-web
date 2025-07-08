@@ -36,7 +36,9 @@ export default function DesktopLeftNavbar({
 
   return (
     <div
-      className={`${mobileNavOpen ? "" : "hidden"} bg-gray-50 dark:bg-stone-900 text-stone-900 dark:text-stone-300 md:block w-64 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto border-r border-stone-300 dark:border-stone-900`}
+      className={`${mobileNavOpen ? "" : "hidden"} bg-gray-50 dark:bg-[#242424] text-stone-800 
+        dark:text-stone-300 md:block w-64 bg-white p-4 space-y-6 shadow-md h-screen 
+        overflow-y-auto border-r border-stone-300 dark:border-stone-800`}
     >
       {/* App Navigation */}
       <div>
@@ -46,7 +48,7 @@ export default function DesktopLeftNavbar({
             <a
               key={label}
               href={href}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#333333] transition-colors"
             >
               <Icon className="w-4 h-4" />
               <span className="text-sm">{label}</span>
@@ -61,13 +63,13 @@ export default function DesktopLeftNavbar({
           Subscribed Users
         </h2>
         <ul className="space-y-1 text-sm">
-          <li className="px-3 py-1 rounded hover:bg-gray-100 cursor-pointer">
+          <li className="px-3 py-1 rounded hover:bg-gray-100 dark:hover:bg-[#333333] cursor-pointer">
             🔥 JohnDoe
           </li>
-          <li className="px-3 py-1 rounded hover:bg-gray-100 cursor-pointer">
+          <li className="px-3 py-1 rounded hover:bg-gray-100 dark:hover:bg-[#333333] cursor-pointer">
             🌟 JaneSmith
           </li>
-          <li className="px-3 py-1 rounded hover:bg-gray-100 cursor-pointer">
+          <li className="px-3 py-1 rounded hover:bg-gray-100 dark:hover:bg-[#333333] cursor-pointer">
             ⚡ CodeWizard
           </li>
         </ul>
@@ -81,7 +83,7 @@ export default function DesktopLeftNavbar({
             <a
               key={label}
               href={href}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#333333] transition-colors"
             >
               <Icon className="w-4 h-4" />
               <span className="text-sm">{label}</span>

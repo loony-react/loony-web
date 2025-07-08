@@ -59,7 +59,7 @@ const View = (props: AppRouteProps) => {
   })
 
   return (
-    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex dark:bg-black dark:text-gray-50">
+    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex dark:bg-stone-800 dark:text-white">
       {/* Left Navbar */}
       <div
         className={`${mobileNavOpen ? "translate-x-30 sm:w-[80%]" : "hidden"} md:block md:w-[20%]`}

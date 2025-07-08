@@ -30,7 +30,7 @@ const Navigation = ({
   }, [])
 
   return (
-    <nav className="bg-white border-b border-gray-200 py-2">
+    <nav className="bg-white dark:bg-[#242424] border-b border-gray-200 dark:border-stone-900 text-black dark:text-white py-2">
       <div className="mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center pl-5">
@@ -40,7 +40,7 @@ const Navigation = ({
               setMobileNavOpen((prevState: boolean) => !prevState)
             }}
           />
-          <a href="/" className="text-xl font-bold text-gray-900">
+          <a href="/" className="text-xl font-bold">
             Loony
           </a>
         </div>
@@ -80,7 +80,7 @@ const AuthNavRight = ({ logoutUser }: any) => {
           {/* Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-600 rounded-sm hover:bg-gray-700 transition duration-200"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-gray-600 rounded-sm hover:bg-gray-700 transition duration-200"
           >
             Create
             <svg
@@ -101,8 +101,8 @@ const AuthNavRight = ({ logoutUser }: any) => {
 
           {/* Dropdown */}
           {isOpen && (
-            <div className="absolute right-0 mt-2 w-56 rounded-md px-1 bg-white shadow-xl ring-1 ring-gray-200 z-50 animate-fade-in">
-              <ul className="py-2 text-sm text-gray-700">
+            <div className="absolute right-0 mt-2 w-56 rounded-md px-1 bg-white dark:bg-neutral-900 shadow-xl ring-1 ring-gray-200 z-50 animate-fade-in">
+              <ul className="py-2 text-sm">
                 <li>
                   <a
                     href="/create/book"
@@ -124,11 +124,7 @@ const AuthNavRight = ({ logoutUser }: any) => {
           )}
         </li>
         <li>
-          <a
-            href="#"
-            onClick={logoutUser}
-            className="block py-2 text-gray-700 hover:text-blue-600"
-          >
+          <a href="#" onClick={logoutUser} className="block py-2">
             Logout
           </a>
         </li>
@@ -142,10 +138,7 @@ const NotAuthNavRight = () => {
     <>
       <ul className="flex flex-col md:flex-row md:space-x-6 mt-3 md:mt-0">
         <li>
-          <a
-            href="/login"
-            className="block py-2 text-gray-700 hover:text-blue-600"
-          >
+          <a href="/login" className="block py-2">
             Login
           </a>
         </li>
