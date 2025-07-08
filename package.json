@@ -14,8 +14,6 @@
     "packages/*"
   ],
   "dependencies": {
-    "@tailwindcss/postcss": "^4.1.11",
-    "@tailwindcss/typography": "^0.5.16",
     "axios": "^1.6.7",
     "katex": "^0.16.22",
     "loony-api": "0.1.0",
@@ -31,10 +29,12 @@
     "react-router": "^7.4.1",
     "rehype-katex": "^7.0.1",
     "remark-gfm": "^4.0.1",
-    "remark-math": "^6.0.0",
-    "tailwindcss": "^4.1.11"
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
+    "tailwindcss": "^4.1.11",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/typography": "^0.5.16",
     "@biomejs/biome": "^1.9.4",
     "@eslint/compat": "^1.2.7",
     "@eslint/js": "^9.21.0",

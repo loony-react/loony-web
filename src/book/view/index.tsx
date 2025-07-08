@@ -59,9 +59,11 @@ const View = (props: AppRouteProps) => {
   })
 
   return (
-    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex">
+    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex dark:bg-black dark:text-gray-50">
       {/* Left Navbar */}
-      <div className={`${mobileNavOpen ? "" : "hidden"} md:block md:w-[20%]`}>
+      <div
+        className={`${mobileNavOpen ? "translate-x-30 sm:w-[80%]" : "hidden"} md:block md:w-[20%]`}
+      >
         <LeftNav
           doc_id={doc_id}
           setState={setState}
@@ -73,7 +75,9 @@ const View = (props: AppRouteProps) => {
       </div>
 
       {/* Markdown Body */}
-      <div className="md-w-[60%]">
+      <div
+        className={`${mobileNavOpen ? "translate-x-30" : ""} md:block md:w-[60%]`}
+      >
         <div className="w-[90%] mx-[5%] pt-4">
           {parentNode && image ? (
             <img src={image} alt="" width="100%" className="mb-4" />

@@ -63,6 +63,7 @@ const Route = ({
       )}
       <Navigation
         authContext={authContext}
+        appContext={appContext}
         setMobileNavOpen={setMobileNavOpen}
       />
       {authContext.status === AuthStatus.AUTHORIZED && (
@@ -81,6 +82,7 @@ const Route = ({
             element={
               <CreateNewDocument
                 url={CREATE_BOOK}
+                docType="book"
                 title="Create Book"
                 {...props}
               />
@@ -90,6 +92,7 @@ const Route = ({
             path="/create/blog"
             element={
               <CreateNewDocument
+                docType="blog"
                 url={CREATE_BLOG}
                 title="Create Blog"
                 {...props}

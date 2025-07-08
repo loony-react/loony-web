@@ -1,0 +1,2 @@
+card: neutral
+others: stone

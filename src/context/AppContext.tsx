@@ -17,6 +17,7 @@ export const AppContext = createContext<AppContextProps>({
     width: 1920,
     height: 1080,
   },
+  isDark: true,
   setAppContext: () => {
     return
   },
@@ -32,13 +33,25 @@ export function AppProvider({ children }: { children: ReactNode }) {
       width: 1920,
       height: 1080,
     },
+    isDark:
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches),
   })
 
   useEffect(() => {
     if (window.innerWidth <= 720) {
       setAppContext({ ...state, device: { ...state.device, type: "mobile" } })
     }
-  }, [])
+
+    if (state.isDark) {
+      document.documentElement.classList.add("dark")
+      localStorage.theme = "dark"
+    } else {
+      document.documentElement.classList.remove("dark")
+      localStorage.theme = "light"
+    }
+  }, [state, state.isDark, setAppContext])
 
   return (
     <AppContext.Provider value={{ ...state, setAppContext }}>

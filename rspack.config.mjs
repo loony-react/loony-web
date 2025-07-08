@@ -1,5 +1,5 @@
 export default {
-    devServer: {
-      hot: false,
-    },
-  };
+  devServer: {
+    hot: false,
+  },
+}

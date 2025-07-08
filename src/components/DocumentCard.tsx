@@ -24,10 +24,10 @@ export default function Card({
 
   return (
     <div
-      className="rounded-2xl shadow-md overflow-hidden bg-white hover:shadow-xl transition-shadow duration-300"
+      className="rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 text-neutral-900 dark:text-neutral-300"
       onClick={() => navigate(`/view/${docType}/${node.uid}`)}
     >
-      <div className="relative w-full h-44 bg-gray-100 flex items-center justify-center">
+      <div className="relative w-full h-44 bg-gray-100 dark:bg-neutral-800 flex items-center justify-center">
         {image ? (
           <>
             <img
@@ -40,23 +40,19 @@ export default function Card({
             </span>
           </>
         ) : (
-          <h3 className="text-center text-sm font-semibold px-4 text-gray-700">
+          <h3 className="text-center text-sm font-semibold px-4">
             {node.title}
           </h3>
         )}
       </div>
-      <div className="flex p-4">
+      <div className="flex p-4 bg-neutral-100 dark:bg-neutral-700">
         <div className="w-10 h-10 mr-2 rounded-full bg-gray-200 flex items-center justify-center">
-          <User className="w-5 h-5 text-gray-600" />
+          <User className="w-5 h-5 text-neutral-900" />
         </div>
         <div className="flex flex-col">
-          <h3 className="text-sm font-semibold text-gray-900 line-clamp-2">
-            {node.title}
-          </h3>
-          <p className="text-xs text-gray-600 mt-0.5">Sankar Boro</p>
-          <p className="text-xs text-gray-500">
-            0 views • {timeAgo(node.created_at)}
-          </p>
+          <h3 className="text-sm font-semibold line-clamp-2">{node.title}</h3>
+          <p className="text-xs mt-0.5">Sankar Boro</p>
+          <p className="text-xs">0 views • {timeAgo(node.created_at)}</p>
         </div>
       </div>
     </div>

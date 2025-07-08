@@ -4,13 +4,15 @@ import { useNavigate, NavigateFunction } from "react-router"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { AuthStatus } from "loony-types"
 import { axiosInstance } from "loony-api"
-import type { AuthContextProps } from "loony-types"
+import type { AppContextProps, AuthContextProps } from "loony-types"
 import { Menu } from "lucide-react"
 
 const Navigation = ({
   authContext,
+  appContext,
   setMobileNavOpen,
 }: {
+  appContext: AppContextProps
   authContext: AuthContextProps
   setMobileNavOpen: any
 }) => {
