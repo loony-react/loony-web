@@ -8,7 +8,7 @@ import { RightNavEdit } from "components/RightNav.tsx"
 import { LeftNav } from "./pageNavigation.tsx"
 
 const View = (props: AppRouteProps) => {
-  const { appContext, authContext, mobileNavOpen } = props
+  const { appContext, authContext, mobileNavOpen, setMobileNavOpen } = props
   const { isDark } = appContext
   const { base_url } = appContext.env
   const { bookId } = useParams()
@@ -60,10 +60,10 @@ const View = (props: AppRouteProps) => {
   })
 
   return (
-    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex dark:bg-[#272727] dark:text-white">
+    <div className="h-full sm:w-[90%] md:w-[70%] mx-auto flex">
       {/* Left Navbar */}
       <div
-        className={`${mobileNavOpen ? "translate-x-30 sm:w-[80%]" : "hidden"} md:block md:w-[20%]`}
+        className={`${mobileNavOpen ? "absolute top-0 left-0 z-10 w-[80%] bg-[#2d2d2d]" : "hidden"} h-full md:block md:w-[20%]`}
       >
         <LeftNav
           doc_id={doc_id}
@@ -77,7 +77,16 @@ const View = (props: AppRouteProps) => {
 
       {/* Markdown Body */}
       <div
-        className={`${mobileNavOpen ? "translate-x-30" : ""} md:block md:w-[60%]`}
+        className="h-full md:block md:w-[60%]"
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          if (mobileNavOpen) {
+            setMobileNavOpen(false)
+          } else {
+            setMobileNavOpen(true)
+          }
+        }}
       >
         <div className="w-[90%] mx-[5%] pt-4">
           {parentNode && image ? (
@@ -111,7 +120,7 @@ const View = (props: AppRouteProps) => {
         </div>
       </div>
       <div className="hidden md:block w-[18%] pt-4">
-        <div className="border-l border-gray-300">
+        <div className="border-l border-gray-300 dark:border-[#4d4d4d]">
           <RightNavEdit
             doc_id={doc_id}
             authContext={authContext}

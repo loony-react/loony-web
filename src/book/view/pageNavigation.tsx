@@ -27,7 +27,7 @@ export const LeftNav = ({
 
   return (
     <div className="w-full flex h-screen">
-      <aside className="w-full border-r border-gray-200 overflow-y-auto px-[10%] pt-4">
+      <aside className="w-full border-r border-gray-200 dark:border-[#4d4d4d] overflow-y-auto px-4 pt-4">
         <nav className="space-y-4 text-sm">
           <div>
             <h2
@@ -64,7 +64,7 @@ export const LeftNav = ({
                       <li key={section.uid}>
                         <a
                           href="#"
-                          className="block px-2 py-1 rounded text-gray-700 dark:text-white hover:bg-gray-100 hover:bg-stone-900"
+                          className="block px-2 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
                           // className="block px-2 py-1 rounded bg-gray-100 text-sky-600 font-medium"
                           onClick={(e) => {
                             e.stopPropagation()

@@ -26,7 +26,7 @@ import { LeftNav } from "./LeftNav.tsx"
 import { RightNavView } from "components/RightNav.tsx"
 
 export default function Edit(props: AppRouteProps) {
-  const { isMobile, appContext, authContext } = props
+  const { isMobile, appContext, authContext, mobileNavOpen } = props
   const { isDark } = appContext
   const { base_url } = appContext.env
   const { bookId } = useParams()
@@ -87,7 +87,9 @@ export default function Edit(props: AppRouteProps) {
   return (
     <div className="w-[70%] mx-auto flex">
       {/* Left Navbar */}
-      <div className="w-[20%]">
+      <div
+        className={`${mobileNavOpen ? "translate-x-30 sm:w-[80%]" : "hidden"} md:block md:w-[20%]`}
+      >
         <LeftNav
           doc_id={doc_id}
           setState={setState}
@@ -98,7 +100,9 @@ export default function Edit(props: AppRouteProps) {
       </div>
 
       {/* Markdown Body */}
-      <div className="w-[60%] mx-[5%] pt-4">
+      <div
+        className={`${mobileNavOpen ? "translate-x-30" : ""} md:block md:w-[60%]`}
+      >
         {state.modal.method === "delete" && (
           <DeleteModal
             cancel={() => {
@@ -117,7 +121,7 @@ export default function Edit(props: AppRouteProps) {
           />
         )}
         {!state.form.method && (
-          <div className="w-[90%]">
+          <div className="w-[90%] mx-[5%] pt-4">
             {parentNode && image ? (
               <img src={image} alt="" width="100%" className="mb-4" />
             ) : null}
@@ -164,7 +168,7 @@ export default function Edit(props: AppRouteProps) {
         )}
       </div>
       <div className="w-[18%] mt-4">
-        <div className="border-l border-gray-300">
+        <div className="border-l border-gray-300 dark:border-[#4d4d4d]">
           <RightNavView
             doc_id={doc_id}
             authContext={authContext}

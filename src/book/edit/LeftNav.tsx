@@ -18,7 +18,7 @@ export const LeftNav = ({
 
   return (
     <div className="w-full flex h-screen">
-      <aside className="w-full border-r border-gray-200 dark:border-stone-900 overflow-y-auto px-4 py-4">
+      <aside className="w-full border-r border-gray-200 dark:border-[#4d4d4d] overflow-y-auto px-4 py-4">
         <nav className="text-sm">
           <div>
             <div
@@ -100,7 +100,7 @@ export const LeftNav = ({
                     return (
                       <li key={section.uid}>
                         <a
-                          className="block px-2 rounded hover:bg-gray-100"
+                          className="block px-2 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
                           onClick={(e) => {
                             e.stopPropagation()
                             getSection(

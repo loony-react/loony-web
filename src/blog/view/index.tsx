@@ -75,7 +75,7 @@ const View = (props: AppRouteProps) => {
         </div>
       </div>
       <div className="hidden md:block md:w-[18%]">
-        <div className="border-l border-gray-300">
+        <div className="border-l border-gray-300 dark:border-[#4d4d4d]">
           <RightNavEdit
             doc_id={doc_id as number}
             authContext={authContext}

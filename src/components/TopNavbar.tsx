@@ -101,12 +101,12 @@ const AuthNavRight = ({ logoutUser }: any) => {
 
           {/* Dropdown */}
           {isOpen && (
-            <div className="absolute right-0 mt-2 w-56 rounded-md px-1 bg-white dark:bg-neutral-900 shadow-xl ring-1 ring-gray-200 z-50 animate-fade-in">
+            <div className="absolute right-0 mt-2 w-56 rounded-md px-1 bg-white dark:bg-neutral-900 shadow-xl ring-1 ring-gray-200 dark:ring-gray-900 z-50 animate-fade-in">
               <ul className="py-2 text-sm">
                 <li>
                   <a
                     href="/create/book"
-                    className="block px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-150"
+                    className="block px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-[#333333] transition duration-150"
                   >
                     Book
                   </a>
@@ -114,7 +114,7 @@ const AuthNavRight = ({ logoutUser }: any) => {
                 <li>
                   <a
                     href="/create/blog"
-                    className="block px-4 py-2 rounded-md hover:bg-gray-100 transition duration-150"
+                    className="block px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-[#333333] transition duration-150"
                   >
                     Blog
                   </a>
