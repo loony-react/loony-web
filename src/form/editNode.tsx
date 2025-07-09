@@ -157,7 +157,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
       <div className="my-4">
         <button
           onClick={updateNode}
-          className="w-50 bg-zinc-700 text-white py-2 rounded-md hover:bg-zinc-800 transition"
+          className="w-50 bg-stone-700 text-white py-2 rounded-md hover:bg-stone-800 transition"
         >
           Update
         </button>

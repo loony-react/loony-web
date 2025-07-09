@@ -9,6 +9,7 @@ import { LeftNav } from "./pageNavigation.tsx"
 
 const View = (props: AppRouteProps) => {
   const { appContext, authContext, mobileNavOpen } = props
+  const { isDark } = appContext
   const { base_url } = appContext.env
   const { bookId } = useParams()
   const doc_id = bookId && parseInt(bookId)
@@ -59,7 +60,7 @@ const View = (props: AppRouteProps) => {
   })
 
   return (
-    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex dark:bg-stone-800 dark:text-white">
+    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex dark:bg-[#272727] dark:text-white">
       {/* Left Navbar */}
       <div
         className={`${mobileNavOpen ? "translate-x-30 sm:w-[80%]" : "hidden"} md:block md:w-[20%]`}
@@ -85,7 +86,7 @@ const View = (props: AppRouteProps) => {
           <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
             {parentNode.title}
           </h2>
-          <ViewContent source={parentNode.content} />
+          <ViewContent source={parentNode.content} isDark={isDark} />
           {childNodes &&
             childNodes.map((childNode) => {
               const nodeImage = createImageUrl({
@@ -103,7 +104,7 @@ const View = (props: AppRouteProps) => {
                   {nodeImage && nodeImage ? (
                     <img src={nodeImage} alt="" width="100%" />
                   ) : null}
-                  <ViewContent source={childNode.content} />
+                  <ViewContent source={childNode.content} isDark={isDark} />
                 </div>
               )
             })}

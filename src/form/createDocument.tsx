@@ -194,7 +194,7 @@ export default function CreateNewDocument({
 
       <div className="flex-row" style={{ justifyContent: "flex-end" }}>
         <button
-          className="w-100 bg-zinc-700 text-white py-2 rounded-md hover:bg-zinc-800 transition"
+          className="w-100 bg-stone-700 text-white py-2 rounded-md hover:bg-stone-800 transition"
           onClick={createDoc}
           disabled={submitting}
           style={{ marginRight: 10 }}

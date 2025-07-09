@@ -80,7 +80,7 @@ const AuthNavRight = ({ logoutUser }: any) => {
           {/* Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-gray-600 rounded-sm hover:bg-gray-700 transition duration-200"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-stone-100 hover:bg-stone-200 dark:bg-[#2e2e2e] hover:dark:bg-[#363636] rounded-sm transition duration-200"
           >
             Create
             <svg
@@ -106,7 +106,7 @@ const AuthNavRight = ({ logoutUser }: any) => {
                 <li>
                   <a
                     href="/create/book"
-                    className="block px-4 py-2 rounded-md hover:bg-gray-100 hover:text-blue-600 transition duration-150"
+                    className="block px-4 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-500 transition duration-150"
                   >
                     Book
                   </a>
@@ -114,7 +114,7 @@ const AuthNavRight = ({ logoutUser }: any) => {
                 <li>
                   <a
                     href="/create/blog"
-                    className="block px-4 py-2 rounded-md hover:bg-gray-100 hover:text-blue-600 transition duration-150"
+                    className="block px-4 py-2 rounded-md hover:bg-gray-100 transition duration-150"
                   >
                     Blog
                   </a>

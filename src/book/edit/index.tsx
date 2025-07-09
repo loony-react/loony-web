@@ -27,6 +27,7 @@ import { RightNavView } from "components/RightNav.tsx"
 
 export default function Edit(props: AppRouteProps) {
   const { isMobile, appContext, authContext } = props
+  const { isDark } = appContext
   const { base_url } = appContext.env
   const { bookId } = useParams()
   const doc_id = bookId && parseInt(bookId)
@@ -123,7 +124,7 @@ export default function Edit(props: AppRouteProps) {
             <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
               {parentNode.title}
             </h2>
-            <ViewContent source={parentNode.content} />
+            <ViewContent source={parentNode.content} isDark={isDark} />
             <NodeSettings state={state} setState={setState} node={parentNode} />
             {childNodes &&
               childNodes.map((childNode) => {
@@ -142,7 +143,7 @@ export default function Edit(props: AppRouteProps) {
                     {nodeImage && nodeImage ? (
                       <img src={nodeImage} alt="" width="100%" />
                     ) : null}
-                    <ViewContent source={childNode.content} />
+                    <ViewContent source={childNode.content} isDark={isDark} />
                     <NodeSettings
                       state={state}
                       setState={setState}

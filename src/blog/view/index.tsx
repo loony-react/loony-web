@@ -8,6 +8,7 @@ import { RightNavEdit } from "components/RightNav.tsx"
 
 const View = (props: AppRouteProps) => {
   const { authContext, appContext } = props
+  const { isDark } = appContext
   const { base_url } = appContext.env
   const { blogId } = useParams()
   const { user } = authContext
@@ -48,7 +49,7 @@ const View = (props: AppRouteProps) => {
     return <PageLoadingContainer title="" />
 
   return (
-    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex bg-stone-50 text-stone-800 dark:bg-stone-800 dark:text-stone-50">
+    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex bg-stone-50 text-stone-800 dark:bg-[#272727] dark:text-stone-50">
       <div className="hidden md:block w-[20%]" />
       <div className="sm:w-[90%] md:w-[60%] mb-50">
         <div className="w-[90%] mx-[5%]">
@@ -60,14 +61,14 @@ const View = (props: AppRouteProps) => {
             />
           )}
           <h2 className="text-4xl font-semibold my-4">{mainNode.title}</h2>
-          <ViewContent source={mainNode.content} />
+          <ViewContent source={mainNode.content} isDark={isDark} />
           {childNodes.map((node, id) => {
             return (
               <>
                 <h2 className="text-2xl font-semibold my-4 border-b border-gray-300">
                   {node.title}
                 </h2>
-                <ViewContent key={id} source={node.content} />
+                <ViewContent key={id} source={node.content} isDark={isDark} />
               </>
             )
           })}

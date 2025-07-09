@@ -3,13 +3,7 @@ import { useState, useEffect, useContext } from "react"
 import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { createImageUrl, extractImage, getBlogNodes } from "loony-utils"
-import {
-  AppRouteProps,
-  Auth,
-  AuthContextProps,
-  EditBlogState,
-  PageStatus,
-} from "loony-types"
+import { AppRouteProps, Auth, EditBlogState, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
 import { useCallback } from "react"
 import {
@@ -25,7 +19,6 @@ import { Plus, Pencil, Trash2 } from "lucide-react"
 import { RightNavView } from "components/RightNav.tsx"
 import DeleteModal from "./modal.tsx"
 import { STATE_VALUES } from "../../utils/const.ts"
-import { AuthContext } from "context/AuthContext.tsx"
 import {
   showModalToConfirmDeleteDoc,
   onConfirmDelete,
@@ -34,8 +27,9 @@ import {
 import { AppContext } from "context/AppContext.tsx"
 
 export default function Edit(props: AppRouteProps) {
+  const { appContext, authContext } = props
+  const { isDark } = appContext
   const { blogId } = useParams()
-  const authContext = useContext<AuthContextProps>(AuthContext)
   const { setAppContext } = useContext(AppContext)
 
   const navigate = useNavigate()
@@ -122,7 +116,7 @@ export default function Edit(props: AppRouteProps) {
             <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
               {mainNode.title}
             </h2>
-            <ViewContent source={mainNode.content} />
+            <ViewContent source={mainNode.content} isDark={isDark} />
             <NodeSettings
               state={state}
               setState={setState}
@@ -136,7 +130,7 @@ export default function Edit(props: AppRouteProps) {
                   <h2 className="text-2xl font-semibold my-4 border-b border-gray-300">
                     {node.title}
                   </h2>
-                  <ViewContent source={node.content} />
+                  <ViewContent source={node.content} isDark={isDark} />
                   <NodeSettings
                     state={state}
                     setState={setState}

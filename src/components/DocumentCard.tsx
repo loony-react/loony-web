@@ -45,7 +45,7 @@ export default function Card({
           </h3>
         )}
       </div>
-      <div className="flex p-4 bg-neutral-100 dark:bg-neutral-700">
+      <div className="flex p-4 bg-neutral-100 dark:bg-[#2e2e2e]">
         <div className="w-10 h-10 mr-2 rounded-full bg-gray-200 flex items-center justify-center">
           <User className="w-5 h-5 text-neutral-900" />
         </div>
