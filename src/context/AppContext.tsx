@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, useState, ReactNode, useEffect } from "react"
 import { AppContextProps, AppState } from "loony-types"
+import { ApiHandler } from "./ApiHandler"
 import config from "../../config/app.config.json"
 
 const appConfig: any = config
@@ -21,6 +22,7 @@ export const AppContext = createContext<AppContextProps>({
   setAppContext: () => {
     return
   },
+  api: new ApiHandler(),
 })
 
 export function AppProvider({ children }: { children: ReactNode }) {
@@ -37,6 +39,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       localStorage.theme === "dark" ||
       (!("theme" in localStorage) &&
         window.matchMedia("(prefers-color-scheme: dark)").matches),
+    api: new ApiHandler(),
   })
 
   useEffect(() => {

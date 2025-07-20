@@ -15,6 +15,7 @@ import UploadImage from "./uploadImage.tsx"
 import type { Auth } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"
 import { createImageUrl, createTmpImageUrl, extractImage } from "loony-utils"
+import { CancelButton, SubmitButton, Input } from "loony-ui"
 
 export default function AddNodeComponent(props: AddNodeComponentProps) {
   const {
@@ -33,6 +34,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   const authContext = useContext<AuthContextProps>(AuthContext)
   const appContext = useContext<AppContextProps>(AppContext)
   const { base_url } = appContext.env
+  const { isDark } = appContext
 
   const { user } = authContext as Auth
 
@@ -77,7 +79,9 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   return (
     <>
       <div style={{}}>
-        <h2 className="text-2xl font-semibold text-gray-800 mb-1">{heading}</h2>
+        <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-1">
+          {heading}
+        </h2>
         <div>
           {error ? (
             <div style={{ color: "#ff4949", fontWeight: "bold", fontSize: 14 }}>
@@ -85,11 +89,10 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
             </div>
           ) : null}
           <div className="my-4">
-            <input
+            <Input
               type="text"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
               value={formTitle}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setFormTitle(e.target.value)
               }}
               placeholder="Title"
@@ -121,7 +124,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
           </div> */}
         </div>
       </div>
-      <div className="mt-10 border border-gray-300 p-12 rounded-md">
+      <div className="mt-10 border border-gray-300 dark:border-[#4d4d4d] p-12 rounded-md">
         <RenderImage
           formImages={formImages}
           nodeImages={null}
@@ -130,29 +133,21 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
           node={null}
           userId={user.uid}
         />
-        <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+        <h2 className="text-4xl font-semibold border-b border-gray-300 dark:border-[#4d4d4d] mb-8 pb-2">
           {formTitle}
         </h2>
         <ViewContent
           source={`<${contentType}>` + " " + formContent}
           contentType={contentType}
+          isDark={isDark}
         />
       </div>
 
       <div className="my-4">
-        <button
-          onClick={onCreateAction}
-          className="w-50 bg-stone-700 text-white py-2 rounded-md hover:bg-stone-800 transition"
-        >
-          Submit
-        </button>
-        <button
-          onClick={onCancel}
-          className="ml-4 w-50 bg-neutral-200 text-zinc py-2 rounded-md hover:bg-neutral-300 transition"
-          style={{ marginRight: 10 }}
-        >
-          Cancel
-        </button>
+        <span style={{ marginRight: 12 }}>
+          <SubmitButton onClick={onCreateAction} />
+        </span>
+        <CancelButton onClick={onCancel} />
       </div>
     </>
   )

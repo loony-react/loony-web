@@ -18,6 +18,7 @@ import { AppContext } from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
 import type { Auth, UploadImageState } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"
+import { CancelButton, Input, SubmitButton } from "loony-ui"
 
 export default function EditNodeComponent(props: EditNodeComponentProps) {
   const { state, FnCallback, onCancel, docType, doc_id, url, heading } = props
@@ -25,6 +26,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
   const authContext = useContext<AuthContextProps>(AuthContext)
   const appContext = useContext<AppContextProps>(AppContext)
   const { base_url } = appContext.env
+  const { isDark } = appContext
 
   const { user } = authContext as Auth
 
@@ -87,10 +89,10 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
         FnCallback(res.data)
       })
       .catch(() => {
-        onCloseModal()
+        onClickCancel()
       })
   }
-  const onCloseModal = () => {
+  const onClickCancel = () => {
     setFormTitle("")
     setFormContent("")
     onCancel()
@@ -100,8 +102,9 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
 
   return (
     <>
-      <h2 className="text-2xl font-semibold text-gray-800 mb-1">{heading}</h2>
-      <hr />
+      <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-1">
+        {heading}
+      </h2>
       <div>
         <div>
           {error ? (
@@ -110,12 +113,11 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
             </div>
           ) : null}
           <div className="my-4">
-            <input
+            <Input
               type="text"
               placeholder="Title"
               value={formTitle}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-900 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setFormTitle(e.target.value)
               }}
             />
@@ -136,7 +138,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
         </div>
       </div>
 
-      <div className="mt-10 border border-gray-300 p-12 rounded-md">
+      <div className="mt-10 border border-gray-300 dark:border-[#4d4d4d] p-12 rounded-md">
         <RenderImage
           formImages={formImages}
           nodeImages={editNode.images}
@@ -151,22 +153,15 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
         <ViewContent
           source={`<${contentType}>` + " " + formContent}
           contentType={contentType}
+          isDark={isDark}
         />
       </div>
 
       <div className="my-4">
-        <button
-          onClick={updateNode}
-          className="w-50 bg-stone-700 text-white py-2 rounded-md hover:bg-stone-800 transition"
-        >
-          Update
-        </button>
-        <button
-          onClick={onCloseModal}
-          className="ml-4 w-50 bg-neutral-200 text-zinc py-2 rounded-md hover:bg-neutral-300 transition"
-        >
-          Cancel
-        </button>
+        <span style={{ marginRight: 12 }}>
+          <SubmitButton onClick={updateNode} />
+        </span>
+        <CancelButton onClick={onClickCancel} />
       </div>
     </>
   )

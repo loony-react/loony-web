@@ -22,14 +22,14 @@ export const LeftNav = ({
         <nav className="text-sm">
           <div>
             <div
-              className="text-xs font-semibold uppercase tracking-wide"
+              className="px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-[#ececec] dark:hover:bg-[#363636]"
               onClick={viewFrontPage}
               // isActive={parentNode.uid === frontPage.uid}
             >
               {frontPage.title}
             </div>
             <button
-              className="block px-2 py-1 rounded text-blue-700 dark:text-gray-500 hover:bg-blue-100"
+              className="px-2 block rounded text-blue-700 dark:text-[#bdbdbd] hover:bg-[#ececec] dark:hover:bg-[#333333]"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault()
                 setState((prevState) => ({
@@ -50,7 +50,7 @@ export const LeftNav = ({
             return (
               <div key={chapter.uid}>
                 <h2
-                  className="text-xs font-semibold uppercase tracking-wide"
+                  className="px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-[#ececec] dark:hover:bg-[#333333]"
                   onClick={(e) => {
                     e.stopPropagation()
                     getChapter(chapter, setState, groupNodesById, doc_id)
@@ -59,8 +59,72 @@ export const LeftNav = ({
                 >
                   <div style={{ width: "90%" }}>{chapter.title}</div>
                 </h2>
+                <div className="sections px-4">
+                  <button
+                    className="block px-2 rounded text-blue-700 dark:text-[#bdbdbd] hover:bg-[#ececec] dark:hover:bg-[#333333]"
+                    onClick={() => {
+                      setState({
+                        ...state,
+                        topNode: chapter,
+                        page_id: chapter.uid,
+                        form: {
+                          method: "create",
+                          nodeType: 102,
+                        },
+                      })
+                    }}
+                  >
+                    Add Section
+                  </button>
+                  <ul
+                    onClick={() => {
+                      return
+                    }}
+                  >
+                    {chapter.child?.map((section) => {
+                      return (
+                        <li key={section.uid}>
+                          <a
+                            className="block px-2 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              getSection(
+                                section,
+                                setState,
+                                groupNodesById,
+                                doc_id,
+                              )
+                            }}
+                            // isActive={parentNode.uid === section.uid}
+                          >
+                            {section.title}
+                          </a>
+                          <button
+                            className="block px-2 rounded text-blue-700 dark:text-[#bdbdbd] hover:bg-[#ececec] dark:hover:bg-[#333333]"
+                            onClick={(
+                              e: React.MouseEvent<HTMLButtonElement>,
+                            ) => {
+                              setState({
+                                ...state,
+                                topNode: section,
+                                page_id: chapter.uid,
+                                form: {
+                                  method: "create",
+                                  nodeType: 102,
+                                },
+                              })
+                              e.stopPropagation()
+                            }}
+                          >
+                            Add Section
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
                 <button
-                  className="block py-1 rounded text-blue-700 dark:text-gray-500 hover:bg-gray-100"
+                  className="block px-2 rounded text-blue-700 dark:text-[#bdbdbd] hover:bg-[#ececec] dark:hover:bg-[#333333]"
                   onClick={() => {
                     setState({
                       ...state,
@@ -75,66 +139,6 @@ export const LeftNav = ({
                 >
                   Add Chapter
                 </button>
-                <button
-                  className="block ml-2 rounded text-blue-700 dark:text-gray-500 hover:bg-gray-100"
-                  onClick={() => {
-                    setState({
-                      ...state,
-                      topNode: chapter,
-                      page_id: chapter.uid,
-                      form: {
-                        method: "create",
-                        nodeType: 102,
-                      },
-                    })
-                  }}
-                >
-                  Add Section
-                </button>
-                <ul
-                  onClick={() => {
-                    return
-                  }}
-                >
-                  {chapter.child?.map((section) => {
-                    return (
-                      <li key={section.uid}>
-                        <a
-                          className="block px-2 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            getSection(
-                              section,
-                              setState,
-                              groupNodesById,
-                              doc_id,
-                            )
-                          }}
-                          // isActive={parentNode.uid === section.uid}
-                        >
-                          {section.title}
-                        </a>
-                        <button
-                          className="block px-2 py-1 rounded text-blue-700 dark:text-gray-500 hover:bg-gray-100"
-                          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                            setState({
-                              ...state,
-                              topNode: section,
-                              page_id: chapter.uid,
-                              form: {
-                                method: "create",
-                                nodeType: 102,
-                              },
-                            })
-                            e.stopPropagation()
-                          }}
-                        >
-                          Add Section
-                        </button>
-                      </li>
-                    )
-                  })}
-                </ul>
               </div>
             )
           })}

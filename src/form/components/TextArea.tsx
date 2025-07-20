@@ -14,9 +14,9 @@ const modes = [
 export const TextArea = (props: TextAreaProps) => {
   return (
     <div className="">
-      <div className="bg-muted border border-gray-300 rounded-2xl p-4">
+      <div className="bg-muted border border-gray-300 dark:border-[#4d4d4d] rounded-2xl p-4">
         {/* Tabs */}
-        <div className="flex mb-3 border-b border-gray-200">
+        <div className="flex mb-3 border-b border-gray-200 dark:border-[#4d4d4d]">
           {modes.map((m) => (
             <button
               key={m.id}
@@ -36,7 +36,7 @@ export const TextArea = (props: TextAreaProps) => {
         <textarea
           rows={12}
           value={props.formContent}
-          placeholder={`Send a message... (${props.contentType})`}
+          placeholder={`Content...`}
           className="w-full bg-transparent resize-none outline-none text-sm text-foreground placeholder:text-muted-foreground"
           onChange={(event) => {
             props.setFormContent(event.target.value)

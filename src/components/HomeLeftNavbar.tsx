@@ -30,15 +30,12 @@ export default function DesktopLeftNavbar({
   appContext: AppContextProps
 }) {
   const { isDark, setAppContext } = appContext
-  // `fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ${
-  //         isOpen ? "translate-x-0" : "-translate-x-full"
-  //       } md:relative md:translate-x-0 md:block`
 
   return (
     <div
       className={`${mobileNavOpen ? "" : "hidden"} bg-gray-50 dark:bg-[#242424] text-stone-800 
         dark:text-stone-300 md:block w-64 bg-white p-4 space-y-6 shadow-md h-screen 
-        overflow-y-auto border-r border-stone-300 dark:border-stone-800`}
+        overflow-y-auto border-r border-stone-300 dark:border-[#333333]`}
     >
       {/* App Navigation */}
       <div>

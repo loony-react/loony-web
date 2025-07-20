@@ -1,16 +1,20 @@
 :root {
+  --navbar: #242424; /** Top Navbar */
   --dark-bg-1: #292929;
-
   --dark-bg-2: #121212;
-  --dark-bg-2: #1e1e1e;
-  --dark-bg-2: #232323;
-  --dark-bg-2: #252525;
-  --dark-bg-2: #272727;
-  --dark-bg-2: #2c2c2c;
-  --dark-bg-2: #2e2e2e;
-  --dark-bg-2: #333333;
-  --dark-bg-2: #363636;
-  --dark-bg-2: #383838;
+  --dark-bg-3: #1e1e1e;
+  --dark-bg-4: #232323;
+  --dark-bg-5: #252525;
+  --dark-bg-6: #272727; /** Body */
+  --dark-bg-7: #2c2c2c;
+  --dark-bg-8: #2e2e2e; /** Card */
+  --dark-bg-9: #333333; /** List item hover */
+  --dark-bg-10: #363636;
+  --dark-bg-11: #383838;
+  --dark-bg-12: #4d4d4d;
 
-  --dark-border: #4d4d4d;
+  --dark-border: #4d4d4d; /** Dark border */
+
+  --dark-button-text-color: #bdbdbd;
+  --dark-button-text-color: #f0f0f0;
 }

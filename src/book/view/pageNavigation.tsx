@@ -64,7 +64,7 @@ export const LeftNav = ({
                       <li key={section.uid}>
                         <a
                           href="#"
-                          className="block px-2 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
+                          className="block pl-4 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
                           // className="block px-2 py-1 rounded bg-gray-100 text-sky-600 font-medium"
                           onClick={(e) => {
                             e.stopPropagation()

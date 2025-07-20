@@ -24,6 +24,7 @@ import {
 } from "./utils.ts"
 import { LeftNav } from "./LeftNav.tsx"
 import { RightNavView } from "components/RightNav.tsx"
+import { ButtonIcon } from "loony-ui"
 
 export default function Edit(props: AppRouteProps) {
   const { isMobile, appContext, authContext, mobileNavOpen } = props
@@ -159,12 +160,14 @@ export default function Edit(props: AppRouteProps) {
           </div>
         )}
         {state.form.method && (
-          <EditComponent
-            state={state}
-            setState={setState}
-            doc_id={doc_id}
-            isMobile={isMobile}
-          />
+          <div className="w-[90%] mx-[5%] pt-4">
+            <EditComponent
+              state={state}
+              setState={setState}
+              doc_id={doc_id}
+              isMobile={isMobile}
+            />
+          </div>
         )}
       </div>
       <div className="w-[18%] mt-4">
@@ -196,10 +199,8 @@ const NodeSettings = ({
   return (
     <div className="flex gap-1 mb-8">
       {/* Create */}
-      <button
-        className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
-        title="Create"
-        onClick={(e) => {
+      <ButtonIcon
+        onClick={(e: any) => {
           setState({
             ...state,
             topNode: node,
@@ -212,13 +213,10 @@ const NodeSettings = ({
         }}
       >
         <Plus className="w-4 h-4" />
-      </button>
-
+      </ButtonIcon>
       {/* Edit */}
-      <button
-        className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
-        title="Edit"
-        onClick={(e) => {
+      <ButtonIcon
+        onClick={(e: any) => {
           setState({
             ...state,
             topNode: node,
@@ -232,13 +230,10 @@ const NodeSettings = ({
         }}
       >
         <Pencil className="w-4 h-4" />
-      </button>
-
+      </ButtonIcon>
       {/* Delete */}
-      <button
-        className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
-        title="Delete"
-        onClick={(e) => {
+      <ButtonIcon
+        onClick={(e: any) => {
           setState({
             ...state,
             deleteNode: node,
@@ -252,7 +247,7 @@ const NodeSettings = ({
         }}
       >
         <Trash2 className="w-4 h-4" />
-      </button>
+      </ButtonIcon>
     </div>
   )
 }

@@ -227,37 +227,18 @@ const SelectImage = ({
   onSelectImage: React.ChangeEventHandler<HTMLInputElement>
 }) => {
   return (
-    <div className="form-section">
-      <label>Image</label>
-      <div
-        style={{
-          border: "1px dashed #ccc",
-          padding: 24,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <label>Drop file here</label>
-          <br />
-          <span>or</span>
+    <div className="form-section space-y-2">
+      <label className="block text-gray-700 dark:text-white font-medium">
+        Image
+      </label>
+      <div className="border border-dashed border-gray-300 p-6 rounded-lg">
+        <div className="flex flex-col items-center justify-center text-center text-gray-600 dark:text-[#242424]">
+          <label className="dark:text-white">Drop file here</label>
+          <span className="dark:text-white mt-1">or</span>
           <input
             type="file"
             onChange={onSelectImage}
-            style={{
-              backgroundColor: "white",
-              border: "none",
-              padding: 0,
-              margin: 0,
-              marginTop: 20,
-              borderRadius: 15,
-              width: "50%",
-            }}
+            className="mt-5 w-1/2 rounded-[15px] bg-white border-none px-4 py-2 m-0 file:cursor-pointer"
           />
         </div>
       </div>

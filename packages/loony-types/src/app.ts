@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BooleanDispatchAction } from "."
 import { AuthContextProps } from "./user"
 
@@ -11,6 +12,7 @@ export type AppState = {
     height: number
   }
   isDark: boolean
+  api: any
 }
 
 export interface AppContextProps extends AppState {
