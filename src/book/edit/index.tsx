@@ -27,8 +27,9 @@ import { RightNavView } from "components/RightNav.tsx"
 import { ButtonIcon } from "loony-ui"
 
 export default function Edit(props: AppRouteProps) {
-  const { isMobile, appContext, authContext, mobileNavOpen } = props
-  const { isDark } = appContext
+  const { isMobile, appContext, authContext, mobileNavOpen, setMobileNavOpen } =
+    props
+  const { isDark, device } = appContext
   const { base_url } = appContext.env
   const { bookId } = useParams()
   const doc_id = bookId && parseInt(bookId)
@@ -86,10 +87,10 @@ export default function Edit(props: AppRouteProps) {
   })
 
   return (
-    <div className="w-[70%] mx-auto flex">
+    <div className="h-full sm:w-[90%] md:w-[70%] mx-auto flex">
       {/* Left Navbar */}
       <div
-        className={`${mobileNavOpen ? "translate-x-30 sm:w-[80%]" : "hidden"} md:block md:w-[20%]`}
+        className={`${mobileNavOpen ? "absolute top-0 left-0 z-10 w-[80%] bg-[#2d2d2d]" : "hidden"} h-full md:block md:w-[20%]`}
       >
         <LeftNav
           doc_id={doc_id}
@@ -102,7 +103,16 @@ export default function Edit(props: AppRouteProps) {
 
       {/* Markdown Body */}
       <div
-        className={`${mobileNavOpen ? "translate-x-30" : ""} md:block md:w-[60%]`}
+        className="h-full md:block md:w-[60%]"
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          if (device.type === "mobile") {
+            if (mobileNavOpen) {
+              setMobileNavOpen(false)
+            }
+          }
+        }}
       >
         {state.modal.method === "delete" && (
           <DeleteModal
@@ -170,7 +180,7 @@ export default function Edit(props: AppRouteProps) {
           </div>
         )}
       </div>
-      <div className="w-[18%] mt-4">
+      <div className="hidden md:block w-[18%] pt-4">
         <div className="border-l border-gray-300 dark:border-[#4d4d4d]">
           <RightNavView
             doc_id={doc_id}

@@ -18,7 +18,7 @@ export const LeftNav = ({
 
   return (
     <div className="w-full flex h-screen">
-      <aside className="w-full border-r border-gray-200 dark:border-[#4d4d4d] overflow-y-auto px-4 py-4">
+      <aside className="w-full border-r border-gray-200 dark:border-[#4d4d4d] overflow-y-auto py-4">
         <nav className="text-sm">
           <div>
             <div

@@ -7,7 +7,7 @@ export const CancelButton = ({
   return (
     <button
       onClick={onClick}
-      className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+      className="px-4 py-2 border border-[#cccccc] dark:border-[#4d4d4d] hover:border-[#666666] text-gray-800 dark:text-white rounded"
     >
       Cancel
     </button>
@@ -22,7 +22,7 @@ export const SubmitButton = ({
   return (
     <button
       onClick={onClick}
-      className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+      className="px-4 py-2 bg-[#f0f0f0] hover:bg-[#dedede] text-gray-800 rounded"
     >
       Submit
     </button>

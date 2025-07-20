@@ -5,11 +5,11 @@ import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { AppRouteProps, ReadBookState, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
 import { RightNavEdit } from "components/RightNav.tsx"
-import { LeftNav } from "./pageNavigation.tsx"
+import { PageNavigation } from "./PageNavigation.tsx"
 
 const View = (props: AppRouteProps) => {
   const { appContext, authContext, mobileNavOpen, setMobileNavOpen } = props
-  const { isDark } = appContext
+  const { isDark, device } = appContext
   const { base_url } = appContext.env
   const { bookId } = useParams()
   const doc_id = bookId && parseInt(bookId)
@@ -65,7 +65,7 @@ const View = (props: AppRouteProps) => {
       <div
         className={`${mobileNavOpen ? "absolute top-0 left-0 z-10 w-[80%] bg-[#2d2d2d]" : "hidden"} h-full md:block md:w-[20%]`}
       >
-        <LeftNav
+        <PageNavigation
           doc_id={doc_id}
           setState={setState}
           state={state}
@@ -81,10 +81,10 @@ const View = (props: AppRouteProps) => {
         onClick={(e) => {
           e.preventDefault()
           e.stopPropagation()
-          if (mobileNavOpen) {
-            setMobileNavOpen(false)
-          } else {
-            setMobileNavOpen(true)
+          if (device.type === "mobile") {
+            if (mobileNavOpen) {
+              setMobileNavOpen(false)
+            }
           }
         }}
       >

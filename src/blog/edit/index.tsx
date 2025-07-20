@@ -84,7 +84,7 @@ export default function Edit(props: AppRouteProps) {
     return <PageLoadingContainer title="" />
 
   return (
-    <div className="w-[70%] mx-auto mt-4 flex">
+    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex bg-stone-50 text-stone-800 dark:bg-[#272727] dark:text-stone-50">
       {state.modal.method === "delete" && (
         <DeleteModal
           cancel={() => {
@@ -153,7 +153,7 @@ export default function Edit(props: AppRouteProps) {
           </div>
         )}
       </div>
-      <div className="w-[18%]">
+      <div className="hidden md:block md:w-[18%]">
         <div className="border-l border-gray-300">
           <RightNavView
             authContext={props.authContext}
