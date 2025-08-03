@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { axiosInstance } from "loony-api"
 import Cropper, { Area } from "react-easy-crop"
 import type {
@@ -8,7 +8,7 @@ import type {
   User,
   UploadImageState,
 } from "loony-types"
-import { MdOutlineClear } from "react-icons/md"
+import { MdImage, MdOutlineClear, MdUpload } from "react-icons/md"
 
 export default function UploadImage({
   baseUrl,
@@ -144,6 +144,8 @@ export default function UploadImage({
 
 const EditImageComponent = (props: EditImageComponentProps) => {
   const { uploadImage, onSelectImage, imageEdit, setCropImageMetadata } = props
+  const inputRef = useRef<HTMLInputElement>(null)
+
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [aspectRatio, setAspectRatio] = useState({
@@ -154,16 +156,14 @@ const EditImageComponent = (props: EditImageComponentProps) => {
   const onCropComplete = (croppedArea: Area, croppedAreaPixels: Area) => {
     setCropImageMetadata(croppedAreaPixels)
   }
+  const handleButtonClick = () => {
+    inputRef.current?.click() // Triggers the hidden input
+  }
 
   return (
     <div className="form-section">
       <label>Image</label>
-      <div
-        style={{
-          border: "1px dashed #ccc",
-          padding: 24,
-        }}
-      >
+      <div className="">
         <div
           style={{
             display: "flex",
@@ -201,20 +201,30 @@ const EditImageComponent = (props: EditImageComponentProps) => {
               9/16
             </button>
           </div>
-          <input
-            type="file"
-            onChange={onSelectImage}
-            style={{
-              backgroundColor: "white",
-              border: "none",
-              padding: 0,
-              margin: 0,
-              marginTop: 20,
-              borderRadius: 15,
-              width: "50%",
-            }}
-          />
-          <button onClick={uploadImage}>Upload</button>
+          <div className="flex flex-row">
+            <input
+              type="file"
+              onChange={onSelectImage}
+              className="hidden"
+              ref={inputRef}
+            />
+            <button
+              data-slot="button"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 mt-4 border dark:border-[#636363] text-white mr-4"
+              onClick={handleButtonClick}
+            >
+              <MdImage size={21} color="#636363" />
+              Select other image
+            </button>
+            <button
+              data-slot="button"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 mt-4 border dark:border-[#636363] text-white"
+              onClick={uploadImage}
+            >
+              <MdUpload size={21} color="#636363" />
+              Upload image
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -226,20 +236,36 @@ const SelectImage = ({
 }: {
   onSelectImage: React.ChangeEventHandler<HTMLInputElement>
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const handleButtonClick = () => {
+    inputRef.current?.click() // Triggers the hidden input
+  }
+
   return (
     <div className="form-section space-y-2">
       <label className="block text-gray-700 dark:text-white font-medium">
         Image
       </label>
-      <div className="border border-dashed border-gray-300 p-6 rounded-lg">
-        <div className="flex flex-col items-center justify-center text-center text-gray-600 dark:text-[#242424]">
-          <label className="dark:text-white">Drop file here</label>
-          <span className="dark:text-white mt-1">or</span>
+      <div className="border border-dashed dark:border-[#636363] p-6 rounded-lg">
+        <div className="flex flex-col items-center justify-center text-center text-gray-600 dark:text-[#232323]">
+          <div className="bg-background mb-2 flex size-11 shrink-0 items-center justify-center rounded-full border dark:border-[#636363]">
+            <MdImage size={24} color="#636363" />
+          </div>
+          <label className="dark:text-white">Drop your image here</label>
           <input
             type="file"
             onChange={onSelectImage}
-            className="mt-5 w-1/2 rounded-[15px] bg-white border-none px-4 py-2 m-0 file:cursor-pointer"
+            className="hidden"
+            ref={inputRef}
           />
+          <button
+            data-slot="button"
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 mt-4 border dark:border-[#636363] text-white"
+            onClick={handleButtonClick}
+          >
+            <MdUpload size={21} color="#636363" />
+            Select image
+          </button>
         </div>
       </div>
     </div>

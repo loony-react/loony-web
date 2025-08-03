@@ -31,7 +31,7 @@ const Navigation = ({
   }, [])
 
   return (
-    <nav className="bg-white dark:bg-[#242424] border-b border-gray-200 dark:border-stone-900 text-black dark:text-white py-2">
+    <nav className="bg-white dark:bg-[#232323] border-b border-gray-200 dark:border-stone-900 text-black dark:text-white py-2">
       <div className="mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center pl-5">

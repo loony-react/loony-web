@@ -84,7 +84,7 @@ export default function Edit(props: AppRouteProps) {
     return <PageLoadingContainer title="" />
 
   return (
-    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex bg-stone-50 text-stone-800 dark:bg-[#272727] dark:text-stone-50">
+    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex bg-stone-50 text-stone-800 dark:bg-[#292929] dark:text-stone-50">
       {state.modal.method === "delete" && (
         <DeleteModal
           cancel={() => {

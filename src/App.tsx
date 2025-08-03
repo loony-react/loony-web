@@ -10,7 +10,7 @@ import { AuthContextProps } from "loony-types"
 
 function App() {
   return (
-    <div className="text-stone-800 dark:text-stone-50 bg-stone-50 dark:bg-[#272727]">
+    <div className="text-stone-800 dark:text-stone-50 bg-stone-50 dark:bg-[#292929]">
       <AppProvider>
         <NotificationProvider>
           <AuthProvider>

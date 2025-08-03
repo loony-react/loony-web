@@ -33,7 +33,7 @@ export default function DesktopLeftNavbar({
 
   return (
     <div
-      className={`${mobileNavOpen ? "" : "hidden"} bg-gray-50 dark:bg-[#242424] text-stone-800 
+      className={`${mobileNavOpen ? "" : "hidden"} bg-gray-50 dark:bg-[#232323] text-stone-800 
         dark:text-stone-300 md:block w-64 bg-white p-4 space-y-6 shadow-md h-screen 
         overflow-y-auto border-r border-stone-300 dark:border-[#333333]`}
     >
