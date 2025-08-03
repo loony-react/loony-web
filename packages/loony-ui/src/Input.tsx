@@ -1,5 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export const Input = ({ value, onChange, type, placeholder }: any) => {
+export const Input = ({
+  value,
+  onChange,
+  type,
+  placeholder,
+}: {
+  value: string
+  type: string
+  placeholder: string
+  onChange: React.ChangeEventHandler<HTMLInputElement>
+}) => {
   return (
     <input
       type={type}

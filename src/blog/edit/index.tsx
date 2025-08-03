@@ -17,7 +17,7 @@ import { AppendNodeResponse, EditBlogAction } from "loony-types"
 import { DocNode } from "loony-types"
 import { Plus, Pencil, Trash2 } from "lucide-react"
 import { RightNavView } from "components/RightNav.tsx"
-import DeleteModal from "./modal.tsx"
+import DeleteModal from "../../components/Modal.tsx"
 import { STATE_VALUES } from "../../utils/const.ts"
 import {
   showModalToConfirmDeleteDoc,

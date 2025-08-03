@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ReactNode } from "react"
+
 export const CancelButton = ({
   onClick,
 }: {
@@ -44,7 +45,13 @@ export const DeleteButton = ({
   )
 }
 
-export const ButtonIcon = ({ onClick, children }: any) => {
+export const ButtonIcon = ({
+  onClick,
+  children,
+}: {
+  onClick: React.MouseEventHandler<HTMLButtonElement>
+  children: ReactNode
+}) => {
   return (
     <button
       className="p-2 rounded-md text-[#2d2d2d] dark:text-white hover:bg-[#ececec] dark:hover:bg-[#333333] transition"

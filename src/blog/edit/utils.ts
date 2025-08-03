@@ -58,13 +58,13 @@ const deleteBlog = ({
   navigate: NavigateFunction
   setAppContext: AppDispatchAction
 }) => {
-  axiosInstance.post("/book/delete", { doc_id: doc_id }).then(() => {
+  axiosInstance.post("/blog/delete", { doc_id: doc_id }).then(() => {
     setAppContext((prevState: any) => ({
       ...prevState,
       alert: {
         status: "success",
-        title: "Deleted Book",
-        body: "Your book has been successfully deleted.",
+        title: "Deleted Blog",
+        body: "Your blog has been successfully deleted.",
       },
     }))
     navigate("/", { replace: true })
