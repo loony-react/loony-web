@@ -10,8 +10,9 @@ const Home = (props: AppRouteProps) => {
   const { authContext, appContext, mobileNavOpen } = props
   const { base_url } = appContext.env
   const navigate = useNavigate()
-  const [blogs] = useHomeBlogs(authContext)
-  const [books] = useHomeBooks(authContext)
+
+  const blogs = useHomeBlogs(authContext)
+  const books = useHomeBooks(authContext)
 
   return (
     <div className="flex flex-1 overflow-hidden">

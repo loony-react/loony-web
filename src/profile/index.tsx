@@ -10,8 +10,8 @@ const Profile = (props: AppRouteProps) => {
   const { user } = authContext
   const navigate = useNavigate()
 
-  const [blogs] = useUserBlogs(user?.uid as number)
-  const [books] = useUserBooks(user?.uid as number)
+  const blogs = useUserBlogs(user?.uid as number)
+  const books = useUserBooks(user?.uid as number)
 
   return (
     <div className="flex flex-col items-center">

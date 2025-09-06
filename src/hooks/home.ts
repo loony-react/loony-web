@@ -1,100 +1,62 @@
 import { AuthContextProps, AuthStatus } from "loony-types"
-import { useEffect, useState } from "react"
-import { DocNode } from "loony-types"
-import { axiosInstance } from "loony-api"
+import { useEffect } from "react"
+import {
+  useHomeBooks as useHomeBooksApi,
+  useUserHomeBooks,
+  useHomeBlogs as useHomeBlogsApi,
+  useUserHomeBlogs,
+} from "loony-api"
 
-export const useHomeBooks = (
-  authContext: AuthContextProps,
-): [DocNode[] | null] => {
-  const [books, setBooks] = useState<DocNode[] | null>(null)
-
-  useEffect(() => {
-    if (authContext.status === AuthStatus.AUTHORIZED && authContext.user) {
-      ;(async () => {
-        const { user } = authContext
-        const url = `/book/get/${user?.uid}/get_users_book`
-        const { data } = await axiosInstance.get(url)
-        if (data.length > 0) {
-          setBooks(data)
-        }
-      })()
-    } else {
-      ;(async () => {
-        const url = `/book/get/home_books`
-        const { data } = await axiosInstance.get(url)
-        if (data.length > 0) {
-          setBooks(data)
-        }
-      })()
-    }
-  }, [authContext.status])
-
-  return [books]
-}
-
-export const useHomeBlogs = (
-  authContext: AuthContextProps,
-): [DocNode[] | null] => {
-  const [blogs, setBlogs] = useState<DocNode[] | null>(null)
+export const useHomeBooks = (authContext: AuthContextProps): any => {
+  const { data: homeBooks, fetch: fetchHomeBooks } = useHomeBooksApi()
+  const { data: userHomeBooks, fetch: fetchUserHomeBooks } = useUserHomeBooks()
 
   useEffect(() => {
-    if (authContext.status === AuthStatus.AUTHORIZED && authContext.user) {
-      ;(async () => {
-        const { user } = authContext
-        const url = `/blog/get/${user?.uid}/get_users_blog`
-        const { data } = await axiosInstance.get(url)
-        if (data.length > 0) {
-          setBlogs(data)
-        }
-      })()
-    } else {
-      ;(async () => {
-        const url = `/blog/get/home_blogs`
-        const { data } = await axiosInstance.get(url)
-        if (data.length > 0) {
-          setBlogs(data)
-        }
-      })()
+    if (authContext && authContext.status === AuthStatus.AUTHORIZED) {
+      fetchUserHomeBooks(authContext.user?.uid)
+    } else if (authContext && authContext.status === AuthStatus.UNAUTHORIZED) {
+      fetchHomeBooks()
     }
-  }, [authContext.status])
+  }, [authContext, fetchHomeBooks, fetchUserHomeBooks])
 
-  return [blogs]
+  return homeBooks ? homeBooks : userHomeBooks
 }
 
-export const useUserBlogs = (user_id: number): [DocNode[] | null] => {
-  const [docs, setDocs] = useState<DocNode[] | null>(null)
+export const useHomeBlogs = (authContext: AuthContextProps): any => {
+  const { data: homeBlogs, fetch: fetchHomeBlogs } = useHomeBlogsApi()
+  const { data: userHomeBlogs, fetch: fetchUserHomeBlogs } = useUserHomeBlogs()
+
+  useEffect(() => {
+    if (authContext && authContext.status === AuthStatus.AUTHORIZED) {
+      fetchUserHomeBlogs(authContext.user?.uid)
+    } else if (authContext && authContext.status === AuthStatus.UNAUTHORIZED) {
+      fetchHomeBlogs()
+    }
+  }, [authContext, authContext.status, fetchHomeBlogs, fetchUserHomeBlogs])
+
+  return homeBlogs ? homeBlogs : userHomeBlogs
+}
+
+export const useUserBlogs = (user_id: number): null => {
+  const { data: userBlogs, fetch: fetchUserHomeBlogs } = useUserHomeBlogs()
 
   useEffect(() => {
     if (user_id) {
-      axiosInstance
-        .get(`/blog/get/${user_id}/user_blogs`)
-        .then(({ data }) => {
-          setDocs(data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      fetchUserHomeBlogs(user_id)
     }
-  }, [user_id])
+  }, [fetchUserHomeBlogs, user_id])
 
-  return [docs]
+  return userBlogs
 }
 
-export const useUserBooks = (user_id: number): [DocNode[] | null] => {
-  const [docs, setDocs] = useState<DocNode[] | null>(null)
+export const useUserBooks = (user_id: number): null => {
+  const { data: userBooks, fetch: fetchUserHomeBooks } = useUserHomeBooks()
 
   useEffect(() => {
     if (user_id) {
-      axiosInstance
-        .get(`/book/get/${user_id}/user_books`)
-        .then(({ data }) => {
-          setDocs(data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      fetchUserHomeBooks(user_id)
     }
-  }, [user_id])
+  }, [user_id, fetchUserHomeBooks])
 
-  return [docs]
+  return userBooks
 }
