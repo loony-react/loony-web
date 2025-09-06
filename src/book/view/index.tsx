@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react"
-import { createImageUrl, extractImage, getNav } from "loony-utils"
+import { createImageUrl, extractImage, useOrderBookNodes } from "loony-utils"
+import { useGetBookNav } from "loony-api"
 import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
-import { AppRouteProps, ReadBookState, PageStatus } from "loony-types"
+import { AppRouteProps, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
 import { RightNavEdit } from "components/RightNav.tsx"
 import { PageNavigation } from "./PageNavigation.tsx"
@@ -13,27 +13,9 @@ const View = (props: AppRouteProps) => {
   const { base_url } = appContext.env
   const { bookId } = useParams()
   const doc_id = bookId && parseInt(bookId)
-  const [pageStatus, setStatus] = useState({
-    status: PageStatus.IDLE,
-    error: "",
-  })
 
-  const [state, setState] = useState<ReadBookState>({
-    mainNode: null,
-    parentNode: null,
-    page_id: null,
-    section_id: null,
-    groupNodesById: {},
-    navNodes: [],
-    childNodes: [],
-    frontPage: null,
-  })
-
-  useEffect(() => {
-    if (doc_id) {
-      getNav(doc_id, setState, setStatus)
-    }
-  }, [doc_id])
+  const { data: book_data } = useGetBookNav(doc_id)
+  const { state, setState, pageStatus } = useOrderBookNodes(book_data)
 
   const viewFrontPage = () => {
     setState({

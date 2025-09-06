@@ -1,7 +1,14 @@
-import { useState } from "react"
-import { onSignup } from "loony-api"
-import { Link, useNavigate } from "react-router"
-import { NotificationContextProps } from "loony-types"
+import { useContext, useState } from "react"
+import { useSignup } from "loony-api"
+import { useNavigate } from "react-router"
+import {
+  AuthStatus,
+  NotificationContextProps,
+  NotificationState,
+  User,
+} from "loony-types"
+import { IoEye, IoEyeOff } from "react-icons/io5"
+import { AuthContext } from "context/AuthContext"
 
 const Signup = ({
   isMobile,
@@ -10,6 +17,12 @@ const Signup = ({
   isMobile: boolean
   notificationContext: NotificationContextProps
 }) => {
+  // Hooks
+  const { onSignup, error } = useSignup()
+  const authContext = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  // State
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
@@ -19,28 +32,40 @@ const Signup = ({
   })
 
   const [state, setState] = useState({
-    viewPassword: false,
-    state: 1,
+    showPassword: false,
+    showConfirmPassword: false,
   })
-  const [formError, setFormError] = useState({
-    label: "",
-    message: "",
-  })
-  const navigate = useNavigate()
 
+  // Functions
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
   }
 
+  const onSuccess = (data: User) => {
+    authContext.setAuthContext({
+      status: AuthStatus.AUTHORIZED,
+      user: data,
+    })
+    navigate("/", {})
+  }
+
+  const onFailed = (err: any) => {
+    notificationContext.setNotificationContext(
+      (prevState: NotificationState) => ({
+        ...prevState,
+        alert: {
+          title: "Error",
+          content: err,
+          status: "error",
+        },
+      }),
+    )
+  }
+
   const onHandleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onSignup({
-      formData,
-      notificationContext,
-      navigate,
-      setFormError,
-    })
+    onSignup(formData, onSuccess, onFailed)
   }
 
   return (
@@ -88,29 +113,70 @@ const Signup = ({
 
         {/* Password Input */}
         <div>
-          <label className="block text-sm font-medium mb-1">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-[#f4f4f4] dark:bg-[#363636] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+          <label className="block text-sm mb-2">Password</label>
+          <div className="relative">
+            <input
+              name="password"
+              type={state.showPassword ? "text" : "password"}
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full px-4 py-2 bg-[#f4f4f4] dark:bg-[#363636] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              autoComplete="password"
+              required
+            />
+
+            {/* Show eye icon only when typing */}
+            {formData.password.length > 0 && (
+              <button
+                type="button"
+                onClick={() =>
+                  setState({ ...state, showPassword: !state.showPassword })
+                }
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+              >
+                {state.showPassword ? (
+                  <IoEyeOff className="w-5 h-5" />
+                ) : (
+                  <IoEye className="w-5 h-5" />
+                )}
+              </button>
+            )}
+          </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            name="confirm_password"
-            value={formData.confirm_password}
-            onChange={handleChange}
-            className="w-full px-4 py-2 bg-[#f4f4f4] dark:bg-[#363636] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
+          <label className="block text-sm mb-2">Confirm Password</label>
+          <div className="relative">
+            <input
+              name="confirm_password"
+              type={state.showConfirmPassword ? "text" : "password"}
+              value={formData.confirm_password}
+              onChange={handleChange}
+              className="w-full px-4 py-2 bg-[#f4f4f4] dark:bg-[#363636] rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              autoComplete="password"
+              required
+            />
+
+            {/* Show eye icon only when typing */}
+            {formData.confirm_password.length > 0 && (
+              <button
+                type="button"
+                onClick={() =>
+                  setState({
+                    ...state,
+                    showConfirmPassword: !state.showConfirmPassword,
+                  })
+                }
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
+              >
+                {state.showConfirmPassword ? (
+                  <IoEyeOff className="w-5 h-5" />
+                ) : (
+                  <IoEye className="w-5 h-5" />
+                )}
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Submit Button */}
