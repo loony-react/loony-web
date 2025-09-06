@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { deleteOne, deleteSubSection, deleteSection } from "loony-utils"
-import { axiosInstance } from "loony-api"
+import { apiHttpClient } from "loony-api"
 import { STATE_VALUES } from "utils/const.ts"
 import {
   AppDispatchAction,
@@ -49,7 +49,7 @@ const deleteBook = ({
   navigate: NavigateFunction
   setAppContext: AppDispatchAction
 }) => {
-  axiosInstance.post("/book/delete", { doc_id: doc_id }).then(() => {
+  apiHttpClient.post("/book/delete", { doc_id: doc_id }).then(() => {
     setAppContext((prevState) => ({
       ...prevState,
       alert: {
@@ -92,7 +92,7 @@ const deleteNode = ({
     parent_id: deleteNode.parent_id,
     delete_id: deleteNode.uid,
   }
-  axiosInstance
+  apiHttpClient
     .post(`/book/delete/node`, submitData)
     .then((res) => {
       if (deleteNode.identity === 101) {

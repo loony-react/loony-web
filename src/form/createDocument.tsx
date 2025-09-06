@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useContext } from "react"
 import { useNavigate } from "react-router"
-import { axiosInstance } from "loony-api"
+import { apiHttpClient } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
 import ViewContent from "../components/ViewContent.tsx"
@@ -87,7 +87,7 @@ export default function CreateNewDocument({
       theme,
     }
 
-    axiosInstance
+    apiHttpClient
       .post(url, submitData)
       .then(() => {
         appContext.setAppContext((prevState) => ({

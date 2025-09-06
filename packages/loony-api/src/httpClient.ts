@@ -1,11 +1,6 @@
 // src/api/httpClient.js
 import axios from "axios"
 
-export const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000",
-  withCredentials: true,
-})
-
 const authHttpClient = axios.create({
   baseURL: "http://localhost:5000",
   timeout: 10000,

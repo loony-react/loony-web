@@ -15,7 +15,7 @@ import type { Auth } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"
 import { createImageUrl, createTmpImageUrl, extractImage } from "loony-utils"
 import { CancelButton, SubmitButton, Input } from "loony-ui"
-import { apiHttpClient } from "api/httpClient.ts"
+import { apiHttpClient } from "loony-api"
 
 export default function AddNodeComponent(props: AddNodeComponentProps) {
   const {

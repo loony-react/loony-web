@@ -4,6 +4,9 @@ export const login = (creds) => authHttpClient.post("/login", creds)
 export const logout = () => authHttpClient.post("/logout")
 export const register = (creds) => authHttpClient.post("/register", creds)
 
+/** User */
+export const getUserInfo = () => authHttpClient.get("/user/userInfo")
+
 /** Home */
 export const getHomeBooks = () => apiHttpClient.get(`/book/get/home_books`)
 export const getHomeBlogs = () => apiHttpClient.get(`/book/get/home_books`)

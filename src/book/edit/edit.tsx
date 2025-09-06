@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import AddNode from "../../form/addNode.tsx"
 import EditDocument from "../../form/editNode.tsx"
 import { appendChapters, appendSections, appendSubSections } from "loony-utils"
@@ -30,164 +29,163 @@ export default function EditComponent({
     topNode,
   } = state
 
-  const editPage = (data: DocNode) => {
-    if (!editNode) return
-    let __parentNode = null
-    const __navNodes = navNodes.map((n) => {
-      if (n.uid === editNode.uid) {
-        const t = {
-          ...n,
-          ...data,
-        }
-        __parentNode = t
-        return t
+  const editPage = useCallback(
+    (data: DocNode) => {
+      if (editNode) {
+        let __parentNode: DocNode | null = null
+        const __navNodes = navNodes.map((n) => {
+          if (n.uid === editNode.uid) {
+            const t = {
+              ...n,
+              ...data,
+            }
+            __parentNode = t
+            return t
+          }
+          return n
+        })
+        setState((prevState) => ({
+          ...prevState,
+          parentNode: __parentNode,
+          navNodes: __navNodes,
+          form: STATE_VALUES.form,
+        }))
       }
-      return n
-    })
-    setState({
-      ...state,
-      parentNode: __parentNode,
-      navNodes: __navNodes,
-      form: STATE_VALUES.form,
-    })
-  }
-  const editSection = (data: DocNode) => {
-    if (!editNode) return
-    setState({
-      ...state,
-      groupNodesById: {
-        ...groupNodesById,
-        [editNode.uid as number]: {
-          ...data,
-          child: editNode.child,
+    },
+    [editNode, navNodes, setState],
+  )
+
+  const editSection = useCallback(
+    (data: DocNode) => {
+      if (!editNode) return
+      setState((prevState) => ({
+        ...prevState,
+        groupNodesById: {
+          ...groupNodesById,
+          [editNode.uid as number]: {
+            ...data,
+            child: editNode.child,
+          },
         },
-      },
-      parentNode: data,
-      form: STATE_VALUES.form,
-      editNode: null,
-    })
-  }
-  const editSubSection = (data: DocNode) => {
-    if (!editNode) return
-    if (!parentNode) return
-    const activeSection = groupNodesById[parentNode.uid]
-    const subSections = activeSection.child as DocNode[]
-    const child = subSections?.map((innerNode) => {
-      if (innerNode.uid === editNode.uid) {
-        return {
-          ...innerNode,
-          ...data,
+        parentNode: data,
+        form: STATE_VALUES.form,
+        editNode: null,
+      }))
+    },
+    [editNode, groupNodesById, setState],
+  )
+
+  const editSubSection = useCallback(
+    (data: DocNode) => {
+      if (!editNode) return
+      if (!parentNode) return
+      const activeSection = groupNodesById[parentNode.uid]
+      const subSections = activeSection.child as DocNode[]
+      const child = subSections?.map((innerNode) => {
+        if (innerNode.uid === editNode.uid) {
+          return {
+            ...innerNode,
+            ...data,
+          }
         }
+        return innerNode
+      })
+      setState((prevState) => ({
+        ...prevState,
+        groupNodesById: {
+          ...groupNodesById,
+          [parentNode.uid as number]: {
+            ...activeSection,
+            child,
+          },
+        },
+        childNodes: child,
+        form: STATE_VALUES.form,
+        editNode: null,
+      }))
+    },
+    [editNode, groupNodesById, parentNode, setState],
+  )
+
+  const updateFrontPage = useCallback(
+    (data: DocNode) => {
+      const __parentNode = {
+        ...frontPage,
+        ...data,
       }
-      return innerNode
-    })
-    setState({
-      ...state,
-      groupNodesById: {
-        ...groupNodesById,
-        [parentNode.uid as number]: {
-          ...activeSection,
-          child,
+      setState((prevState) => ({
+        ...prevState,
+        parentNode: __parentNode,
+        page_id: __parentNode.uid,
+        form: STATE_VALUES.form,
+      }))
+    },
+    [frontPage, setState],
+  )
+
+  const addChapterFnCb = useCallback(
+    (data: { new_node: DocNode; update_node: DocNode }) => {
+      if (!topNode) return
+      const newNavNodes = appendChapters(navNodes, topNode, data)
+      setState((prevState) => ({
+        ...prevState,
+        parentNode: data.new_node,
+        navNodes: newNavNodes,
+        childNodes: [],
+        addNode: null,
+        form: STATE_VALUES.form,
+      }))
+    },
+    [navNodes, setState, topNode],
+  )
+
+  const addSectionFnCb = useCallback(
+    (data: { new_node: DocNode; update_node: DocNode }) => {
+      if (!topNode || !parentNode) return
+
+      const newNavNodes = appendSections(navNodes, topNode, data)
+      const newActiveNode = data.new_node
+      setState((prevState) => ({
+        ...prevState,
+        addNode: null,
+        navNodes: newNavNodes,
+        section_id: newActiveNode.uid,
+        parentNode: newActiveNode,
+        childNodes: [],
+        groupNodesById: {
+          ...groupNodesById,
+          [newActiveNode.uid]: {
+            ...newActiveNode,
+            child: [],
+          },
         },
-      },
-      childNodes: child,
-      form: STATE_VALUES.form,
-      editNode: null,
-    })
-  }
+        form: STATE_VALUES.form,
+      }))
+    },
+    [groupNodesById, navNodes, parentNode, setState, topNode],
+  )
 
-  const updateFrontPage = (data: DocNode) => {
-    const __parentNode = {
-      ...frontPage,
-      ...data,
-    }
-    setState({
-      ...state,
-      parentNode: __parentNode,
-      page_id: __parentNode.uid,
-      form: STATE_VALUES.form,
-    })
-  }
+  const addSubSectionFnCb = useCallback(
+    (data: { new_node: DocNode; update_node: DocNode }) => {
+      if (!topNode || !parentNode) return
+      const newChildNodes = appendSubSections(childNodes, topNode, data)
 
-  const editFnCallback = (data: DocNode) => {
-    if (!editNode) return
-    if (editNode.identity === 100) {
-      updateFrontPage(data)
-    }
-    if (editNode.identity === 101) {
-      editPage(data)
-    }
-    if (editNode.identity === 102) {
-      editSection(data)
-    }
-    if (editNode.identity === 103) {
-      editSubSection(data)
-    }
-  }
-
-  const addChapterFnCb = (data: {
-    new_node: DocNode
-    update_node: DocNode
-  }) => {
-    if (!topNode) return
-    const newNavNodes = appendChapters(navNodes, topNode, data)
-    setState({
-      ...state,
-      parentNode: data.new_node,
-      navNodes: newNavNodes,
-      childNodes: [],
-      addNode: null,
-      form: STATE_VALUES.form,
-    })
-  }
-
-  const addSectionFnCb = (data: {
-    new_node: DocNode
-    update_node: DocNode
-  }) => {
-    if (!topNode || !parentNode) return
-
-    const newNavNodes = appendSections(navNodes, topNode, data)
-    const newActiveNode = data.new_node
-    setState({
-      ...state,
-      addNode: null,
-      navNodes: newNavNodes,
-      section_id: newActiveNode.uid,
-      parentNode: newActiveNode,
-      childNodes: [],
-      groupNodesById: {
-        ...groupNodesById,
-        [newActiveNode.uid]: {
-          ...newActiveNode,
-          child: [],
+      setState((prevState) => ({
+        ...prevState,
+        groupNodesById: {
+          ...groupNodesById,
+          [parentNode?.uid as number]: {
+            ...parentNode,
+            child: newChildNodes,
+          },
         },
-      },
-      form: STATE_VALUES.form,
-    })
-  }
-
-  const addSubSectionFnCb = (data: {
-    new_node: DocNode
-    update_node: DocNode
-  }) => {
-    if (!topNode || !parentNode) return
-    const newChildNodes = appendSubSections(childNodes, topNode, data)
-
-    setState({
-      ...state,
-      groupNodesById: {
-        ...groupNodesById,
-        [parentNode?.uid as number]: {
-          ...parentNode,
-          child: newChildNodes,
-        },
-      },
-      childNodes: newChildNodes,
-      addNode: null,
-      form: STATE_VALUES.form,
-    })
-  }
+        childNodes: newChildNodes,
+        addNode: null,
+        form: STATE_VALUES.form,
+      }))
+    },
+    [childNodes, groupNodesById, parentNode, setState, topNode],
+  )
 
   const onCancel = useCallback(() => {
     setState({
@@ -198,11 +196,10 @@ export default function EditComponent({
     })
   }, [setState, state])
 
-  const nodeTypes: any = {
+  const addNodeTypes: any = {
     101: {
       parent_id: topNode?.uid,
       FnCallback: addChapterFnCb,
-      url: "/book/append/node",
       identity: 101,
       heading: "Add Chapter",
       page_id: page_id,
@@ -210,7 +207,6 @@ export default function EditComponent({
     102: {
       parent_id: topNode?.uid,
       FnCallback: addSectionFnCb,
-      url: "/book/append/node",
       identity: 102,
       heading: "Add Section",
       page_id: page_id,
@@ -218,37 +214,53 @@ export default function EditComponent({
     103: {
       parent_id: topNode?.uid,
       FnCallback: addSubSectionFnCb,
-      url: "/book/append/node",
       identity: 103,
       heading: "Add Sub-Section",
       page_id: section_id,
     },
   }
-  return (
-    <>
-      {form.method === "create" && topNode ? (
-        <AddNode
-          isMobile={isMobile}
-          doc_id={doc_id as number}
-          parent_identity={topNode.identity}
-          onCancel={onCancel}
-          docType="book"
-          {...nodeTypes[form.nodeType]}
-        />
-      ) : null}
 
-      {form.method === "update" ? (
-        <EditDocument
-          docType="book"
-          doc_id={doc_id}
-          state={state}
-          FnCallback={editFnCallback}
-          onCancel={onCancel}
-          heading="Edit Node"
-          url="/book/edit"
-          isMobile={isMobile}
-        />
-      ) : null}
-    </>
-  )
+  const editNodeTypes: any = {
+    100: {
+      FnCallback: updateFrontPage,
+    },
+    101: {
+      FnCallback: editPage,
+    },
+    102: {
+      FnCallback: editSection,
+    },
+    103: {
+      FnCallback: editSubSection,
+    },
+  }
+
+  if (form.method === "create" && topNode) {
+    return (
+      <AddNode
+        isMobile={isMobile}
+        doc_id={doc_id as number}
+        parent_identity={topNode.identity}
+        onCancel={onCancel}
+        docType="book"
+        url="/book/append/node"
+        {...addNodeTypes[form.nodeType]}
+      />
+    )
+  }
+  if (editNode) {
+    return (
+      <EditDocument
+        docType="book"
+        doc_id={doc_id}
+        state={state}
+        onCancel={onCancel}
+        heading="Edit Node"
+        url="/book/edit"
+        isMobile={isMobile}
+        {...editNodeTypes[editNode.identity]}
+      />
+    )
+  }
+  return null
 }

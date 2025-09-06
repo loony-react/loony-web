@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { AuthStatus } from "loony-types"
 import PageLoader from "../components/PageLoader.tsx"
 import { Auth, AuthContextProps } from "loony-types"
-import { getUserInfo } from "api/index.ts"
+import { getUserInfo } from "loony-api"
 
 const authState: Auth = {
   status: AuthStatus.IDLE,

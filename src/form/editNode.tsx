@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, useContext } from "react"
-import { axiosInstance } from "loony-api"
+import { apiHttpClient } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
 import type {
@@ -83,7 +83,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
       images: formImages || [],
       theme,
     }
-    axiosInstance
+    apiHttpClient
       .post(url__, submitData)
       .then((res) => {
         FnCallback(res.data)

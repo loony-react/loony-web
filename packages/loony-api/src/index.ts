@@ -1,11 +1,7 @@
+export { apiHttpClient, authHttpClient } from "./httpClient"
 export { useLogin, useLogout, useSignup } from "./authHooks"
-export { axiosInstance } from "./httpClient"
-export { getChapter, getSection } from "./api"
-export {
-  onSendResetPassword,
-  onSendResetPasswordEmail,
-  onSignup,
-} from "./onSubmit"
+export { getChapter, getSection, getUserInfo } from "./api"
+export { onSendResetPassword, onSendResetPasswordEmail } from "./onSubmit"
 export { useGetBookNav, useGetChapter } from "./bookApiHook"
 export { useGetBlogNodes } from "./blogApiHook"
 export {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { axiosInstance } from "loony-api"
+import { apiHttpClient } from "loony-api"
 import {
   AppDispatchAction,
   DocNode,
@@ -58,7 +58,7 @@ const deleteBlog = ({
   navigate: NavigateFunction
   setAppContext: AppDispatchAction
 }) => {
-  axiosInstance.post("/blog/delete", { doc_id: doc_id }).then(() => {
+  apiHttpClient.post("/blog/delete", { doc_id: doc_id }).then(() => {
     setAppContext((prevState: any) => ({
       ...prevState,
       alert: {
@@ -97,7 +97,7 @@ const deleteNode = ({ state, setState }: any) => {
         : null,
     }
 
-    axiosInstance
+    apiHttpClient
       .post(`/blog/delete/node`, submitData)
       .then(() => {
         const nodesAfterDelete = deleteBlogNode(childNodes, submitData)

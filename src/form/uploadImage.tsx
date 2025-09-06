@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { axiosInstance } from "loony-api"
+import { apiHttpClient } from "loony-api"
 import Cropper, { Area } from "react-easy-crop"
 import type {
   AfterImageSelect,
@@ -82,7 +82,7 @@ export default function UploadImage({
     )
     formData.append("file", afterImageSelect.image as File)
 
-    await axiosInstance
+    await apiHttpClient
       .post("/upload_file", formData, {
         headers: {
           "Content-Type": "multipart/form-data",

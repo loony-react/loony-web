@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect, useState } from "react"
 
-import { BasicMenuNavContainer } from '../components/Containers.tsx'
-import { axiosInstance } from 'loony-api'
-import { JsonObject, AuthContextProps, AuthStatus } from 'loony-types'
+import { BasicMenuNavContainer } from "../components/Containers.tsx"
+import {} from "loony-api"
+import { AuthContextProps, AuthStatus } from "loony-types"
+import { apiHttpClient } from "loony-api"
 
 const Followed = ({ authContext }: { authContext: AuthContextProps }) => {
-  const [canFollowTags, setCanFollowTags] = useState<JsonObject[]>([])
+  const [canFollowTags, setCanFollowTags] = useState<any>([])
 
   useEffect(() => {
     if (authContext.status === AuthStatus.AUTHORIZED && authContext.user) {
-      axiosInstance
+      apiHttpClient
         .get(`/tag/${authContext.user.uid}/get_all_tags_user_can_follow`)
-        .then(({ data }: { data: JsonObject[] }) => {
+        .then(({ data }: { data: any }) => {
           setCanFollowTags(data)
         })
         .catch((err) => {
@@ -21,7 +23,7 @@ const Followed = ({ authContext }: { authContext: AuthContextProps }) => {
   }, [])
 
   const user_removed_a_followed_tag = (tag_id: number) => {
-    axiosInstance.post(`/tag/user_removed_a_followed_tag`, {
+    apiHttpClient.post(`/tag/user_removed_a_followed_tag`, {
       tag_id,
       user_id: authContext.user && authContext.user.uid,
     })
@@ -37,13 +39,13 @@ const Followed = ({ authContext }: { authContext: AuthContextProps }) => {
               <span
                 style={{
                   marginRight: 10,
-                  backgroundColor: '#ccc',
+                  backgroundColor: "#ccc",
                   width: 35,
                   height: 30,
                   borderRadius: 30,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 {tag.name.substr(0, 1)}
@@ -67,13 +69,13 @@ const Followed = ({ authContext }: { authContext: AuthContextProps }) => {
 }
 
 const Recommended = ({ authContext }: { authContext: AuthContextProps }) => {
-  const [followedTags, setFollowedTags] = useState<JsonObject[]>([])
+  const [followedTags, setFollowedTags] = useState<any>([])
 
   useEffect(() => {
     if (authContext.status === AuthStatus.AUTHORIZED && authContext.user) {
-      axiosInstance
+      apiHttpClient
         .get(`/tag/${authContext.user.uid}/get_all_tags_user_has_followed`)
-        .then(({ data }: { data: JsonObject[] }) => {
+        .then(({ data }: { data: any }) => {
           setFollowedTags(data)
         })
         .catch((err) => {
@@ -82,7 +84,7 @@ const Recommended = ({ authContext }: { authContext: AuthContextProps }) => {
     }
   }, [])
   const user_removed_a_followed_tag = (tag_id: number) => {
-    axiosInstance.post(`/tag/user_removed_a_followed_tag`, {
+    apiHttpClient.post(`/tag/user_removed_a_followed_tag`, {
       tag_id,
       user_id: authContext.user && authContext.user.uid,
     })
@@ -98,13 +100,13 @@ const Recommended = ({ authContext }: { authContext: AuthContextProps }) => {
               <span
                 style={{
                   marginRight: 10,
-                  backgroundColor: '#ccc',
+                  backgroundColor: "#ccc",
                   width: 35,
                   height: 30,
                   borderRadius: 30,
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
                 {tag.name.substr(0, 1)}

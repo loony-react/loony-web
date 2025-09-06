@@ -3,7 +3,7 @@
 import { useNavigate, NavigateFunction } from "react-router"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { AuthStatus } from "loony-types"
-import { axiosInstance, useLogout } from "loony-api"
+import { useLogout } from "loony-api"
 import type { AppContextProps, AuthContextProps } from "loony-types"
 import { Menu } from "lucide-react"
 import {} from "./"
