@@ -118,7 +118,12 @@ export default function Edit(props: AppRouteProps) {
               {parentNode.title}
             </h2>
             <ViewContent source={parentNode.content} isDark={isDark} />
-            <NodeSettings state={state} setState={setState} node={parentNode} />
+            <NodeSettings
+              state={state}
+              setState={setState}
+              node={parentNode}
+              parentNode={null}
+            />
             {childNodes &&
               childNodes.map((childNode) => {
                 const nodeImage = createImageUrl({
@@ -141,6 +146,7 @@ export default function Edit(props: AppRouteProps) {
                       state={state}
                       setState={setState}
                       node={childNode}
+                      parentNode={parentNode}
                     />
                   </div>
                 )
@@ -179,10 +185,12 @@ const NodeSettings = ({
   setState,
   node,
   state,
+  parentNode,
 }: {
   setState: EditBookAction
   node: DocNode
   state: EditBookState
+  parentNode: DocNode | null
 }) => {
   return (
     <div className="flex gap-1 mb-8">
@@ -192,9 +200,10 @@ const NodeSettings = ({
           setState({
             ...state,
             topNode: node,
+            // parentNode,
             form: {
               method: "create",
-              nodeType: node.identity + 1,
+              nodeType: node.identity === 103 ? 103 : node.identity + 1,
             },
           })
           e.stopPropagation()

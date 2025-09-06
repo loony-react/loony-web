@@ -176,7 +176,6 @@ const RenderImage = ({
   userId,
 }: any) => {
   if (formImages) {
-    console.log(formImages, "formImages")
     const image = createTmpImageUrl({
       docType,
       baseUrl,

@@ -104,6 +104,7 @@ export const getSection = <T extends ReadBookState | EditBookState>(
           },
         },
         page_id: __node.uid,
+        section_id: __node.uid,
         parentNode,
       }))
     })
@@ -114,6 +115,7 @@ export const getSection = <T extends ReadBookState | EditBookState>(
       ...resetState,
       childNodes: groupNodesById[uid].child,
       page_id: __node.uid,
+      section_id: __node.uid,
       parentNode: groupNodesById[uid],
     }))
     if (groupNodesById[uid] && !groupNodesById[uid].content) {

@@ -224,7 +224,6 @@ export default function EditComponent({
       page_id: section_id,
     },
   }
-
   return (
     <>
       {form.method === "create" && topNode ? (

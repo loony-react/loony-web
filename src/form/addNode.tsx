@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useContext } from "react"
-import { axiosInstance } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
 import "react-easy-crop/react-easy-crop.css"
@@ -16,6 +15,7 @@ import type { Auth } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"
 import { createImageUrl, createTmpImageUrl, extractImage } from "loony-utils"
 import { CancelButton, SubmitButton, Input } from "loony-ui"
+import { apiHttpClient } from "api/httpClient.ts"
 
 export default function AddNodeComponent(props: AddNodeComponentProps) {
   const {
@@ -31,6 +31,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
     docType,
   } = props
 
+  console.log(props)
   const authContext = useContext<AuthContextProps>(AuthContext)
   const appContext = useContext<AppContextProps>(AppContext)
   const { base_url } = appContext.env
@@ -65,7 +66,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
       page_id,
       parent_identity,
     }
-    axiosInstance
+    apiHttpClient
       .post(url, formData)
       .then(({ data }) => {
         FnCallback(data)
@@ -162,7 +163,6 @@ const RenderImage = ({
   userId,
 }: any) => {
   if (formImages) {
-    console.log(formImages, "formImages")
     const image = createTmpImageUrl({
       docType,
       baseUrl,
@@ -173,7 +173,6 @@ const RenderImage = ({
     if (!image) return null
     return <img src={image} alt="Uploaded file" />
   } else if (nodeImages) {
-    console.log(nodeImages, "nodeImages")
     const image = createImageUrl({
       docType,
       baseUrl,
