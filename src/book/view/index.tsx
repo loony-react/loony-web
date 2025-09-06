@@ -17,6 +17,12 @@ const View = (props: AppRouteProps) => {
   const { data: book_data } = useGetBookNav(doc_id)
   const { state, setState, pageStatus } = useBookNodes(book_data)
 
+  const { parentNode, navNodes, frontPage, childNodes, mainNode } = state
+
+  if (pageStatus.status !== PageStatus.VIEW_PAGE)
+    return <PageLoadingContainer title="" />
+
+  if (!parentNode || !mainNode || !frontPage || !doc_id) return null
   const viewFrontPage = () => {
     setState({
       ...state,
@@ -25,14 +31,6 @@ const View = (props: AppRouteProps) => {
       childNodes: [],
     })
   }
-
-  const { parentNode, navNodes, frontPage, childNodes, mainNode } = state
-
-  if (pageStatus.status !== PageStatus.VIEW_PAGE)
-    return <PageLoadingContainer title="" />
-
-  if (!parentNode || !mainNode || !frontPage || !doc_id) return null
-
   const image = createImageUrl({
     docType: "book",
     baseUrl: base_url,

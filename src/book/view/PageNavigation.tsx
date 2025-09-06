@@ -1,27 +1,40 @@
 import { getChapter, getSection } from "loony-utils"
 import {
-  ReadBookAction,
   ReadBookState,
   DocNode,
-  EditBookAction,
   EditBookState,
   VoidReturnFunction,
 } from "loony-types"
+import { useCallback } from "react"
 
-export const PageNavigation = ({
+export const PageNavigation = <T extends ReadBookState | EditBookState>({
   setState,
   navNodes,
   state,
   doc_id,
   viewFrontPage,
 }: {
-  setState: ReadBookAction | EditBookAction
+  setState: React.Dispatch<React.SetStateAction<T>>
   navNodes: DocNode[]
   state: ReadBookState | EditBookState
   doc_id: number
   viewFrontPage: VoidReturnFunction
 }) => {
   const { frontPage, parentNode, groupNodesById } = state
+
+  const onGetChapter = useCallback(
+    (chapter: DocNode) => {
+      getChapter(chapter, setState, groupNodesById, doc_id)
+    },
+    [doc_id, groupNodesById, setState],
+  )
+
+  const onGetSection = useCallback(
+    (section: DocNode) => {
+      getSection(section, setState, groupNodesById, doc_id)
+    },
+    [doc_id, groupNodesById, setState],
+  )
 
   if (!frontPage || !parentNode) return null
 
@@ -42,7 +55,7 @@ export const PageNavigation = ({
                   className="px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-[#ececec] dark:hover:bg-[#333333]"
                   onClick={(e) => {
                     e.stopPropagation()
-                    getChapter(chapter, setState, groupNodesById, doc_id)
+                    onGetChapter(chapter)
                   }}
                   // isActive={parentNode.uid === chapter.uid}
                 >
@@ -64,12 +77,7 @@ export const PageNavigation = ({
                             className="block px-2 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
                             onClick={(e) => {
                               e.stopPropagation()
-                              getSection(
-                                section,
-                                setState,
-                                groupNodesById,
-                                doc_id,
-                              )
+                              onGetSection(section)
                             }}
                             // isActive={parentNode.uid === section.uid}
                           >

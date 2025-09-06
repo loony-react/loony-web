@@ -15,6 +15,10 @@ export const getUsersHomeBlogs = (uid: number) =>
 /** Book */
 export const getBookNav = (doc_id: number) =>
   apiHttpClient.get(`/book/get/nav?doc_id=${doc_id}`)
+export const getChapter = (doc_id: number, page_id: number) =>
+  apiHttpClient.get(`/book/get/chapter?doc_id=${doc_id}&page_id=${page_id}`)
+export const getSection = (doc_id: number, page_id: number) =>
+  apiHttpClient.get(`/book/get/section?doc_id=${doc_id}&page_id=${page_id}`)
 
 /** Blog */
 export const getBlogNodes = (doc_id: number) =>

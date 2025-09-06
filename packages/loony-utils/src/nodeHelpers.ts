@@ -1,13 +1,12 @@
-import { axiosInstance } from "loony-api"
 import {
-  PageStatusDispatchAction,
+  getChapter as getChapterAlias,
+  getSection as getSectionAlias,
+} from "loony-api"
+import {
   AppendNodeResponse,
-  EditBookAction,
-  EditBlogAction,
   GroupedNodesById,
-  ReadBlogAction,
-  ReadBookAction,
-  PageStatus,
+  ReadBookState,
+  EditBookState,
 } from "loony-types"
 import { DocNode } from "loony-types"
 
@@ -17,18 +16,17 @@ const resetState = {
   form: "",
 }
 
-export const getChapter = (
+export const getChapter = <T extends ReadBookState | EditBookState>(
   __node: DocNode,
-  setState: ReadBookAction | EditBookAction,
+  setState: React.Dispatch<React.SetStateAction<T>>,
   groupNodesById: GroupedNodesById,
   doc_id: number,
   // setStatus: PageStatusDispatchAction,
 ) => {
   const { uid } = __node
-  const url = `/book/get/chapter?doc_id=${doc_id}&page_id=${uid}`
 
   const fetchData = () => {
-    axiosInstance.get(url).then(({ data }) => {
+    getChapterAlias(doc_id, uid).then(({ data }) => {
       let parentNode = null
       const childNodes = []
       data.nodes.forEach((n) => {
@@ -74,17 +72,16 @@ export const getChapter = (
   }
 }
 
-export const getSection = (
+export const getSection = <T extends ReadBookState | EditBookState>(
   __node: DocNode,
-  setState: ReadBookAction | EditBookAction,
+  setState: React.Dispatch<React.SetStateAction<T>>,
   groupNodesById: GroupedNodesById,
   doc_id: number,
   // setStatus: PageStatusDispatchAction,
 ) => {
   const { uid } = __node
-  const url = `/book/get/section?doc_id=${doc_id}&page_id=${uid}`
   const fetchData = () => {
-    axiosInstance.get(url).then(({ data }) => {
+    getSectionAlias(doc_id, uid).then(({ data }) => {
       let parentNode = null
       const childNodes = []
       data.nodes.forEach((n) => {
@@ -127,82 +124,82 @@ export const getSection = (
   }
 }
 
-export const getSections = (
-  __node: DocNode,
-  setState: ReadBookAction | EditBookAction,
-  allSectionsByPageId: GroupedNodesById,
-  doc_id: number,
-  // setStatus: PageStatusDispatchAction,
-) => {
-  const { uid } = __node
-  const url = `/book/get/sections?doc_id=${doc_id}&page_id=${uid}`
+// export const getSections = <T extends ReadBookState | EditBookState>(
+//   __node: DocNode,
+//   setState: React.Dispatch<React.SetStateAction<T>>,
+//   allSectionsByPageId: GroupedNodesById,
+//   doc_id: number,
+//   // setStatus: PageStatusDispatchAction,
+// ) => {
+//   const { uid } = __node
+//   const url = `/book/get/sections?doc_id=${doc_id}&page_id=${uid}`
 
-  const fetchData = () => {
-    axiosInstance.get(url).then(({ data }) => {
-      const res = orderNodes(data, __node)
-      setState((prevState) => ({
-        ...prevState,
-        ...resetState,
-        activeSectionsByPageId: res,
-        allSectionsByPageId: {
-          ...allSectionsByPageId,
-          [uid]: res,
-        },
-        page_id: __node.uid,
-        parentNode: __node,
-        activeSubSectionsBySectionId: [],
-      }))
-    })
-  }
+//   const fetchData = () => {
+//     axiosInstance.get(url).then(({ data }) => {
+//       const res = orderNodes(data, __node)
+//       setState((prevState) => ({
+//         ...prevState,
+//         ...resetState,
+//         activeSectionsByPageId: res,
+//         allSectionsByPageId: {
+//           ...allSectionsByPageId,
+//           [uid]: res,
+//         },
+//         page_id: __node.uid,
+//         parentNode: __node,
+//         activeSubSectionsBySectionId: [],
+//       }))
+//     })
+//   }
 
-  if (allSectionsByPageId[uid]) {
-    setState((prevState) => ({
-      ...prevState,
-      ...resetState,
-      activeSectionsByPageId: allSectionsByPageId[uid],
-      page_id: __node.uid,
-      parentNode: __node,
-      activeSubSectionsBySectionId: [],
-    }))
-  } else {
-    fetchData()
-  }
-}
+//   if (allSectionsByPageId[uid]) {
+//     setState((prevState) => ({
+//       ...prevState,
+//       ...resetState,
+//       activeSectionsByPageId: allSectionsByPageId[uid],
+//       page_id: __node.uid,
+//       parentNode: __node,
+//       activeSubSectionsBySectionId: [],
+//     }))
+//   } else {
+//     fetchData()
+//   }
+// }
 
-export const getSubSections = (
-  __node: DocNode,
-  setState: ReadBookAction | EditBookAction,
-  allSubSectionsBySectionId: GroupedNodesById,
-  doc_id: number,
-  // setStatus: PageStatusDispatchAction,
-) => {
-  const { uid } = __node
-  const url = `/book/get/sub_sections?doc_id=${doc_id}&page_id=${uid}`
-  if (allSubSectionsBySectionId[uid]) {
-    setState((prevState) => ({
-      ...prevState,
-      ...resetState,
-      activeSubSectionsBySectionId: allSubSectionsBySectionId[uid],
-      section_id: __node.uid,
-      parentNode: __node,
-    }))
-  } else {
-    axiosInstance.get(url).then(({ data }) => {
-      const res = orderNodes(data, __node)
-      setState((prevState) => ({
-        ...prevState,
-        ...resetState,
-        activeSubSectionsBySectionId: res,
-        allSubSectionsBySectionId: {
-          ...allSubSectionsBySectionId,
-          [uid]: res,
-        },
-        section_id: __node.uid,
-        parentNode: __node,
-      }))
-    })
-  }
-}
+// export const getSubSections = <T extends ReadBookState | EditBookState>(
+//   __node: DocNode,
+//   setState: React.Dispatch<React.SetStateAction<T>>,
+//   allSubSectionsBySectionId: GroupedNodesById,
+//   doc_id: number,
+//   // setStatus: PageStatusDispatchAction,
+// ) => {
+//   const { uid } = __node
+//   const url = `/book/get/sub_sections?doc_id=${doc_id}&page_id=${uid}`
+//   if (allSubSectionsBySectionId[uid]) {
+//     setState((prevState) => ({
+//       ...prevState,
+//       ...resetState,
+//       activeSubSectionsBySectionId: allSubSectionsBySectionId[uid],
+//       section_id: __node.uid,
+//       parentNode: __node,
+//     }))
+//   } else {
+//     axiosInstance.get(url).then(({ data }) => {
+//       const res = orderNodes(data, __node)
+//       setState((prevState) => ({
+//         ...prevState,
+//         ...resetState,
+//         activeSubSectionsBySectionId: res,
+//         allSubSectionsBySectionId: {
+//           ...allSubSectionsBySectionId,
+//           [uid]: res,
+//         },
+//         section_id: __node.uid,
+//         parentNode: __node,
+//       }))
+//     })
+//   }
+// }
 
 /**
  *
