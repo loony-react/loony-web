@@ -11,13 +11,12 @@ import { IoEye, IoEyeOff } from "react-icons/io5"
 import { AuthContext } from "../context/AuthContext.tsx"
 
 const Login = ({
-  isMobile,
   notificationContext,
 }: {
   isMobile: boolean
   notificationContext: NotificationContextProps
 }) => {
-  const { onLogin, error } = useLogin()
+  const { onLogin } = useLogin()
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -63,13 +62,13 @@ const Login = ({
 
   return (
     <div className="w-120 mx-auto mt-10 p-6 bg-white dark:bg-[#2e2e2e] dark:text-white shadow-md rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold mb-6">Login</h2>
+      <div className="flex justify-center">
+        <h2 className="text-2xl font-bold mb-6">Login</h2>
+      </div>
       <form onSubmit={onHandleLogin} className="space-y-4">
         {/* Username / Email Input */}
         <div>
-          <label className="block text-sm font-medium mb-1">
-            Username or Email
-          </label>
+          <label className="block text-sm mb-2">Username or Email</label>
           <input
             type="text"
             name="username"

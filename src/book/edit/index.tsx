@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useContext } from "react"
-import { createImageUrl, extractImage, getNav } from "loony-utils"
+import { useContext } from "react"
+import { createImageUrl, extractImage, useEditBookNodes } from "loony-utils"
 import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import ViewContent from "../../components/ViewContent.tsx"
@@ -8,7 +8,6 @@ import {
   AppRouteProps,
   EditBookState,
   PageStatus,
-  PageState,
   DocNode,
   EditBookAction,
 } from "loony-types"
@@ -25,6 +24,7 @@ import {
 import { LeftNav } from "./LeftNav.tsx"
 import { RightNavView } from "components/RightNav.tsx"
 import { ButtonIcon } from "loony-ui"
+import { useGetBookNav } from "loony-api"
 
 export default function Edit(props: AppRouteProps) {
   const { isMobile, appContext, authContext, mobileNavOpen, setMobileNavOpen } =
@@ -35,33 +35,11 @@ export default function Edit(props: AppRouteProps) {
   const doc_id = bookId && parseInt(bookId)
   const navigate = useNavigate()
   const { setAppContext } = useContext(AppContext)
-  const [status, setStatus] = useState<PageState>({
-    status: PageStatus.IDLE,
-    error: "",
-  })
-  const [state, setState] = useState<EditBookState>({
-    mainNode: null,
-    childNodes: [],
-    form: STATE_VALUES.form,
-    modal: STATE_VALUES.modal,
-    parentNode: null,
-    topNode: null,
-    page_id: null,
-    section_id: null,
-    groupNodesById: {},
-    navNodes: [],
-    frontPage: null,
-    addNode: null,
-    deleteNode: null,
-    editNode: null,
-    doc_id: doc_id as number,
-  })
-
-  useEffect(() => {
-    if (doc_id) {
-      getNav(doc_id, setState, setStatus)
-    }
-  }, [doc_id])
+  const { data: book_data } = useGetBookNav(doc_id)
+  const { state, setState, pageStatus } = useEditBookNodes(
+    book_data,
+    doc_id as number,
+  )
 
   const viewFrontPage = () => {
     setState({
@@ -73,7 +51,7 @@ export default function Edit(props: AppRouteProps) {
       form: STATE_VALUES.form,
     })
   }
-  if (status.status !== PageStatus.VIEW_PAGE)
+  if (pageStatus.status !== PageStatus.VIEW_PAGE)
     return <PageLoadingContainer title="" />
 
   const { parentNode, childNodes, mainNode } = state

@@ -1,6 +1,21 @@
 import { useState } from "react"
-import { login, register } from "./api"
+import { login, logout, register } from "./api"
 import { handleError } from "./query"
+
+export const useLogout = () => {
+  const onLogout = (onSuccess, onError) => {
+    logout()
+      .then((res) => {
+        onSuccess(res.data)
+      })
+      .catch((err) => {
+        const appError = handleError(err)
+        onError(appError)
+      })
+  }
+
+  return { onLogout }
+}
 
 export const useLogin = () => {
   const [error, setError] = useState({

@@ -1,4 +1,4 @@
-import { createImageUrl, extractImage, useOrderBookNodes } from "loony-utils"
+import { createImageUrl, extractImage, useBookNodes } from "loony-utils"
 import { useGetBookNav } from "loony-api"
 import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
@@ -15,7 +15,7 @@ const View = (props: AppRouteProps) => {
   const doc_id = bookId && parseInt(bookId)
 
   const { data: book_data } = useGetBookNav(doc_id)
-  const { state, setState, pageStatus } = useOrderBookNodes(book_data)
+  const { state, setState, pageStatus } = useBookNodes(book_data)
 
   const viewFrontPage = () => {
     setState({

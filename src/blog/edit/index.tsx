@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useContext } from "react"
+import { useContext } from "react"
 import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
-import { createImageUrl, extractImage, getBlogNodes } from "loony-utils"
+import { createImageUrl, extractImage, useEditBlogNodes } from "loony-utils"
 import { AppRouteProps, Auth, EditBlogState, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
 import { useCallback } from "react"
@@ -25,6 +24,7 @@ import {
   onCancel,
 } from "./utils.ts"
 import { AppContext } from "context/AppContext.tsx"
+import { useGetBlogNodes } from "loony-api"
 
 export default function Edit(props: AppRouteProps) {
   const { appContext, authContext } = props
@@ -37,36 +37,8 @@ export default function Edit(props: AppRouteProps) {
   const base_url = props.appContext.env.base_url
   const { user } = authContext as Auth
 
-  const [state, setState] = useState<EditBlogState>({
-    mainNode: null,
-    parentNode: null,
-    addNode: null,
-    editNode: null,
-    nodeIndex: null,
-    topNode: null,
-    doc_id: doc_id as number,
-    childNodes: [],
-    form: {
-      method: "",
-      nodeType: 0,
-    },
-    modal: {
-      method: "",
-      nodeType: 0,
-      title: "",
-    },
-    deleteNode: null,
-  })
-  const [status, setStatus] = useState({
-    status: PageStatus.IDLE,
-    error: "",
-  })
-
-  useEffect(() => {
-    if (doc_id) {
-      getBlogNodes(doc_id, setState, setStatus)
-    }
-  }, [doc_id])
+  const { data } = useGetBlogNodes(doc_id)
+  const { state, setState, status } = useEditBlogNodes(data, doc_id as number)
 
   const { mainNode, childNodes } = state
 

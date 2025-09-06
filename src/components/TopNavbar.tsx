@@ -3,7 +3,7 @@
 import { useNavigate, NavigateFunction } from "react-router"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { AuthStatus } from "loony-types"
-import { axiosInstance } from "loony-api"
+import { axiosInstance, useLogout } from "loony-api"
 import type { AppContextProps, AuthContextProps } from "loony-types"
 import { Menu } from "lucide-react"
 import {} from "./"
@@ -19,16 +19,21 @@ const Navigation = ({
 }) => {
   const navigate: NavigateFunction = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
+  const { onLogout } = useLogout()
+
+  const onLogoutSuccess = useCallback(() => {
+    authContext.setAuthContext({
+      status: AuthStatus.UNAUTHORIZED,
+      user: null,
+    })
+    navigate("/", { replace: true })
+  }, [authContext, navigate])
+
+  const onLogoutError = () => {}
 
   const logoutUser = useCallback(() => {
-    axiosInstance.post("/auth/logout").then(() => {
-      authContext.setAuthContext({
-        status: AuthStatus.UNAUTHORIZED,
-        user: null,
-      })
-      navigate("/", { replace: true })
-    })
-  }, [])
+    onLogout(onLogoutSuccess, onLogoutError)
+  }, [onLogout, onLogoutSuccess])
 
   return (
     <nav className="bg-white dark:bg-[#232323] border-b border-gray-200 dark:border-stone-900 text-black dark:text-white py-2">

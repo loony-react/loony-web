@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react"
 import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
-import { createImageUrl, extractImage, getBlogNodes } from "loony-utils"
-import { AppRouteProps, ReadBlogState, PageStatus } from "loony-types"
+import { createImageUrl, extractImage, useBlogNodes } from "loony-utils"
+import { AppRouteProps, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
 import { RightNavEdit } from "components/RightNav.tsx"
+import { useGetBlogNodes } from "loony-api"
 
 const View = (props: AppRouteProps) => {
   const { authContext, appContext } = props
@@ -14,22 +14,8 @@ const View = (props: AppRouteProps) => {
   const { user } = authContext
   const doc_id = blogId && parseInt(blogId)
 
-  const [state, setState] = useState<ReadBlogState>({
-    mainNode: null,
-    childNodes: [],
-    topNode: null,
-    doc_id: doc_id as number,
-  })
-  const [status, setStatus] = useState({
-    status: PageStatus.IDLE,
-    error: "",
-  })
-
-  useEffect(() => {
-    if (doc_id) {
-      getBlogNodes(doc_id, setState, setStatus)
-    }
-  }, [doc_id])
+  const { data } = useGetBlogNodes(doc_id as number)
+  const { state, status } = useBlogNodes(data, doc_id as number)
 
   if (status.status !== PageStatus.VIEW_PAGE)
     return <PageLoadingContainer title="" />

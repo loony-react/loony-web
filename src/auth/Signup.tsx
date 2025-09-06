@@ -11,14 +11,13 @@ import { IoEye, IoEyeOff } from "react-icons/io5"
 import { AuthContext } from "context/AuthContext"
 
 const Signup = ({
-  isMobile,
   notificationContext,
 }: {
   isMobile: boolean
   notificationContext: NotificationContextProps
 }) => {
   // Hooks
-  const { onSignup, error } = useSignup()
+  const { onSignup } = useSignup()
   const authContext = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -70,7 +69,9 @@ const Signup = ({
 
   return (
     <div className="w-120 mx-auto mt-10 p-6 shadow-md dark:bg-[#2e2e2e] rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold mb-6">Signup</h2>
+      <div className="flex justify-center">
+        <h2 className="text-2xl font-bold mb-6">Sign up</h2>
+      </div>
       <form onSubmit={onHandleSignup} className="space-y-4">
         {/* Username / Email Input */}
         <div>
