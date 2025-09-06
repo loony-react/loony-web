@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { axiosInstance } from 'loony-api'
-import { AuthStatus } from 'loony-types'
-import PageLoader from '../components/PageLoader.tsx'
-import { Auth, AuthContextProps } from 'loony-types'
+import React, { useEffect, useState } from "react"
+import { AuthStatus } from "loony-types"
+import PageLoader from "../components/PageLoader.tsx"
+import { Auth, AuthContextProps } from "loony-types"
+import { getUserInfo } from "api/index.ts"
 
 const authState: Auth = {
   status: AuthStatus.IDLE,
@@ -18,13 +18,12 @@ export const AuthContext = React.createContext<AuthContextProps>({
 
 const useAuthSession = (): [
   Auth,
-  React.Dispatch<React.SetStateAction<Auth>>
+  React.Dispatch<React.SetStateAction<Auth>>,
 ] => {
   const [authContext, setAuthContext] = useState(authState)
 
   useEffect(() => {
-    axiosInstance
-      .get('/auth/user/session')
+    getUserInfo()
       .then(({ data }) => {
         setAuthContext({
           user: data,
@@ -48,19 +47,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   if (authContext.status === AuthStatus.IDLE)
     return (
       <div className="book-container">
-        <div style={{ display: 'flex', flexDirection: 'row', height: '100%' }}>
+        <div style={{ display: "flex", flexDirection: "row", height: "100%" }}>
           <div
             style={{
-              width: '20%',
+              width: "20%",
               paddingTop: 15,
-              borderRight: '1px solid #ebebeb',
+              borderRight: "1px solid #ebebeb",
             }}
           />
           <div
             style={{
-              width: '100%',
+              width: "100%",
               paddingTop: 15,
-              paddingLeft: '5%',
+              paddingLeft: "5%",
               paddingBottom: 50,
             }}
           >

@@ -33,13 +33,15 @@ const Signup = ({
     setFormData({ ...formData, [name]: value })
   }
 
-  const onHandleSignup = () =>
+  const onHandleSignup = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     onSignup({
       formData,
       notificationContext,
       navigate,
       setFormError,
     })
+  }
 
   return (
     <div className="w-120 mx-auto mt-10 p-6 shadow-md dark:bg-[#2e2e2e] rounded-lg shadow-lg">

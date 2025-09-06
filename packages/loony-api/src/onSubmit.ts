@@ -4,8 +4,9 @@ import {
   NotificationContextProps,
   NotificationState,
 } from "loony-types"
-import { axiosInstance, handleError } from "./index"
+import { axiosInstance } from "./index"
 import { NavigateFunction } from "react-router"
+import { handleError } from "./query"
 
 export const onLogin = ({
   formData,

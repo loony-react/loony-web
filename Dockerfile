@@ -1,30 +1,20 @@
-# Stage 1: Build the React app using Node 18.20.5 (alpine)
-FROM node:18.20.5-alpine AS builder
-
-# Set working directory
-WORKDIR /app
-
-# Install dependencies
-COPY package.json package-lock.json ./
-RUN npm install
-
-# Copy rest of the source code
-COPY . .
-
-# Build the production version
-RUN npm run build
-
-# Stage 2: Serve the app using nginx
+# Use an official Nginx image as the base
 FROM nginx:stable-alpine
 
-# Copy built files from builder
-COPY --from=builder /app/build /usr/share/nginx/html
+# Set the working directory
+WORKDIR /usr/share/nginx/html
 
-# Optional: Use a custom nginx config for React Router support
-# COPY nginx.conf /etc/nginx/nginx.conf
+# Remove default static files
+RUN rm -rf ./*
 
-# Expose port
+# Copy the built React app from local dist directory to Nginx's html directory
+COPY dist/ /usr/share/nginx/html
+
+# Copy custom Nginx config if needed (optional)
+# COPY local/nginx.conf /etc/nginx/nginx.conf
+
+# Expose port 80
 EXPOSE 80
 
-# Start nginx
+# Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]

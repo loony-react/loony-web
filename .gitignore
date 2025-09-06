@@ -30,3 +30,4 @@ build/
 .yarn/
 scripts/deploy.sh
 run.sh
+local/

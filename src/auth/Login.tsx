@@ -1,7 +1,12 @@
 import { useContext, useState } from "react"
 import { Link, useNavigate } from "react-router"
-import { NotificationContextProps } from "loony-types"
-import { onLogin } from "loony-api"
+import {
+  AuthStatus,
+  NotificationContextProps,
+  NotificationState,
+  User,
+} from "loony-types"
+import { useLogin } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
 
 const Login = ({
@@ -11,14 +16,10 @@ const Login = ({
   isMobile: boolean
   notificationContext: NotificationContextProps
 }) => {
+  const { onLogin, error } = useLogin()
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-  })
-  const [viewPassword, setViewPassword] = useState(false)
-  const [formError, setFormError] = useState({
-    label: "",
-    message: "",
   })
 
   const navigate = useNavigate()
@@ -30,16 +31,30 @@ const Login = ({
     setFormData({ ...formData, [name]: value })
   }
 
+  const onSuccess = (data: User) => {
+    authContext.setAuthContext({
+      status: AuthStatus.AUTHORIZED,
+      user: data,
+    })
+    navigate("/", {})
+  }
+
+  const onFailed = (err: any) => {
+    notificationContext.setNotificationContext(
+      (prevState: NotificationState) => ({
+        ...prevState,
+        alert: {
+          title: "Error",
+          content: err,
+          status: "error",
+        },
+      }),
+    )
+  }
+
   const onHandleLogin = (e: any) => {
     e.preventDefault()
-    setFormError({ label: "", message: "" })
-    onLogin({
-      formData,
-      setFormError,
-      authContext,
-      notificationContext,
-      navigate,
-    })
+    onLogin(formData, onSuccess, onFailed)
   }
 
   return (
