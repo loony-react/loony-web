@@ -61,92 +61,94 @@ const Route = ({
       {notificationContext.alert && (
         <Alert alert={notificationContext.alert} onClose={onCloseAlert} />
       )}
-      <Navigation
-        authContext={authContext}
-        appContext={appContext}
-        setMobileNavOpen={setMobileNavOpen}
-      />
       {authContext.status === AuthStatus.AUTHORIZED && (
-        <Routes>
-          <ReactRoute path="/" element={<Home {...props} />} />
-          <ReactRoute
-            path="/view/book/:bookId"
-            element={<BookView {...props} />}
+        <>
+          <Navigation
+            authContext={authContext}
+            appContext={appContext}
+            setMobileNavOpen={setMobileNavOpen}
           />
-          <ReactRoute
-            path="/view/blog/:blogId"
-            element={<BlogView {...props} />}
-          />
-          <ReactRoute
-            path="/create/book"
-            element={
-              <CreateNewDocument
-                url={CREATE_BOOK}
-                docType="book"
-                title="Create Book"
-                {...props}
-              />
-            }
-          />
-          <ReactRoute
-            path="/create/blog"
-            element={
-              <CreateNewDocument
-                docType="blog"
-                url={CREATE_BLOG}
-                title="Create Blog"
-                {...props}
-              />
-            }
-          />
-          <ReactRoute
-            path="/edit/book/:bookId"
-            element={<EditBook {...props} />}
-          />
-          <ReactRoute
-            path="/edit/blog/:blogId"
-            element={<EditBlog {...props} />}
-          />
-          <ReactRoute path="/profile" element={<Profile {...props} />} />
-          <ReactRoute
-            path="/policies/ContentPolicy"
-            element={
-              <Suspense
-                fallback={
-                  <PageLoadingContainer title="Content Policy" {...props} />
-                }
-              >
-                <ContentPolicy />
-              </Suspense>
-            }
-          />
-          <ReactRoute
-            path="/policies/PrivacyPolicy"
-            element={
-              <Suspense
-                fallback={
-                  <PageLoadingContainer title="Privacy Policy" {...props} />
-                }
-              >
-                <PrivacyPolicy />
-              </Suspense>
-            }
-          />
-          <ReactRoute
-            path="/policies/UserAgreement"
-            element={
-              <Suspense
-                fallback={
-                  <PageLoadingContainer title="User Agreement" {...props} />
-                }
-              >
-                <UserAgreement />
-              </Suspense>
-            }
-          />
-          <ReactRoute path="/unauthorized" element={<UnAuthorized />} />
-          <ReactRoute path="*" element={<NotFound />} />
-        </Routes>
+          <Routes>
+            <ReactRoute path="/" element={<Home {...props} />} />
+            <ReactRoute
+              path="/view/book/:bookId"
+              element={<BookView {...props} />}
+            />
+            <ReactRoute
+              path="/view/blog/:blogId"
+              element={<BlogView {...props} />}
+            />
+            <ReactRoute
+              path="/create/book"
+              element={
+                <CreateNewDocument
+                  url={CREATE_BOOK}
+                  docType="book"
+                  title="Create Book"
+                  {...props}
+                />
+              }
+            />
+            <ReactRoute
+              path="/create/blog"
+              element={
+                <CreateNewDocument
+                  docType="blog"
+                  url={CREATE_BLOG}
+                  title="Create Blog"
+                  {...props}
+                />
+              }
+            />
+            <ReactRoute
+              path="/edit/book/:bookId"
+              element={<EditBook {...props} />}
+            />
+            <ReactRoute
+              path="/edit/blog/:blogId"
+              element={<EditBlog {...props} />}
+            />
+            <ReactRoute path="/profile" element={<Profile {...props} />} />
+            <ReactRoute
+              path="/policies/ContentPolicy"
+              element={
+                <Suspense
+                  fallback={
+                    <PageLoadingContainer title="Content Policy" {...props} />
+                  }
+                >
+                  <ContentPolicy />
+                </Suspense>
+              }
+            />
+            <ReactRoute
+              path="/policies/PrivacyPolicy"
+              element={
+                <Suspense
+                  fallback={
+                    <PageLoadingContainer title="Privacy Policy" {...props} />
+                  }
+                >
+                  <PrivacyPolicy />
+                </Suspense>
+              }
+            />
+            <ReactRoute
+              path="/policies/UserAgreement"
+              element={
+                <Suspense
+                  fallback={
+                    <PageLoadingContainer title="User Agreement" {...props} />
+                  }
+                >
+                  <UserAgreement />
+                </Suspense>
+              }
+            />
+            <ReactRoute path="/unauthorized" element={<UnAuthorized />} />
+            <ReactRoute path="*" element={<NotFound />} />
+          </Routes>
+        </>
       )}
       {authContext.status === AuthStatus.UNAUTHORIZED && (
         <Routes>
