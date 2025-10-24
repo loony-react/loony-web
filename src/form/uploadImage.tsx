@@ -71,7 +71,8 @@ export default function UploadImage({
     reader.readAsDataURL(selectedFile)
   }
 
-  const uploadImage = async () => {
+  const uploadImage = (e: any) => {
+    e.preventDefault()
     const formData = new FormData()
     formData.append(
       "metadata",
@@ -82,8 +83,8 @@ export default function UploadImage({
     )
     formData.append("file", afterImageSelect.image as File)
 
-    await apiHttpClient
-      .post("/upload_file", formData, {
+    apiHttpClient
+      .post("/file/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -133,7 +134,7 @@ export default function UploadImage({
             </div>
           </div>
           <img
-            src={`${baseUrl}/tmp/${user?.uid}/340/${afterTmpImageUpload}`}
+            src={`${baseUrl}/file/tmp/${user?.uid}/340/${afterTmpImageUpload}`}
             alt="tmp file upload"
           />
         </div>

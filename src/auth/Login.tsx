@@ -115,7 +115,7 @@ const Login = ({
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 dark:bg-white dark:text-black text-white py-2 rounded-md hover:bg-blue-700 transition"
         >
           Sign In
         </button>
@@ -124,7 +124,7 @@ const Login = ({
         <span>Dont have an account?</span>
         <a
           href="/signup"
-          className="ml-1 font-medium text-blue-600 hover:underline"
+          className="ml-1 font-medium text-blue-600 dark:text-white hover:underline"
         >
           Register
         </a>

@@ -10,40 +10,40 @@ import { AuthContextProps } from "loony-types"
 
 function App() {
   return (
-    <div className="text-stone-800 dark:text-stone-50 bg-stone-50 dark:bg-[#292929]">
-      <AppProvider>
-        <NotificationProvider>
-          <AuthProvider>
-            <BrowserRouter>
-              <AppContext.Consumer>
-                {(appContext) => {
-                  return (
-                    <NotificationContext.Consumer>
-                      {(notificationContext) => {
-                        return (
-                          <AuthContext.Consumer>
-                            {(authContext: AuthContextProps) => {
-                              return (
-                                <Routes
-                                  authContext={authContext}
-                                  appContext={appContext}
-                                  notificationContext={notificationContext}
-                                />
-                              )
-                            }}
-                          </AuthContext.Consumer>
-                        )
-                      }}
-                    </NotificationContext.Consumer>
-                  )
-                }}
-              </AppContext.Consumer>
-            </BrowserRouter>
-          </AuthProvider>
-        </NotificationProvider>
-      </AppProvider>
-    </div>
+    <AppProvider>
+      <NotificationProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <AppContext.Consumer>
+              {(appContext) => {
+                return (
+                  <NotificationContext.Consumer>
+                    {(notificationContext) => {
+                      return (
+                        <AuthContext.Consumer>
+                          {(authContext: AuthContextProps) => {
+                            return (
+                              <Routes
+                                authContext={authContext}
+                                appContext={appContext}
+                                notificationContext={notificationContext}
+                              />
+                            )
+                          }}
+                        </AuthContext.Consumer>
+                      )
+                    }}
+                  </NotificationContext.Consumer>
+                )
+              }}
+            </AppContext.Consumer>
+          </BrowserRouter>
+        </AuthProvider>
+      </NotificationProvider>
+    </AppProvider>
   )
 }
 
 export default App
+
+// className="text-stone-800 dark:text-stone-50 bg-stone-50 dark:bg-[#292929]"

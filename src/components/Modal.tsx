@@ -9,7 +9,6 @@ export default function DeleteModal({
   confirm: (e: any) => void
   title?: string
 }) {
-  console.log(title)
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/60">
       <div className="bg-white dark:bg-[#2e2e2e] rounded-lg shadow-lg w-full max-w-sm p-6">

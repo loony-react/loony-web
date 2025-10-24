@@ -36,29 +36,27 @@ const Navigation = ({
   }, [onLogout, onLogoutSuccess])
 
   return (
-    <nav className="bg-white dark:bg-[#232323] border-b border-gray-200 dark:border-stone-900 text-black dark:text-white py-2">
-      <div className="mx-auto flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex items-center pl-5">
-          <Menu
-            className="block lg:hidden mr-2"
-            onClick={() => {
-              setMobileNavOpen((prevState: boolean) => !prevState)
-            }}
-          />
-          <a href="/" className="text-xl font-bold">
-            Loony
-          </a>
-        </div>
+    <nav className="flex">
+      {/* Logo */}
+      <div className="w-72 py-2 px-4 bg-white dark:bg-[#131313] text-black dark:text-white">
+        <Menu
+          className="block lg:hidden mr-2"
+          onClick={() => {
+            setMobileNavOpen((prevState: boolean) => !prevState)
+          }}
+        />
+        <a href="/" className="text-xl font-bold">
+          Loony
+        </a>
+      </div>
 
-        {/* Menu */}
-        <div className="hidden md:flex md:items-center pr-10">
-          {authContext.status === AuthStatus.AUTHORIZED ? (
-            <AuthNavRight logoutUser={logoutUser} />
-          ) : (
-            <NotAuthNavRight />
-          )}
-        </div>
+      {/* Menu */}
+      <div className="flex-1 flex justify-end dark:bg-[#212121] text-black dark:text-white hidden md:flex md:items-center pr-10 py-2 px-4">
+        {authContext.status === AuthStatus.AUTHORIZED ? (
+          <AuthNavRight logoutUser={logoutUser} />
+        ) : (
+          <NotAuthNavRight />
+        )}
       </div>
     </nav>
   )

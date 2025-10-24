@@ -57,7 +57,7 @@ const Route = ({
   }
 
   return (
-    <div className="h-screen flex flex-col">
+    <>
       {notificationContext.alert && (
         <Alert alert={notificationContext.alert} onClose={onCloseAlert} />
       )}
@@ -210,7 +210,7 @@ const Route = ({
           <ReactRoute path="*" element={<NotFound />} />
         </Routes>
       )}
-    </div>
+    </>
   )
 }
 

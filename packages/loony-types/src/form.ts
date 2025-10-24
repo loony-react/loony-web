@@ -38,7 +38,7 @@ export type AfterImageSelect = {
 }
 
 export type EditImageComponentProps = {
-  uploadImage: () => void
+  uploadImage: (e: React.MouseEvent<HTMLButtonElement>) => void
   onSelectImage: React.ChangeEventHandler<HTMLInputElement>
   imageEdit: string | null
   setCropImageMetadata: React.Dispatch<React.SetStateAction<CropImageMetadata>>

@@ -2,7 +2,7 @@ import { apiHttpClient, authHttpClient } from "./httpClient"
 
 export const login = (creds) => authHttpClient.post("/login", creds)
 export const logout = () => authHttpClient.post("/logout")
-export const register = (creds) => authHttpClient.post("/register", creds)
+export const register = (creds) => authHttpClient.post("/signup", creds)
 
 /** User */
 export const getUserInfo = () => authHttpClient.get("/user/userInfo")

@@ -2,7 +2,6 @@
 import { useState, useContext } from "react"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
-import "react-easy-crop/react-easy-crop.css"
 import type {
   AuthContextProps,
   AppContextProps,
@@ -31,7 +30,6 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
     docType,
   } = props
 
-  console.log(props)
   const authContext = useContext<AuthContextProps>(AuthContext)
   const appContext = useContext<AppContextProps>(AppContext)
   const { base_url } = appContext.env

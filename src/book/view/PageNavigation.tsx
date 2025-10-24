@@ -40,7 +40,7 @@ export const PageNavigation = <T extends ReadBookState | EditBookState>({
 
   return (
     <div className="w-full flex h-screen">
-      <aside className="w-full border-r border-gray-200 dark:border-[#4d4d4d] overflow-y-auto py-4">
+      <aside className="w-full overflow-y-auto py-4">
         <nav className="text-sm">
           <div
             className="px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-[#ececec] dark:hover:bg-[#363636]"

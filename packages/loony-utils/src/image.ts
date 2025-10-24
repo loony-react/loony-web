@@ -36,7 +36,7 @@ export const createImageUrl = ({
   nodeId?: number
 }) => {
   return image && image.name
-    ? `${baseUrl}/${docType}/${nodeId}/${size || "340"}/${image.name}`
+    ? `${baseUrl}/file/${docType}/${nodeId}/${size || "340"}/${image.name}`
     : null
 }
 
@@ -53,6 +53,6 @@ export const createTmpImageUrl = ({
   userId?: number
 }) => {
   return image && image.name
-    ? `${baseUrl}/tmp/${userId}/${size || "340"}/${image.name}`
+    ? `${baseUrl}/file/tmp/${userId}/${size || "340"}/${image.name}`
     : null
 }
