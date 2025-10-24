@@ -15,9 +15,9 @@ const Home = (props: AppRouteProps) => {
   const books = useHomeBooks(authContext)
 
   return (
-    <div className="flex flex-1 overflow-hidden">
+    <div className="flex flex-1 overflow-hidden h-screen">
       <HomeLeftNavbar mobileNavOpen={mobileNavOpen} appContext={appContext} />
-      <main className="flex-1 bg-stone-50 dark:bg-[#212121] p-6 overflow-y-auto">
+      <main className="ml-72 p-4 flex-1 bg-stone-50 dark:bg-[#212121] overflow-y-auto mt-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           <Documents
             navigate={navigate}

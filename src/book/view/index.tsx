@@ -4,7 +4,7 @@ import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { AppRouteProps, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
-import { RightNavEdit } from "components/RightNav.tsx"
+// import { RightNavEdit } from "components/RightNav.tsx"
 import { PageNavigation } from "./PageNavigation.tsx"
 
 const View = (props: AppRouteProps) => {
@@ -40,24 +40,18 @@ const View = (props: AppRouteProps) => {
   })
 
   return (
-    <div className="text-stone-800 dark:text-stone-50 bg-stone-50 dark:bg-[#131313]">
-      <div className="h-full sm:w-[90%] md:w-[100%] mx-auto flex">
-        {/* Left Navbar */}
+    <div className="flex flex-1 overflow-hidden">
+      <PageNavigation
+        doc_id={doc_id}
+        setState={setState}
+        state={state}
+        viewFrontPage={viewFrontPage}
+        navNodes={navNodes}
+        {...props}
+      />
+      <main className="ml-64 h-screen flex-1 bg-stone-50 dark:bg-[#212121] p-6 mt-16">
         <div
-          className={`${mobileNavOpen ? "absolute top-0 left-0 z-10 w-[80%] bg-[#2d2d2d]" : "hidden"} h-full md:block md:w-[20%] lg:w-72`}
-        >
-          <PageNavigation
-            doc_id={doc_id}
-            setState={setState}
-            state={state}
-            viewFrontPage={viewFrontPage}
-            navNodes={navNodes}
-            {...props}
-          />
-        </div>
-
-        <div
-          className="h-full bg-[#212121] flex-1"
+          className="h-screen bg-[#212121] flex-1"
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -72,7 +66,7 @@ const View = (props: AppRouteProps) => {
             {parentNode && image ? (
               <img src={image} alt="" width="100%" className="mb-4" />
             ) : null}
-            <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+            <h2 className="text-4xl dark:text-white font-semibold mb-4 pb-2">
               {parentNode.title}
             </h2>
             <ViewContent source={parentNode.content} isDark={isDark} />
@@ -110,7 +104,7 @@ const View = (props: AppRouteProps) => {
             />
           </div>
         </div> */}
-      </div>
+      </main>
     </div>
   )
 }

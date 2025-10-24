@@ -35,10 +35,11 @@ const View = (props: AppRouteProps) => {
     return <PageLoadingContainer title="" />
 
   return (
-    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex bg-stone-50 text-stone-800 dark:bg-[#292929] dark:text-stone-50">
-      <div className="hidden md:block w-[20%]" />
-      <div className="sm:w-[90%] md:w-[60%] mb-50">
-        <div className="w-[90%] mx-[5%]">
+    <div className="flex flex-1 overflow-hidden">
+      <div className="fixed bg-gray-50 dark:bg-[#131313] text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16" />
+
+      <main className="ml-64 h-screen flex-1 bg-stone-50 dark:bg-[#212121] mt-16">
+        <div className="w-[45%] mx-auto">
           {image && (
             <img
               src={image}
@@ -46,7 +47,9 @@ const View = (props: AppRouteProps) => {
               className="w-full h-full object-cover mb-4"
             />
           )}
-          <h2 className="text-4xl font-semibold my-4">{mainNode.title}</h2>
+          <h2 className="text-4xl dark:text-white font-semibold my-4">
+            {mainNode.title}
+          </h2>
           <ViewContent source={mainNode.content} isDark={isDark} />
           {childNodes.map((node, id) => {
             return (
@@ -58,18 +61,14 @@ const View = (props: AppRouteProps) => {
               </>
             )
           })}
+          {/* <RightNavEdit
+              doc_id={doc_id as number}
+              authContext={authContext}
+              mainNode={mainNode}
+              docType="blog"
+            /> */}
         </div>
-      </div>
-      <div className="hidden md:block md:w-[18%]">
-        <div className="border-l border-gray-300 dark:border-[#4d4d4d]">
-          <RightNavEdit
-            doc_id={doc_id as number}
-            authContext={authContext}
-            mainNode={mainNode}
-            docType="blog"
-          />
-        </div>
-      </div>
+      </main>
     </div>
   )
 }

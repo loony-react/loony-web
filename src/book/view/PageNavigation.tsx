@@ -39,7 +39,7 @@ export const PageNavigation = <T extends ReadBookState | EditBookState>({
   if (!frontPage || !parentNode) return null
 
   return (
-    <div className="w-full flex h-screen">
+    <div className="fixed bg-gray-50 dark:bg-[#131313] text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16">
       <aside className="w-full overflow-y-auto py-4">
         <nav className="text-sm">
           <div

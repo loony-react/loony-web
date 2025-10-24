@@ -56,88 +56,86 @@ export default function Edit(props: AppRouteProps) {
     return <PageLoadingContainer title="" />
 
   return (
-    <div className="sm:w-[90%] md:w-[70%] mx-auto mt-4 flex bg-stone-50 text-stone-800 dark:bg-[#292929] dark:text-stone-50">
-      {state.modal.method === "delete" && (
-        <DeleteModal
-          cancel={() => {
-            onCancel({ setState })
-          }}
-          confirm={() => {
-            onConfirmDelete({
-              state,
-              setState,
-              setAppContext,
-              navigate,
-              doc_id: doc_id as number,
-            })
-          }}
-          title={state.modal.title}
-        />
-      )}
-      <div className="w-[20%]" />
-      <div className="w-[60%] mb-50">
-        {!state.form.method && (
-          <div className="w-[90%] mx-[5%]">
-            {image && (
-              <img
-                src={image}
-                alt="Video Thumbnail"
-                className="w-full h-full object-cover mb-4"
-              />
-            )}
-            <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
-              {mainNode.title}
-            </h2>
-            <ViewContent source={mainNode.content} isDark={isDark} />
-            <NodeSettings
-              state={state}
-              setState={setState}
-              node={mainNode}
-              nodeIndex={null}
-            />
-
-            {childNodes.map((node, id) => {
-              return (
-                <div key={id}>
-                  <h2 className="text-2xl font-semibold my-4 border-b border-gray-300">
-                    {node.title}
-                  </h2>
-                  <ViewContent source={node.content} isDark={isDark} />
-                  <NodeSettings
-                    state={state}
-                    setState={setState}
-                    node={node}
-                    nodeIndex={id}
-                  />
-                </div>
-              )
-            })}
-          </div>
-        )}
-        {state.form.method && (
-          <div className="w-[90%] mx-[5%]">
-            <EditComponent
-              state={state}
-              setState={setState}
-              doc_id={doc_id as number}
-              isMobile={false}
-            />
-          </div>
-        )}
-      </div>
-      <div className="hidden md:block md:w-[18%]">
-        <div className="border-l border-gray-300">
-          <RightNavView
-            authContext={props.authContext}
-            doc_id={doc_id as number}
-            mainNode={mainNode}
-            docType="blog"
-            deleteDoc={(e: any) => {
-              showModalToConfirmDeleteDoc(e, setState, mainNode.title)
+    <div className="flex flex-1 overflow-hidden">
+      <div className="fixed bg-gray-50 dark:bg-[#131313] text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16" />
+      <main className="ml-64 h-screen flex-1 bg-stone-50 dark:bg-[#212121] p-6 mt-16">
+        {state.modal.method === "delete" && (
+          <DeleteModal
+            cancel={() => {
+              onCancel({ setState })
             }}
+            confirm={() => {
+              onConfirmDelete({
+                state,
+                setState,
+                setAppContext,
+                navigate,
+                doc_id: doc_id as number,
+              })
+            }}
+            title={state.modal.title}
           />
+        )}
+        <div className="w-[45%] mx-auto pt-4">
+          {!state.form.method && (
+            <div className="w-[90%] mx-[5%]">
+              {image && (
+                <img
+                  src={image}
+                  alt="Video Thumbnail"
+                  className="w-full h-full object-cover mb-4"
+                />
+              )}
+              <h2 className="text-4xl dark:text-white font-semibold mb-8 pb-2">
+                {mainNode.title}
+              </h2>
+              <ViewContent source={mainNode.content} isDark={isDark} />
+              <NodeSettings
+                state={state}
+                setState={setState}
+                node={mainNode}
+                nodeIndex={null}
+              />
+
+              {childNodes.map((node, id) => {
+                return (
+                  <div key={id}>
+                    <h2 className="text-2xl font-semibold my-4 border-b border-gray-300">
+                      {node.title}
+                    </h2>
+                    <ViewContent source={node.content} isDark={isDark} />
+                    <NodeSettings
+                      state={state}
+                      setState={setState}
+                      node={node}
+                      nodeIndex={id}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+          )}
+          {state.form.method && (
+            <div className="w-[90%] mx-[5%]">
+              <EditComponent
+                state={state}
+                setState={setState}
+                doc_id={doc_id as number}
+                isMobile={false}
+              />
+            </div>
+          )}
         </div>
-      </div>
+        {/* <RightNavView
+              authContext={props.authContext}
+              doc_id={doc_id as number}
+              mainNode={mainNode}
+              docType="blog"
+              deleteDoc={(e: any) => {
+                showModalToConfirmDeleteDoc(e, setState, mainNode.title)
+              }}
+            /> */}
+      </main>
     </div>
   )
 }

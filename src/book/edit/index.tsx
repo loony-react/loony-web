@@ -17,10 +17,10 @@ import { AppContext } from "context/AppContext.tsx"
 import {
   onCancel,
   onConfirmDelete,
-  showModalToConfirmDeleteDoc,
+  // showModalToConfirmDeleteDoc,
 } from "./utils.ts"
 import { LeftNav } from "./LeftNav.tsx"
-import { RightNavView } from "components/RightNav.tsx"
+// import { RightNavView } from "components/RightNav.tsx"
 import { ButtonIcon } from "loony-ui"
 import { useGetBookNav } from "loony-api"
 import { Image } from "./Image.tsx"
@@ -51,103 +51,103 @@ export default function Edit(props: AppRouteProps) {
 
   const baseImageUrl = `${base_url}/book/${doc_id}`
   return (
-    <div className="h-full sm:w-[90%] md:w-[70%] mx-auto flex">
-      {/* Left Navbar */}
-      <div
-        className={`${mobileNavOpen ? "absolute top-0 left-0 z-10 w-[80%] bg-[#2d2d2d]" : "hidden"} h-full md:block md:w-[20%]`}
-      >
-        <LeftNav doc_id={doc_id} setState={setState} state={state} {...props} />
-      </div>
-
-      {/* Markdown Body */}
-      <div
-        className="h-full md:block md:w-[60%]"
-        onClick={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          if (device.type === "mobile") {
-            if (mobileNavOpen) {
-              setMobileNavOpen(false)
+    <div className="flex flex-1">
+      <LeftNav doc_id={doc_id} setState={setState} state={state} {...props} />
+      <main className="ml-64 h-screen flex-1 bg-stone-50 dark:bg-[#212121] p-6 mt-16">
+        {/* Markdown Body */}
+        <div
+          className="h-full bg-[#212121] flex-1 mt-16"
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            if (device.type === "mobile") {
+              if (mobileNavOpen) {
+                setMobileNavOpen(false)
+              }
             }
-          }
-        }}
-      >
-        {state.modal.method === "delete" && (
-          <DeleteModal
-            cancel={() => {
-              onCancel({ setState })
-            }}
-            confirm={() =>
-              onConfirmDelete({
-                state,
-                setState,
-                navigate,
-                doc_id: doc_id,
-                setAppContext,
-              })
-            }
-            title={state.modal.title}
-          />
-        )}
-        {!state.form.method && (
-          <div className="w-[90%] mx-[5%] pt-4">
-            <Image
-              baseUrl={baseImageUrl}
-              images={parentNode.images}
-              size={720}
+          }}
+        >
+          {state.modal.method === "delete" && (
+            <DeleteModal
+              cancel={() => {
+                onCancel({ setState })
+              }}
+              confirm={() =>
+                onConfirmDelete({
+                  state,
+                  setState,
+                  navigate,
+                  doc_id: doc_id,
+                  setAppContext,
+                })
+              }
+              title={state.modal.title}
             />
-            <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
-              {parentNode.title}
-            </h2>
-            <ViewContent source={parentNode.content} isDark={isDark} />
-            <NodeSettings state={state} setState={setState} node={parentNode} />
-            {childNodes &&
-              childNodes.map((childNode) => {
-                return (
-                  <div key={childNode.uid}>
-                    <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
-                      {childNode.title}
-                    </h2>
-                    <Image
-                      baseUrl={baseImageUrl}
-                      images={childNode.images}
-                      size={720}
-                    />
-                    <ViewContent source={childNode.content} isDark={isDark} />
-                    <NodeSettings
-                      state={state}
-                      setState={setState}
-                      node={childNode}
-                    />
-                  </div>
-                )
-              })}
-          </div>
-        )}
-        {state.form.method && (
-          <div className="w-[90%] mx-[5%] pt-4">
-            <EditComponent
-              state={state}
-              setState={setState}
-              doc_id={doc_id}
-              isMobile={isMobile}
-            />
-          </div>
-        )}
-      </div>
-      <div className="hidden md:block w-[18%] pt-4">
-        <div className="border-l border-gray-300 dark:border-[#4d4d4d]">
-          <RightNavView
-            doc_id={doc_id}
-            authContext={authContext}
-            mainNode={mainNode}
-            docType="book"
-            deleteDoc={(e: any) => {
-              showModalToConfirmDeleteDoc(e, setState, mainNode.title)
-            }}
-          />
+          )}
+          {!state.form.method && (
+            <div className="w-[45%] mx-auto pt-4">
+              <Image
+                baseUrl={baseImageUrl}
+                images={parentNode.images}
+                size={720}
+              />
+              <h2 className="text-4xl font-semibold dark:text-white mb-8 pb-2">
+                {parentNode.title}
+              </h2>
+              <ViewContent source={parentNode.content} isDark={isDark} />
+              <NodeSettings
+                state={state}
+                setState={setState}
+                node={parentNode}
+              />
+              {childNodes &&
+                childNodes.map((childNode) => {
+                  return (
+                    <div key={childNode.uid}>
+                      <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+                        {childNode.title}
+                      </h2>
+                      <Image
+                        baseUrl={baseImageUrl}
+                        images={childNode.images}
+                        size={720}
+                      />
+                      <ViewContent source={childNode.content} isDark={isDark} />
+                      <NodeSettings
+                        state={state}
+                        setState={setState}
+                        node={childNode}
+                      />
+                    </div>
+                  )
+                })}
+            </div>
+          )}
+          {state.form.method && (
+            <div className="w-[45%] mx-auto pt-4">
+              <EditComponent
+                state={state}
+                setState={setState}
+                doc_id={doc_id}
+                isMobile={isMobile}
+              />
+            </div>
+          )}
         </div>
-      </div>
+        {/* <div className="hidden md:block w-[18%] pt-4">
+          <div className="border-l border-gray-300 dark:border-[#4d4d4d]">
+            <RightNavView
+              doc_id={doc_id}
+              authContext={authContext}
+              mainNode={mainNode}
+              docType="book"
+              deleteDoc={(e: any) => {
+                showModalToConfirmDeleteDoc(e, setState, mainNode.title)
+              }}
+            />
+          </div>
+        </div> */}
+      </main>
     </div>
   )
 }

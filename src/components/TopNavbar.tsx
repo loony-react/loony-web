@@ -36,22 +36,22 @@ const Navigation = ({
   }, [onLogout, onLogoutSuccess])
 
   return (
-    <nav className="flex">
+    <nav className="flex fixed w-full h-16 py-auto">
       {/* Logo */}
-      <div className="w-72 py-2 px-4 bg-white dark:bg-[#131313] text-black dark:text-white">
-        <Menu
+      <div className="flex items-center w-72 px-4 bg-white dark:bg-[#131313] text-black dark:text-white">
+        {/* <Menu
           className="block lg:hidden mr-2"
           onClick={() => {
             setMobileNavOpen((prevState: boolean) => !prevState)
           }}
-        />
+        /> */}
         <a href="/" className="text-xl font-bold">
           Loony
         </a>
       </div>
 
       {/* Menu */}
-      <div className="flex-1 flex justify-end dark:bg-[#212121] text-black dark:text-white hidden md:flex md:items-center pr-10 py-2 px-4">
+      <div className="flex-1 flex items-center justify-end dark:bg-[#212121] text-black dark:text-white hidden md:flex md:items-center pr-10 py-2 px-4">
         {authContext.status === AuthStatus.AUTHORIZED ? (
           <AuthNavRight logoutUser={logoutUser} />
         ) : (
