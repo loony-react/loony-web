@@ -35,10 +35,10 @@ const View = (props: AppRouteProps) => {
     return <PageLoadingContainer title="" />
 
   return (
-    <div className="flex flex-1 overflow-hidden">
+    <div>
       <div className="fixed bg-gray-50 dark:bg-[#131313] text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16" />
 
-      <main className="ml-64 h-screen flex-1 bg-stone-50 dark:bg-[#212121] mt-16">
+      <main className="flex-1 h-screen ml-64 bg-stone-50 dark:bg-[#212121] pt-16">
         <div className="w-[45%] mx-auto">
           {image && (
             <img
@@ -61,14 +61,16 @@ const View = (props: AppRouteProps) => {
               </>
             )
           })}
-          {/* <RightNavEdit
-              doc_id={doc_id as number}
-              authContext={authContext}
-              mainNode={mainNode}
-              docType="blog"
-            /> */}
         </div>
       </main>
+      <div className="fixed bottom-0 right-16 mb-4 mx-auto">
+        <RightNavEdit
+          doc_id={doc_id as number}
+          authContext={authContext}
+          mainNode={mainNode}
+          docType="blog"
+        />
+      </div>
     </div>
   )
 }

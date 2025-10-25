@@ -49,7 +49,7 @@ const View = (props: AppRouteProps) => {
         navNodes={navNodes}
         {...props}
       />
-      <main className="flex-1 h-screen ml-64 bg-stone-50 dark:bg-[#212121] p-6">
+      <main className="flex-1 h-screen ml-64 bg-stone-50 dark:bg-[#212121] pt-16">
         <div
           className="bg-gray-50"
           onClick={(e) => {

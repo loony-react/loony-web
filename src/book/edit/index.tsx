@@ -61,7 +61,7 @@ export default function Edit(props: AppRouteProps) {
   return (
     <div>
       <LeftNav doc_id={doc_id} setState={setState} state={state} {...props} />
-      <main className="flex-1 h-screen ml-64 bg-stone-50 dark:bg-[#212121] p-6">
+      <main className="flex-1 h-screen ml-64 bg-stone-50 dark:bg-[#212121] pt-16">
         {/* Markdown Body */}
         <div
           className="bg-gray-50"
