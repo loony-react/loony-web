@@ -9,6 +9,7 @@ import type {
   UploadImageState,
 } from "loony-types"
 import { MdImage, MdOutlineClear, MdUpload } from "react-icons/md"
+import { ButtonIcon } from "loony-ui"
 
 export default function UploadImage({
   baseUrl,
@@ -259,14 +260,12 @@ const SelectImage = ({
             className="hidden"
             ref={inputRef}
           />
-          <button
-            data-slot="button"
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 mt-4 border border-gray-400 dark:border-[#636363] dark:text-white"
-            onClick={handleButtonClick}
-          >
-            <MdUpload size={21} color="#636363" />
-            Select image
-          </button>
+          <div className="my-4">
+            <ButtonIcon onClick={handleButtonClick}>
+              <MdUpload size={21} color="#636363" />
+              Select image
+            </ButtonIcon>
+          </div>
         </div>
       </div>
     </div>

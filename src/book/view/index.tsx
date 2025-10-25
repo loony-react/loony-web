@@ -1,6 +1,6 @@
 import { createImageUrl, extractImage, useBookNodes } from "loony-utils"
 import { useGetBookNav } from "loony-api"
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { AppRouteProps, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
@@ -8,33 +8,44 @@ import { RightNavEdit } from "components/RightNav.tsx"
 import { PageNavigation } from "./PageNavigation.tsx"
 
 const View = (props: AppRouteProps) => {
-  const { appContext, authContext, mobileNavOpen, setMobileNavOpen } = props
-  const { isDark, device } = appContext
-  const { base_url } = appContext.env
-  const { bookId } = useParams()
-  const doc_id = bookId && parseInt(bookId)
+  const {
+    appContext: {
+      isDark,
+      device,
+      env: { base_url },
+    },
+    authContext,
+    mobileNavOpen,
+    setMobileNavOpen,
+  } = props
 
-  const { data: book_data } = useGetBookNav(doc_id)
-  const { state, setState, pageStatus } = useBookNodes(book_data)
+  const navigate = useNavigate()
+  const { bookId } = useParams()
+  const docId = bookId ? Number(bookId) : null
+
+  const { data: bookData } = useGetBookNav(docId)
+  const { state, setState, pageStatus } = useBookNodes(bookData)
 
   const { parentNode, navNodes, frontPage, childNodes, mainNode } = state
 
+  // Early returns for clarity and performance
   if (pageStatus.status !== PageStatus.VIEW_PAGE)
     return <PageLoadingContainer title="" />
 
-  if (!parentNode || !mainNode || !frontPage || !doc_id) return null
-  const viewFrontPage = () => {
-    setState({
-      ...state,
-      page_id: state.frontPage?.uid || null,
-      parentNode: frontPage,
+  if (!parentNode || !mainNode || !frontPage || !docId) return null
+
+  const viewFrontPage = () =>
+    setState((prev) => ({
+      ...prev,
+      page_id: prev.frontPage?.uid ?? null,
+      parentNode: prev.frontPage,
       childNodes: [],
-    })
-  }
+    }))
+
   const image = createImageUrl({
     docType: "book",
     baseUrl: base_url,
-    nodeId: doc_id,
+    nodeId: docId,
     image: extractImage(parentNode.images),
     size: 720,
   })
@@ -42,7 +53,7 @@ const View = (props: AppRouteProps) => {
   return (
     <div className="min-h-screen">
       <PageNavigation
-        doc_id={doc_id}
+        doc_id={docId}
         setState={setState}
         state={state}
         viewFrontPage={viewFrontPage}
@@ -74,7 +85,7 @@ const View = (props: AppRouteProps) => {
                 const nodeImage = createImageUrl({
                   docType: "book",
                   baseUrl: base_url,
-                  nodeId: doc_id,
+                  nodeId: docId,
                   image: extractImage(childNode.images),
                   size: 720,
                 })
@@ -97,10 +108,11 @@ const View = (props: AppRouteProps) => {
 
       <div className="fixed bottom-0 right-16 mb-4 mx-auto">
         <RightNavEdit
-          doc_id={doc_id}
+          doc_id={docId}
           authContext={authContext}
           mainNode={mainNode}
           docType="book"
+          navigate={navigate}
         />
       </div>
     </div>

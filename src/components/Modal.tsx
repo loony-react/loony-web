@@ -1,4 +1,4 @@
-import { CancelButton, DeleteButton } from "loony-ui"
+import { BorderButton, DeleteButton } from "loony-ui"
 
 export default function DeleteModal({
   cancel,
@@ -20,7 +20,7 @@ export default function DeleteModal({
         </p>
         <p className="text-blue-600 dark:text-red-300 text-lg mb-6">{title}</p>
         <div className="flex justify-end space-x-2">
-          <CancelButton onClick={cancel} />
+          <BorderButton onClick={cancel} />
           <DeleteButton onClick={confirm} />
         </div>
       </div>

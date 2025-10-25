@@ -154,6 +154,7 @@ export default function Edit(props: AppRouteProps) {
           deleteDoc={(e: any) => {
             showModalToConfirmDeleteDoc(e, setState, mainNode.title)
           }}
+          navigate={navigate}
         />
       </div>
     </div>

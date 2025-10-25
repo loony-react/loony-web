@@ -21,7 +21,7 @@ export const TextArea = (props: TextAreaProps) => {
             <button
               key={m.id}
               onClick={() => props.setContentType(m.id)}
-              className={`flex-1 text-sm font-medium px-4 py-2 text-center transition-colors duration-200 ${
+              className={`flex-1 text-sm font-medium px-4 py-2 text-center dark:text-gray-200 transition-colors duration-200 ${
                 props.contentType === m.id
                   ? "border-b-2 border-primary text-primary"
                   : "text-muted-foreground hover:text-foreground"
@@ -37,7 +37,7 @@ export const TextArea = (props: TextAreaProps) => {
           rows={12}
           value={props.formContent}
           placeholder={`Content...`}
-          className="w-full bg-transparent resize-none outline-none text-sm text-foreground placeholder:text-muted-foreground"
+          className="w-full bg-transparent resize-none outline-none text-sm text-foreground dark:text-gray-200 placeholder:text-muted-foreground"
           onChange={(event) => {
             props.setFormContent(event.target.value)
           }}

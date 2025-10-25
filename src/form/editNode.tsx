@@ -18,7 +18,7 @@ import { AppContext } from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
 import type { Auth, UploadImageState } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"
-import { CancelButton, Input, SubmitButton } from "loony-ui"
+import { BorderButton, Input, SubmitButton } from "loony-ui"
 
 export default function EditNodeComponent(props: EditNodeComponentProps) {
   const { state, FnCallback, onCancel, docType, doc_id, url, heading } = props
@@ -162,7 +162,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
         <span style={{ marginRight: 12 }}>
           <SubmitButton onClick={updateNode} />
         </span>
-        <CancelButton onClick={onClickCancel} />
+        <BorderButton onClick={onClickCancel} />
       </div>
     </div>
   )

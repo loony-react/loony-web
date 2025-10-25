@@ -13,7 +13,7 @@ import UploadImage from "./uploadImage.tsx"
 import type { Auth } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"
 import { createImageUrl, createTmpImageUrl, extractImage } from "loony-utils"
-import { CancelButton, SubmitButton, Input } from "loony-ui"
+import { BorderButton, SubmitButton, Input } from "loony-ui"
 import { apiHttpClient } from "loony-api"
 
 export default function AddNodeComponent(props: AddNodeComponentProps) {
@@ -133,7 +133,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
           node={null}
           userId={user.uid}
         />
-        <h2 className="text-4xl font-semibold border-b border-gray-300 dark:border-[#4d4d4d] mb-8 pb-2">
+        <h2 className="text-4xl dark:text-gray-200 font-semibold border-b border-gray-300 dark:border-[#4d4d4d] mb-8 pb-2">
           {formTitle}
         </h2>
         <ViewContent
@@ -147,7 +147,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
         <span style={{ marginRight: 12 }}>
           <SubmitButton onClick={onCreateAction} />
         </span>
-        <CancelButton onClick={onCancel} />
+        <BorderButton onClick={onCancel} />
       </div>
     </div>
   )

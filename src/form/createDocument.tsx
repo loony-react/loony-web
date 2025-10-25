@@ -13,7 +13,7 @@ import type { Auth, UploadImageState } from "loony-types"
 import UploadImage from "./uploadImage.tsx"
 import { HR } from "components/index.tsx"
 import { createTmpImageUrl } from "loony-utils"
-import { CancelButton, SubmitButton, Input } from "loony-ui"
+import { BorderButton, SubmitButton, Input } from "loony-ui"
 
 export default function CreateNewDocument({
   url,
@@ -142,6 +142,7 @@ export default function CreateNewDocument({
           <div className="my-4">
             <Input
               type="text"
+              name="title"
               value={formTitle}
               onChange={(e: any) => {
                 setFormTitle(e.target.value)
@@ -165,6 +166,7 @@ export default function CreateNewDocument({
           />
           <div className="my-4">
             <Input
+              name="tags"
               type="text"
               placeholder="Keywords"
               value={tags}
@@ -180,7 +182,7 @@ export default function CreateNewDocument({
 
       <div className="mt-10 border border-gray-300 dark:border-[#4d4d4d] p-12 rounded-md mb-8">
         {image && <img key={image} src={image} alt="tmp file upload" />}
-        <h2 className="text-4xl font-semibold border-b border-gray-300 dark:border-[#4d4d4d] mb-8 mt-4">
+        <h2 className="text-4xl font-semibold border-b border-gray-300 dark:text-gray-200 dark:border-[#4d4d4d] mb-8 mt-4">
           {formTitle}
         </h2>
         <ViewContent
@@ -194,7 +196,7 @@ export default function CreateNewDocument({
         <span style={{ marginRight: 12 }}>
           <SubmitButton onClick={createDoc} />
         </span>
-        <CancelButton onClick={routeTo} />
+        <BorderButton onClick={routeTo} />
       </div>
     </div>
   )
