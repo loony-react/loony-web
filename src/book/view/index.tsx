@@ -51,7 +51,7 @@ const View = (props: AppRouteProps) => {
       />
       <main className="ml-64 h-screen flex-1 bg-stone-50 dark:bg-[#212121] p-6 mt-16">
         <div
-          className="h-screen bg-[#212121] flex-1"
+          className="h-screen bg-gray-50 flex-1"
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()

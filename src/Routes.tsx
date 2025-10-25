@@ -58,16 +58,16 @@ const Route = ({
 
   return (
     <>
+      <Navigation
+        authContext={authContext}
+        appContext={appContext}
+        setMobileNavOpen={setMobileNavOpen}
+      />
       {notificationContext.alert && (
         <Alert alert={notificationContext.alert} onClose={onCloseAlert} />
       )}
       {authContext.status === AuthStatus.AUTHORIZED && (
         <>
-          <Navigation
-            authContext={authContext}
-            appContext={appContext}
-            setMobileNavOpen={setMobileNavOpen}
-          />
           <Routes>
             <ReactRoute path="/" element={<Home {...props} />} />
             <ReactRoute

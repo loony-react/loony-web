@@ -40,59 +40,54 @@ export const PageNavigation = <T extends ReadBookState | EditBookState>({
 
   return (
     <div className="fixed bg-gray-50 dark:bg-[#131313] text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16">
-      <aside className="w-full overflow-y-auto py-4">
-        <nav className="text-sm">
-          <div
-            className="px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-[#ececec] dark:hover:bg-[#363636]"
-            onClick={viewFrontPage}
-          >
-            {frontPage.title}
-          </div>
-          {navNodes.map((chapter) => {
-            return (
-              <div key={chapter.uid}>
-                <h2
-                  className="px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-[#ececec] dark:hover:bg-[#333333]"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    onGetChapter(chapter)
+      <nav>
+        <h2 className="text-sm font-semibold uppercase mb-2">
+          {frontPage.title}
+        </h2>
+        {navNodes.map((chapter) => {
+          return (
+            <div key={chapter.uid}>
+              <h2
+                className="px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-[#ececec] dark:hover:bg-[#333333]"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onGetChapter(chapter)
+                }}
+                // isActive={parentNode.uid === chapter.uid}
+              >
+                {chapter.title}
+              </h2>
+              <div className="sections px-4">
+                <ul
+                  onClick={() => {
+                    return
                   }}
-                  // isActive={parentNode.uid === chapter.uid}
                 >
-                  {chapter.title}
-                </h2>
-                <div className="sections px-4">
-                  <ul
-                    onClick={() => {
-                      return
-                    }}
-                  >
-                    {/* {page_id === chapter.uid &&
+                  {/* {page_id === chapter.uid &&
                 } */}
-                    {chapter.child?.map((section) => {
-                      return (
-                        <li key={section.uid}>
-                          <a
-                            href="#"
-                            className="block px-2 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              onGetSection(section)
-                            }}
-                            // isActive={parentNode.uid === section.uid}
-                          >
-                            {section.title}
-                          </a>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </div>
+                  {chapter.child?.map((section) => {
+                    return (
+                      <li key={section.uid}>
+                        <a
+                          href="#"
+                          className="block px-2 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onGetSection(section)
+                          }}
+                          // isActive={parentNode.uid === section.uid}
+                        >
+                          {section.title}
+                        </a>
+                      </li>
+                    )
+                  })}
+                </ul>
               </div>
-            )
-          })}
-        </nav>
-      </aside>
+            </div>
+          )
+        })}
+      </nav>
     </div>
   )
 }
