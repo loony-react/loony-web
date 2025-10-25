@@ -40,7 +40,7 @@ const View = (props: AppRouteProps) => {
   })
 
   return (
-    <div>
+    <div className="min-h-screen">
       <PageNavigation
         doc_id={doc_id}
         setState={setState}
@@ -49,9 +49,8 @@ const View = (props: AppRouteProps) => {
         navNodes={navNodes}
         {...props}
       />
-      <main className="flex-1 h-screen ml-64 bg-stone-50 dark:bg-[#212121] pt-16">
+      <main className="flex-1 min-h-screen ml-64 bg-stone-50 dark:bg-[#212121] pt-16">
         <div
-          className="bg-gray-50"
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()

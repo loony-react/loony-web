@@ -3,7 +3,7 @@ import { DocNode, AuthContextProps, AuthStatus } from "loony-types"
 import { Link } from "react-router"
 
 const className =
-  "flex items-center gap-2 px-4 py-2 border border-gray-400 mr-4 rounded transition hover:bg-[#ececec] dark:hover:bg-[#363636]"
+  "flex items-center gap-2 px-4 py-2 border border-gray-400 mr-4 rounded transition hover:bg-[#ececec] dark:hover:bg-gray-200 dark:bg-white"
 
 export const RightNavView = ({
   doc_id,

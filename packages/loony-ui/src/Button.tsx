@@ -23,7 +23,18 @@ export const SubmitButton = ({
   return (
     <button
       onClick={onClick}
-      className="px-4 py-2 bg-[#f0f0f0] hover:bg-[#dedede] text-gray-800 rounded"
+      className="px-4.5
+      py-2.5
+        rounded-lg
+        font-medium
+        duration-200
+        bg-black
+        text-white
+        hover:bg-gray-800
+        dark:bg-white
+        dark:text-black
+        dark:hover:bg-gray-200
+        dark:focus:ring-white"
     >
       Submit
     </button>

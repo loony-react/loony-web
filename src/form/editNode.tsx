@@ -101,7 +101,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
   if (!editNode || !mainNode || !user) return null
 
   return (
-    <>
+    <div className="pb-24">
       <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-1">
         {heading}
       </h2>
@@ -115,6 +115,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
           <div className="my-4">
             <Input
               type="text"
+              name="title"
               placeholder="Title"
               value={formTitle}
               onChange={(e: any) => {
@@ -147,7 +148,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
           node={editNode}
           userId={user.uid}
         />
-        <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+        <h2 className="text-4xl dark:text-white font-semibold mb-8 py-4">
           {formTitle}
         </h2>
         <ViewContent
@@ -163,7 +164,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
         </span>
         <CancelButton onClick={onClickCancel} />
       </div>
-    </>
+    </div>
   )
 }
 

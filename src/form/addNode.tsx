@@ -76,7 +76,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   if (!user) return null
 
   return (
-    <>
+    <div className="pb-24">
       <div style={{}}>
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-1">
           {heading}
@@ -90,6 +90,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
           <div className="my-4">
             <Input
               type="text"
+              name="title"
               value={formTitle}
               onChange={(e: any) => {
                 setFormTitle(e.target.value)
@@ -148,7 +149,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
         </span>
         <CancelButton onClick={onCancel} />
       </div>
-    </>
+    </div>
   )
 }
 

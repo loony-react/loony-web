@@ -59,12 +59,11 @@ export default function Edit(props: AppRouteProps) {
   })
 
   return (
-    <div>
+    <div className="min-h-screen">
       <LeftNav doc_id={doc_id} setState={setState} state={state} {...props} />
-      <main className="flex-1 h-screen ml-64 bg-stone-50 dark:bg-[#212121] pt-16">
+      <main className="min-h-screen flex-1 ml-64 bg-stone-50 dark:bg-[#212121] pt-16">
         {/* Markdown Body */}
         <div
-          className="bg-gray-50"
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -130,7 +129,7 @@ export default function Edit(props: AppRouteProps) {
             </div>
           )}
           {state.form.method && (
-            <div className="w-[45%] mx-auto pt-4">
+            <div className="w-[45%] mx-auto">
               <EditComponent
                 state={state}
                 setState={setState}
