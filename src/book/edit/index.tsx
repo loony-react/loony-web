@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { useEditBookNodes } from "loony-utils"
+import { createImageUrl, extractImage, useEditBookNodes } from "loony-utils"
 import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import ViewContent from "../../components/ViewContent.tsx"
@@ -17,10 +17,10 @@ import { AppContext } from "context/AppContext.tsx"
 import {
   onCancel,
   onConfirmDelete,
-  // showModalToConfirmDeleteDoc,
+  showModalToConfirmDeleteDoc,
 } from "./utils.ts"
 import { LeftNav } from "./LeftNav.tsx"
-// import { RightNavView } from "components/RightNav.tsx"
+import { RightNavView } from "components/RightNav.tsx"
 import { ButtonIcon } from "loony-ui"
 import { useGetBookNav } from "loony-api"
 import { Image } from "./Image.tsx"
@@ -50,13 +50,21 @@ export default function Edit(props: AppRouteProps) {
   if (!parentNode || !mainNode || !doc_id) return null
 
   const baseImageUrl = `${base_url}/book/${doc_id}`
+  const image = createImageUrl({
+    docType: "book",
+    baseUrl: base_url,
+    nodeId: doc_id,
+    image: extractImage(parentNode.images),
+    size: 720,
+  })
+
   return (
-    <div className="flex flex-1">
+    <div>
       <LeftNav doc_id={doc_id} setState={setState} state={state} {...props} />
-      <main className="ml-64 h-screen flex-1 bg-stone-50 dark:bg-[#212121] p-6 mt-16">
+      <main className="flex-1 h-screen ml-64 bg-stone-50 dark:bg-[#212121] p-6">
         {/* Markdown Body */}
         <div
-          className="h-full bg-[#212121] flex-1 mt-16"
+          className="bg-gray-50"
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -86,11 +94,9 @@ export default function Edit(props: AppRouteProps) {
           )}
           {!state.form.method && (
             <div className="w-[45%] mx-auto pt-4">
-              <Image
-                baseUrl={baseImageUrl}
-                images={parentNode.images}
-                size={720}
-              />
+              {parentNode && image ? (
+                <img src={image} alt="" width="100%" className="mb-4" />
+              ) : null}
               <h2 className="text-4xl font-semibold dark:text-white mb-8 pb-2">
                 {parentNode.title}
               </h2>
@@ -136,18 +142,21 @@ export default function Edit(props: AppRouteProps) {
         </div>
         {/* <div className="hidden md:block w-[18%] pt-4">
           <div className="border-l border-gray-300 dark:border-[#4d4d4d]">
-            <RightNavView
-              doc_id={doc_id}
-              authContext={authContext}
-              mainNode={mainNode}
-              docType="book"
-              deleteDoc={(e: any) => {
-                showModalToConfirmDeleteDoc(e, setState, mainNode.title)
-              }}
-            />
+            
           </div>
         </div> */}
       </main>
+      <div className="fixed bottom-0 right-16 mb-4 mx-auto">
+        <RightNavView
+          doc_id={doc_id}
+          authContext={authContext}
+          mainNode={mainNode}
+          docType="book"
+          deleteDoc={(e: any) => {
+            showModalToConfirmDeleteDoc(e, setState, mainNode.title)
+          }}
+        />
+      </div>
     </div>
   )
 }

@@ -2,6 +2,9 @@
 import { DocNode, AuthContextProps, AuthStatus } from "loony-types"
 import { Link } from "react-router"
 
+const className =
+  "flex items-center gap-2 px-4 py-2 border border-gray-400 mr-4 rounded transition hover:bg-[#ececec] dark:hover:bg-[#363636]"
+
 export const RightNavView = ({
   doc_id,
   authContext,
@@ -16,22 +19,19 @@ export const RightNavView = ({
   deleteDoc: any
 }) => {
   return (
-    <ul>
+    <ul className="flex flex-row">
       {authContext.status === AuthStatus.AUTHORIZED &&
       authContext.user?.uid === mainNode.user_id ? (
         <>
-          <li className="flex items-center gap-2 px-3 rounded transition hover:bg-[#ececec] dark:hover:bg-[#363636]">
+          <li className={className}>
             <Link to={`/view/${docType}/${doc_id}`}>View</Link>
           </li>
-          <li
-            onClick={deleteDoc}
-            className="flex items-center gap-2 px-3 rounded transition hover:bg-[#ececec] dark:hover:bg-[#363636]"
-          >
+          <li onClick={deleteDoc} className={className}>
             <Link to="#">Delete</Link>
           </li>
         </>
       ) : null}
-      <li className="flex items-center gap-2 px-3 rounded transition hover:bg-[#ececec] dark:hover:bg-[#363636]">
+      <li className={className}>
         <Link to="#">Report</Link>
       </li>
     </ul>
@@ -50,14 +50,14 @@ export const RightNavEdit = ({
   docType: string
 }) => {
   return (
-    <ul>
+    <ul className="flex flex-row">
       {authContext.status === AuthStatus.AUTHORIZED &&
       authContext.user?.uid === mainNode.user_id ? (
-        <li className="flex items-center gap-2 px-3 rounded transition hover:bg-[#ececec] dark:hover:bg-[#363636]">
+        <li className={className}>
           <Link to={`/edit/${docType}/${doc_id}`}>Edit</Link>
         </li>
       ) : null}
-      <li className="flex items-center gap-2 px-3 rounded transition hover:bg-[#ececec] dark:hover:bg-[#363636]">
+      <li className={className}>
         <Link to="#">Report</Link>
       </li>
     </ul>

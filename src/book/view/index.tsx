@@ -4,7 +4,7 @@ import { useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { AppRouteProps, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
-// import { RightNavEdit } from "components/RightNav.tsx"
+import { RightNavEdit } from "components/RightNav.tsx"
 import { PageNavigation } from "./PageNavigation.tsx"
 
 const View = (props: AppRouteProps) => {
@@ -40,7 +40,7 @@ const View = (props: AppRouteProps) => {
   })
 
   return (
-    <div className="flex flex-1 overflow-hidden">
+    <div>
       <PageNavigation
         doc_id={doc_id}
         setState={setState}
@@ -49,9 +49,9 @@ const View = (props: AppRouteProps) => {
         navNodes={navNodes}
         {...props}
       />
-      <main className="ml-64 h-screen flex-1 bg-stone-50 dark:bg-[#212121] p-6 mt-16">
+      <main className="flex-1 h-screen ml-64 bg-stone-50 dark:bg-[#212121] p-6">
         <div
-          className="h-screen bg-gray-50 flex-1"
+          className="bg-gray-50"
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -62,7 +62,7 @@ const View = (props: AppRouteProps) => {
             }
           }}
         >
-          <div className="w-[45%] mx-auto pt-4">
+          <div className="w-[45%] mx-auto">
             {parentNode && image ? (
               <img src={image} alt="" width="100%" className="mb-4" />
             ) : null}
@@ -92,19 +92,18 @@ const View = (props: AppRouteProps) => {
                 )
               })}
           </div>
+          <div className="pb-16" />
         </div>
-
-        {/* <div className="hidden md:block w-[18%] pt-4">
-          <div className="border-l border-gray-300 dark:border-[#4d4d4d]">
-            <RightNavEdit
-              doc_id={doc_id}
-              authContext={authContext}
-              mainNode={mainNode}
-              docType="book"
-            />
-          </div>
-        </div> */}
       </main>
+
+      <div className="fixed bottom-0 right-16 mb-4 mx-auto">
+        <RightNavEdit
+          doc_id={doc_id}
+          authContext={authContext}
+          mainNode={mainNode}
+          docType="book"
+        />
+      </div>
     </div>
   )
 }

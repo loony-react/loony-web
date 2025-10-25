@@ -69,88 +69,86 @@ export const LeftNav = ({
 
   return (
     <div className="fixed bg-gray-50 dark:bg-[#131313] text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16">
-      <aside className="w-full overflow-y-auto py-4">
-        <nav className="text-sm">
-          <div>
-            <div
-              className="px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-[#ececec] dark:hover:bg-[#363636]"
-              onClick={viewFrontPage}
-            >
-              {frontPage.title}
-            </div>
-            <button
-              className="px-2 block rounded text-blue-700 dark:text-[#bdbdbd] hover:bg-[#ececec] dark:hover:bg-[#333333]"
-              onClick={(e) => addChapter(e, undefined)}
-            >
-              Add Chapter
-            </button>
-          </div>
-          {navNodes.map((chapter) => {
-            return (
-              <div key={chapter.uid}>
-                <h2
-                  className="px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-[#ececec] dark:hover:bg-[#333333]"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    getChapter(chapter, setState, groupNodesById, doc_id)
-                  }}
-                >
-                  <div style={{ width: "90%" }}>{chapter.title}</div>
-                </h2>
-                <div className="sections px-4">
-                  <button
-                    className="block px-2 rounded text-blue-700 dark:text-[#bdbdbd] hover:bg-[#ececec] dark:hover:bg-[#333333]"
-                    onClick={(e) => addSection(e, chapter, chapter.uid)}
-                  >
-                    Add Section
-                  </button>
-                  <ul
-                    onClick={() => {
-                      return
-                    }}
-                  >
-                    {chapter.child?.map((section) => {
-                      return (
-                        <li key={section.uid}>
-                          <a
-                            className="block px-2 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              getSection(
-                                section,
-                                setState,
-                                groupNodesById,
-                                doc_id,
-                              )
-                            }}
-                            // isActive={parentNode.uid === section.uid}
-                          >
-                            {section.title}
-                          </a>
-                          <button
-                            className="block px-2 rounded text-blue-700 dark:text-[#bdbdbd] hover:bg-[#ececec] dark:hover:bg-[#333333]"
-                            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                              addSection(e, section, chapter.uid)
-                            }
-                          >
-                            Add Section
-                          </button>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </div>
+      <nav>
+        <div>
+          <h2
+            className="text-sm font-semibold uppercase mb-2"
+            onClick={viewFrontPage}
+          >
+            {frontPage.title}
+          </h2>
+          <button
+            className="px-2 block rounded text-blue-700 dark:text-[#bdbdbd] hover:bg-[#ececec] dark:hover:bg-[#333333]"
+            onClick={(e) => addChapter(e, undefined)}
+          >
+            Add Chapter
+          </button>
+        </div>
+        {navNodes.map((chapter) => {
+          return (
+            <div key={chapter.uid}>
+              <h2
+                className="px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-[#ececec] dark:hover:bg-[#333333]"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  getChapter(chapter, setState, groupNodesById, doc_id)
+                }}
+              >
+                <div style={{ width: "90%" }}>{chapter.title}</div>
+              </h2>
+              <div className="sections px-4">
                 <button
                   className="block px-2 rounded text-blue-700 dark:text-[#bdbdbd] hover:bg-[#ececec] dark:hover:bg-[#333333]"
-                  onClick={(e) => addChapter(e, chapter)}
+                  onClick={(e) => addSection(e, chapter, chapter.uid)}
                 >
-                  Add Chapter
+                  Add Section
                 </button>
+                <ul
+                  onClick={() => {
+                    return
+                  }}
+                >
+                  {chapter.child?.map((section) => {
+                    return (
+                      <li key={section.uid}>
+                        <a
+                          className="block px-2 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            getSection(
+                              section,
+                              setState,
+                              groupNodesById,
+                              doc_id,
+                            )
+                          }}
+                          // isActive={parentNode.uid === section.uid}
+                        >
+                          {section.title}
+                        </a>
+                        <button
+                          className="block px-2 rounded text-blue-700 dark:text-[#bdbdbd] hover:bg-[#ececec] dark:hover:bg-[#333333]"
+                          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                            addSection(e, section, chapter.uid)
+                          }
+                        >
+                          Add Section
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
               </div>
-            )
-          })}
-        </nav>
-      </aside>
+              <button
+                className="block px-2 rounded text-blue-700 dark:text-[#bdbdbd] hover:bg-[#ececec] dark:hover:bg-[#333333]"
+                onClick={(e) => addChapter(e, chapter)}
+              >
+                Add Chapter
+              </button>
+            </div>
+          )
+        })}
+      </nav>
     </div>
   )
 }
