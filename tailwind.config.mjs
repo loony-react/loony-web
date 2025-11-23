@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-import typepography from "@tailwindcss/typography"
+import tailwindcssTypepography from "@tailwindcss/typography"
 export default {
   darkMode: "class",
   content: [
@@ -8,5 +8,5 @@ export default {
   theme: {
     extend: {}, // Customize your theme here if needed
   },
-  plugins: [typepography()],
+  plugins: [tailwindcssTypepography],
 }

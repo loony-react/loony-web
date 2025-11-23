@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 button {
   cursor: pointer;
 }
@@ -11,4 +9,44 @@ html,
 body,
 #root {
   height: 100%;
+}
+@layer base {
+  /* code block container */
+  pre code.hljs {
+    @apply block bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm;
+  }
+
+  /* inline code */
+  :not(pre) > code {
+    @apply bg-gray-800 text-gray-100 px-1 py-0.5 rounded;
+  }
+
+  /* COMMENTS – optional gray */
+  .hljs-comment,
+  .hljs-quote {
+    @apply text-gray-400;
+  }
+
+  /* RED */
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-meta .hljs-keyword {
+    @apply text-red-500;
+  }
+
+  /* GREEN */
+  .hljs-string,
+  .hljs-title,
+  .hljs-attr,
+  .hljs-template-tag {
+    @apply text-green-500;
+  }
+
+  /* BLUE */
+  .hljs-number,
+  .hljs-literal,
+  .hljs-type,
+  .hljs-symbol {
+    @apply text-blue-500;
+  }
 }
