@@ -23,16 +23,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "lily-utils": ["packages/lily-utils/src"],
-      "lily-utils/*": ["packages/lily-utils/src*"],
-      "lily-types": ["packages/lily-types/src"],
-      "lily-types/*": ["packages/lily-types/src/*"],
-      "lily-query": ["packages/lily-query/src"],
-      "lily-query/*": ["packages/lily-query/src/*"],
-      "lily-ui": ["packages/lily-ui/src"],
-      "lily-ui/*": ["packages/lily-ui/src/*"]
-    },
-    "baseUrl": "src"
+      "lily-utils": ["./packages/lily-utils/src"],
+      "lily-utils/*": ["./packages/lily-utils/src*"],
+      "lily-types": ["./packages/lily-types/src"],
+      "lily-types/*": ["./packages/lily-types/src/*"],
+      "lily-query": ["./packages/lily-query/src"],
+      "lily-query/*": ["./packages/lily-query/src/*"],
+      "lily-ui": ["./packages/lily-ui/src"],
+      "lily-ui/*": ["./packages/lily-ui/src/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", "packages/*/src"]
 }

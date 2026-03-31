@@ -31,3 +31,4 @@ build/
 scripts/deploy.sh
 run.sh
 local/
+*.env

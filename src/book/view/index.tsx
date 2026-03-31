@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import { AppRouteProps, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
-import { RightNavEdit } from "components/RightNav.tsx"
+import { RightNavEdit } from "../../components/RightNav.tsx"
 import { PageNavigation } from "./PageNavigation.tsx"
 
 const View = (props: AppRouteProps) => {

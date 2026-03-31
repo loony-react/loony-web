@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { deleteOne, deleteSubSection, deleteSection } from "loony-utils"
 import { apiHttpClient } from "loony-api"
-import { STATE_VALUES } from "utils/const.ts"
+import { STATE_VALUES } from "../../utils/const.ts"
 import {
   AppDispatchAction,
   DocNode,

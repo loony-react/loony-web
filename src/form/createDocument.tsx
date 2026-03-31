@@ -7,13 +7,13 @@ import { TextArea } from "./components/TextArea.tsx"
 import ViewContent from "../components/ViewContent.tsx"
 import { stopWords } from "../utils/index.tsx"
 
-import "react-easy-crop/react-easy-crop.css"
 import { AppContext } from "../context/AppContext.tsx"
 import type { Auth, UploadImageState } from "loony-types"
 import UploadImage from "./uploadImage.tsx"
-import { HR } from "components/index.tsx"
+import { HR } from "../components/index.tsx"
 import { createTmpImageUrl } from "loony-utils"
 import { BorderButton, SubmitButton, Input } from "loony-ui"
+import "react-easy-crop/react-easy-crop.css"
 
 export default function CreateNewDocument({
   url,

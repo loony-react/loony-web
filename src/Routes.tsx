@@ -23,8 +23,8 @@ import UnAuthorized from "./error/UnAuthorized.tsx"
 import Navigation from "./components/TopNavbar.tsx"
 import PageLoadingContainer from "./components/PageLoadingContainer.tsx"
 import ForgotPassword from "./auth/ForgotPassword.tsx"
-import ResetPassword from "auth/ResetPassword.tsx"
-import CreateNewDocument from "home/Form.tsx"
+import ResetPassword from "./auth/ResetPassword.tsx"
+import CreateNewDocument from "./home/Form.tsx"
 const ContentPolicy = lazy(() => import("./static/ContentPolicy.tsx"))
 const PrivacyPolicy = lazy(() => import("./static/PrivacyPolicy.tsx"))
 const UserAgreement = lazy(() => import("./static/UserAgreement.tsx"))

@@ -3,7 +3,7 @@ import EditDocument from "../../form/editNode.tsx"
 import { appendChapters, appendSections, appendSubSections } from "loony-utils"
 import { EditBookAction, EditBookState, DocNode } from "loony-types"
 import { useCallback } from "react"
-import { STATE_VALUES } from "utils/const.ts"
+import { STATE_VALUES } from "../../utils/const.ts"
 
 export default function EditComponent({
   state,

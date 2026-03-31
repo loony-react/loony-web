@@ -9,7 +9,7 @@ const authHttpClient = axios.create({
 })
 
 const apiHttpClient = axios.create({
-  baseURL: process.env.HTTPS_BACKEND_URL,
+  baseURL: process.env.HTTPS_API_URL,
   timeout: 10000,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,

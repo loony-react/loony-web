@@ -13,14 +13,14 @@ import {
 import EditComponent from "./edit.tsx"
 import { Plus, Pencil, Trash2 } from "lucide-react"
 import DeleteModal from "../../components/Modal.tsx"
-import { AppContext } from "context/AppContext.tsx"
+import { AppContext } from "../../context/AppContext.tsx"
 import {
   onCancel,
   onConfirmDelete,
   showModalToConfirmDeleteDoc,
 } from "./utils.ts"
 import { LeftNav } from "./LeftNav.tsx"
-import { RightNavView } from "components/RightNav.tsx"
+import { RightNavView } from "../../components/RightNav.tsx"
 import { ButtonIcon } from "loony-ui"
 import { useGetBookNav } from "loony-api"
 import { Image } from "./Image.tsx"

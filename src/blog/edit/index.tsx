@@ -15,7 +15,7 @@ import EditNodeForm from "../../form/editNode.tsx"
 import { AppendNodeResponse, EditBlogAction } from "loony-types"
 import { DocNode } from "loony-types"
 import { Plus, Pencil, Trash2 } from "lucide-react"
-import { RightNavView } from "components/RightNav.tsx"
+import { RightNavView } from "../../components/RightNav.tsx"
 import DeleteModal from "../../components/Modal.tsx"
 import { STATE_VALUES } from "../../utils/const.ts"
 import {
@@ -23,7 +23,7 @@ import {
   onConfirmDelete,
   onCancel,
 } from "./utils.ts"
-import { AppContext } from "context/AppContext.tsx"
+import { AppContext } from "../../context/AppContext.tsx"
 import { useGetBlogNodes } from "loony-api"
 
 export default function Edit(props: AppRouteProps) {

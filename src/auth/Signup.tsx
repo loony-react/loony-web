@@ -8,7 +8,7 @@ import {
   User,
 } from "loony-types"
 import { IoEye, IoEyeOff } from "react-icons/io5"
-import { AuthContext } from "context/AuthContext"
+import { AuthContext } from "../context/AuthContext"
 import { register } from "loony-api/src/api"
 import { Button, Input, PasswordInput } from "loony-ui"
 

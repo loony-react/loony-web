@@ -1,10 +1,10 @@
 import { NavigateFunction, useNavigate } from "react-router"
 import { AppRouteProps, DocNode } from "loony-types"
-import DocumentCard from "components/DocumentCard.tsx"
+import DocumentCard from "../components/DocumentCard.tsx"
 
 import HomeLeftNavbar from "../components/HomeLeftNavbar.tsx"
 import { useHomeBlogs, useHomeBooks } from "../hooks/home.ts"
-import { EmptyCard } from "components/EmptyCard.tsx"
+import { EmptyCard } from "../components/EmptyCard.tsx"
 
 const Home = (props: AppRouteProps) => {
   const { authContext, appContext, mobileNavOpen } = props

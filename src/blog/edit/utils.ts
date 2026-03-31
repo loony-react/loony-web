@@ -8,7 +8,7 @@ import {
 } from "loony-types"
 import { deleteBlogNode, orderBlogChildNodes } from "loony-utils"
 import { NavigateFunction } from "react-router"
-import { STATE_VALUES } from "utils/const"
+import { STATE_VALUES } from "../../utils/const"
 
 export const onCancel = ({ setState }: { setState: EditBlogAction }) => {
   setState((state) => ({

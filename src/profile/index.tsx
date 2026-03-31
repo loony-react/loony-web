@@ -2,7 +2,7 @@ import { NavigateFunction, useNavigate } from "react-router"
 import { AppRouteProps, DocNode } from "loony-types"
 import { User } from "lucide-react"
 import { useUserBlogs, useUserBooks } from "../hooks/home.ts"
-import DocumentCard from "components/DocumentCard.tsx"
+import DocumentCard from "../components/DocumentCard.tsx"
 
 const Profile = (props: AppRouteProps) => {
   const { authContext, appContext } = props

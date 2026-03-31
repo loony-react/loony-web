@@ -1,16 +1,18 @@
 import { defineConfig } from "@rsbuild/core"
 import { pluginReact } from "@rsbuild/plugin-react"
-import x from "@tailwindcss/postcss"
-import y from "autoprefixer"
+import tailwindcssPostcss from "@tailwindcss/postcss"
+import autoprefixer from "autoprefixer"
 import fs from "fs"
+
+const { APP_PORT, HTTPS_KEY_PATH, HTTPS_CERT_PATH } = process.env
 
 export default defineConfig({
   server: {
-    port: (process.env.APP_PORT && parseInt(process.env.APP_PORT)) || 5000,
+    port: (APP_PORT && parseInt(APP_PORT)) || 3000,
     strictPort: true,
     https: {
-      key: fs.readFileSync("./.local/localhost-key.pem"),
-      cert: fs.readFileSync("./.local/localhost.pem"),
+      key: HTTPS_KEY_PATH && fs.readFileSync(HTTPS_KEY_PATH),
+      cert: HTTPS_CERT_PATH && fs.readFileSync(HTTPS_CERT_PATH),
     },
   },
   source: {
@@ -25,7 +27,7 @@ export default defineConfig({
   tools: {
     postcss: {
       postcssOptions: {
-        plugins: [x, y],
+        plugins: [tailwindcssPostcss, autoprefixer],
       },
     },
   },
