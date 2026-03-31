@@ -6,7 +6,14 @@ export default {
     "./src/**/*.{html,js,ts,jsx,tsx}", // Scans your src files for class usage
   ],
   theme: {
-    extend: {}, // Customize your theme here if needed
+    extend: {
+      colors: {
+        navbar: "#131313",
+        body: "#212121",
+        cardTop: "#262626",
+        cardBot: "#2e2e2e",
+      },
+    },
   },
   plugins: [tailwindcssTypepography],
 }

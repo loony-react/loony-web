@@ -65,7 +65,7 @@ const Login = ({
     <>
       <div className="fixed bg-gray-50 dark:bg-[#131313] text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16" />
       <div className="flex flex-1 justify-center items-center overflow-hidden h-screen bg-gray-50 dark:bg-[#212121]">
-        <div className="w-120 mx-auto p-6 bg-white dark:bg-[#2e2e2e] dark:text-white shadow-md rounded-lg">
+        <div className="w-120 mx-auto p-6 bg-white dark:bg-cardTop dark:text-white shadow-md rounded-lg">
           <div className="flex justify-center">
             <h2 className="text-2xl font-bold mb-6">Login</h2>
           </div>
