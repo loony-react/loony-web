@@ -2,14 +2,14 @@
 import axios from "axios"
 
 const authHttpClient = axios.create({
-  baseURL: process.env.HTTPS_AUTH_URL,
+  baseURL: process.env.AUTH_URL,
   timeout: 10000,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 })
 
 const apiHttpClient = axios.create({
-  baseURL: process.env.HTTPS_API_URL,
+  baseURL: process.env.API_URL,
   timeout: 10000,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,

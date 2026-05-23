@@ -5,7 +5,7 @@ import {
   useUserHomeBooks,
   useHomeBlogs as useHomeBlogsApi,
   useUserHomeBlogs,
-} from "../../loony-api"
+} from "loony-api"
 
 export const useHomeBooks = (authContext: AuthContextProps): any => {
   const { data: homeBooks, fetch: fetchHomeBooks } = useHomeBooksApi()

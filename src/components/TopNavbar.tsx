@@ -17,6 +17,7 @@ const TopNavbar = ({
   authContext: AuthContextProps
   setMobileNavOpen: any
 }) => {
+  console.log(authContext)
   const navigate: NavigateFunction = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
   const { onLogout } = useLogout()
