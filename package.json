@@ -14,7 +14,7 @@
   "scripts": {
     "build": "rsbuild build",
     "check": "biome check --write",
-    "dev": "rsbuild dev --open",
+    "dev": "HTTPS=true rsbuild dev --open",
     "format": "prettier --write .",
     "lint": "eslint .",
     "preview": "rsbuild preview"
@@ -26,6 +26,7 @@
     "axios": "^1.6.7",
     "katex": "^0.16.22",
     "loony-api": "0.1.0",
+    "loony-dotenv": "^0.1.2",
     "loony-types": "0.1.0",
     "loony-ui": "0.1.0",
     "loony-utils": "0.1.0",
