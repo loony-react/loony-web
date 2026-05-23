@@ -13,6 +13,7 @@ const { PORT } = process.env
 
 const config = {
   server: {
+    host: "localhost",
     port: (PORT && parseInt(PORT)) || 3003,
     strictPort: true,
   },
