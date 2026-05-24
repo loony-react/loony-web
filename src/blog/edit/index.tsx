@@ -58,7 +58,7 @@ export default function Edit(props: AppRouteProps) {
 
   return (
     <div>
-      <div className="fixed bg-gray-50 dark:bg-[#131313] text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16" />
+      <div className="fixed bg-[#111111] border-r border-white/[0.08] w-64 h-screen mt-14" />
       <Container>
         {state.modal.method === "delete" && (
           <DeleteModal
@@ -87,7 +87,7 @@ export default function Edit(props: AppRouteProps) {
                   className="w-full h-full object-cover mb-4"
                 />
               )}
-              <h2 className="text-4xl dark:text-white font-semibold mb-8 pb-2">
+              <h2 className="text-3xl font-bold text-[#ececec] mb-8 pb-2">
                 {mainNode.title}
               </h2>
               <ViewContent source={mainNode.content} isDark={isDark} />
@@ -101,7 +101,7 @@ export default function Edit(props: AppRouteProps) {
               {childNodes.map((node, id) => {
                 return (
                   <div key={id}>
-                    <h2 className="text-2xl font-semibold my-4 border-b border-gray-300">
+                    <h2 className="text-2xl font-semibold my-4 border-b border-white/[0.08] text-[#ececec]">
                       {node.title}
                     </h2>
                     <ViewContent source={node.content} isDark={isDark} />
@@ -246,7 +246,7 @@ const NodeSettings = ({
     <div className="flex gap-1 mb-12">
       {/* Create */}
       <button
-        className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
+        className="p-1.5 rounded-md text-[#6b6b76] hover:bg-white/5 hover:text-[#9b9ba4] transition-colors duration-150"
         title="Create"
         onClick={(e) => {
           e.stopPropagation()
@@ -265,7 +265,7 @@ const NodeSettings = ({
 
       {/* Edit */}
       <button
-        className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
+        className="p-1.5 rounded-md text-[#6b6b76] hover:bg-white/5 hover:text-[#9b9ba4] transition-colors duration-150"
         title="Edit"
         onClick={(e) => {
           setState({
@@ -285,7 +285,7 @@ const NodeSettings = ({
       {/* Delete */}
       {node.identity > 100 && (
         <button
-          className="p-2 rounded-md text-gray-500 hover:bg-gray-100 transition"
+          className="p-1.5 rounded-md text-[#6b6b76] hover:bg-white/5 hover:text-[#9b9ba4] transition-colors duration-150"
           title="Delete"
           onClick={(e) => {
             setState({

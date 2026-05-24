@@ -11,7 +11,6 @@ import UploadImage from "./uploadImage.tsx"
 import { HR } from "../components/index.tsx"
 import { createTmpImageUrl } from "loony-utils"
 import { BorderButton, SubmitButton, Input } from "loony-ui"
-import "react-easy-crop/react-easy-crop.css"
 
 export default function CreateNewDocument({
   url,
@@ -96,7 +95,7 @@ export default function CreateNewDocument({
   return (
     <div className="w-[40%] ml-[15%]">
       <div>
-        <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-1">
+        <h2 className="text-xl font-semibold text-[#ececec] mb-1">
           {title}
         </h2>
         {error && (
@@ -143,9 +142,9 @@ export default function CreateNewDocument({
 
       {HR}
 
-      <div className="mt-10 border border-gray-300 dark:border-[#4d4d4d] p-12 rounded-md mb-8">
+      <div className="mt-10 border border-white/[0.08] bg-[#111111] p-10 rounded-xl mb-8">
         {image && <img key={image} src={image} alt="preview" className="mb-4" />}
-        <h2 className="text-4xl font-semibold border-b border-gray-300 dark:text-gray-200 dark:border-[#4d4d4d] mb-8 mt-4">
+        <h2 className="text-3xl font-semibold border-b border-white/[0.08] text-[#ececec] mb-8 mt-4">
           {formTitle}
         </h2>
         <ViewContent

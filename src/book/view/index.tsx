@@ -60,7 +60,7 @@ const View = (props: AppRouteProps) => {
         navNodes={navNodes}
         {...props}
       />
-      <main className="flex-1 min-h-screen ml-64 bg-stone-50 dark:bg-[#212121] pt-16">
+      <main className="flex-1 min-h-screen ml-64 bg-[#0d0d0d] pt-14">
         <div
           onClick={(e) => {
             e.preventDefault()
@@ -76,7 +76,7 @@ const View = (props: AppRouteProps) => {
             {parentNode && image ? (
               <img src={image} alt="" width="100%" className="mb-4" />
             ) : null}
-            <h2 className="text-4xl dark:text-white font-semibold mb-4 pb-2">
+            <h2 className="text-3xl font-bold mb-4 pb-2 text-[#ececec]">
               {parentNode.title}
             </h2>
             <ViewContent source={parentNode.content} isDark={isDark} />
@@ -91,7 +91,7 @@ const View = (props: AppRouteProps) => {
                 })
                 return (
                   <div key={childNode.uid}>
-                    <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+                    <h2 className="text-3xl font-semibold border-b border-white/[0.08] mb-8 pb-3 text-[#ececec]">
                       {childNode.title}
                     </h2>
                     {nodeImage && nodeImage ? (

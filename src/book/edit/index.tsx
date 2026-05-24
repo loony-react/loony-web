@@ -61,7 +61,7 @@ export default function Edit(props: AppRouteProps) {
   return (
     <div className="min-h-screen">
       <LeftNav doc_id={doc_id} setState={setState} state={state} {...props} />
-      <main className="min-h-screen flex-1 ml-64 bg-stone-50 dark:bg-[#212121] pt-16">
+      <main className="min-h-screen flex-1 ml-64 bg-[#0d0d0d] pt-14">
         {/* Markdown Body */}
         <div
           onClick={(e) => {
@@ -96,7 +96,7 @@ export default function Edit(props: AppRouteProps) {
               {parentNode && image ? (
                 <img src={image} alt="" width="100%" className="mb-4" />
               ) : null}
-              <h2 className="text-4xl font-semibold dark:text-white mb-8 pb-2">
+              <h2 className="text-3xl font-bold text-[#ececec] mb-8 pb-2">
                 {parentNode.title}
               </h2>
               <ViewContent source={parentNode.content} isDark={isDark} />
@@ -109,7 +109,7 @@ export default function Edit(props: AppRouteProps) {
                 childNodes.map((childNode) => {
                   return (
                     <div key={childNode.uid}>
-                      <h2 className="text-4xl font-semibold border-b border-gray-300 mb-8 pb-2">
+                      <h2 className="text-4xl font-semibold border-b border-white/[0.08] mb-8 pb-2">
                         {childNode.title}
                       </h2>
                       <Image

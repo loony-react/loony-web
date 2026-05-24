@@ -6,20 +6,20 @@ export default function DeleteModal({
   title,
 }: {
   cancel: () => void
-  confirm: (e: any) => void
+  confirm: () => void
   title?: string
 }) {
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/60">
-      <div className="bg-white dark:bg-[#2e2e2e] rounded-lg shadow-lg w-full max-w-sm p-6">
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-          Confirm Deletion
-        </h2>
-        <p className="text-gray-600 dark:text-[#ccc] mb-6">
-          Are you sure you want to delete?
-        </p>
-        <p className="text-blue-600 dark:text-red-300 text-lg mb-6">{title}</p>
-        <div className="flex justify-end space-x-2">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+      <div className="w-full max-w-sm mx-4 bg-[#1a1a1a] border border-white/[0.08] rounded-2xl shadow-2xl overflow-hidden">
+        <div className="px-6 py-5">
+          <h2 className="text-base font-semibold text-[#ececec] mb-1">Confirm deletion</h2>
+          <p className="text-sm text-[#9b9ba4] mb-1">This action cannot be undone.</p>
+          {title && (
+            <p className="text-sm text-red-400 font-medium mt-3 truncate">"{title}"</p>
+          )}
+        </div>
+        <div className="flex justify-end gap-3 px-6 py-4 border-t border-white/[0.06]">
           <BorderButton onClick={cancel} />
           <DeleteButton onClick={confirm} />
         </div>

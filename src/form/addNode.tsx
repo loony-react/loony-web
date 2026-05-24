@@ -76,7 +76,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   return (
     <div className="pb-24">
       <div style={{}}>
-        <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-1">
+        <h2 className="text-xl font-semibold text-[#ececec] mb-1">
           {heading}
         </h2>
         <div>
@@ -122,7 +122,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
           </div> */}
         </div>
       </div>
-      <div className="mt-10 border border-gray-300 dark:border-[#4d4d4d] p-12 rounded-md">
+      <div className="mt-10 border border-white/[0.08] bg-[#111111] p-10 rounded-xl">
         <RenderImage
           formImages={formImages}
           nodeImages={null}
@@ -131,7 +131,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
           node={null}
           userId={user.uid}
         />
-        <h2 className="text-4xl dark:text-gray-200 font-semibold border-b border-gray-300 dark:border-[#4d4d4d] mb-8 pb-2">
+        <h2 className="text-3xl font-semibold border-b border-white/[0.08] text-[#ececec] mb-8 pb-2">
           {formTitle}
         </h2>
         <ViewContent

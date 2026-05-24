@@ -1,8 +1,11 @@
 import { DocNode, AuthContextProps, AuthStatus } from "loony-types"
 import { Link, NavigateFunction } from "react-router"
 
-const btnClass =
-  "px-4 py-2 border border-[#cccccc] dark:border-[#4d4d4d] hover:border-[#666666] text-gray-800 dark:text-white rounded cursor-pointer mr-2"
+const ghostBtn =
+  "px-3 py-1.5 text-xs font-medium rounded-lg ring-1 ring-white/10 text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec] transition-all duration-150"
+
+const dangerBtn =
+  "px-3 py-1.5 text-xs font-medium rounded-lg ring-1 ring-red-500/20 bg-red-600/10 text-red-400 hover:bg-red-600/20 hover:text-red-300 transition-all duration-150"
 
 export const RightNavView = ({
   doc_id,
@@ -20,25 +23,23 @@ export const RightNavView = ({
   navigate: NavigateFunction
 }) => {
   return (
-    <ul className="flex flex-row">
+    <div className="flex items-center gap-2 bg-[#111111] border border-white/[0.08] rounded-xl px-3 py-2 shadow-xl">
       {authContext.status === AuthStatus.AUTHORIZED &&
       authContext.user?.uid === mainNode.user_id ? (
         <>
-          <li
-            className={btnClass}
+          <button
+            className={ghostBtn}
             onClick={() => navigate(`/view/${docType}/${doc_id}`, { replace: true })}
           >
             View
-          </li>
-          <li onClick={deleteDoc} className={btnClass}>
-            <Link to="#">Delete</Link>
-          </li>
+          </button>
+          <button onClick={deleteDoc} className={dangerBtn}>
+            Delete
+          </button>
         </>
       ) : null}
-      <li className={btnClass}>
-        <Link to="#">Report</Link>
-      </li>
-    </ul>
+      <Link to="#" className={ghostBtn}>Report</Link>
+    </div>
   )
 }
 
@@ -56,19 +57,17 @@ export const RightNavEdit = ({
   navigate: NavigateFunction
 }) => {
   return (
-    <ul className="flex flex-row">
+    <div className="flex items-center gap-2 bg-[#111111] border border-white/[0.08] rounded-xl px-3 py-2 shadow-xl">
       {authContext.status === AuthStatus.AUTHORIZED &&
       authContext.user?.uid === mainNode.user_id ? (
-        <li
-          className={btnClass}
+        <button
+          className="px-3 py-1.5 text-xs font-medium rounded-lg bg-[#10a37f] text-white hover:bg-[#0d8c6e] transition-all duration-150"
           onClick={() => navigate(`/edit/${docType}/${doc_id}`, { replace: true })}
         >
           Edit
-        </li>
+        </button>
       ) : null}
-      <li className={btnClass}>
-        <Link to="#">Report</Link>
-      </li>
-    </ul>
+      <Link to="#" className={ghostBtn}>Report</Link>
+    </div>
   )
 }

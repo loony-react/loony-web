@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   if (authContext.status === AuthStatus.IDLE)
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-[#212121]">
+      <div className="flex items-center justify-center min-h-screen bg-[#0d0d0d]">
         <PageLoader key_id={1} />
       </div>
     )

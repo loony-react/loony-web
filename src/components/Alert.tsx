@@ -4,15 +4,15 @@ import CustomSpinner from './Spinner.tsx'
 import { Alert } from 'loony-types'
 
 const alertStyles: Record<string, string> = {
-  success: "bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800",
-  error: "bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800",
-  request: "bg-orange-400 border border-orange-500",
+  success: "bg-[#0d2818] border border-green-800/40",
+  error: "bg-[#2a0d0d] border border-red-800/40",
+  request: "bg-[#1a1a1a] border border-white/[0.08]",
 }
 
 const alertIcons: Record<string, React.ReactNode> = {
-  success: <FaCircleCheck className="text-green-600 dark:text-green-400 w-8 h-8" />,
-  error: <FaCircleXmark className="text-red-600 dark:text-red-400 w-8 h-8" />,
-  request: <CustomSpinner color="#fff" />,
+  success: <FaCircleCheck className="text-green-400 w-5 h-5" />,
+  error: <FaCircleXmark className="text-red-400 w-5 h-5" />,
+  request: <CustomSpinner color="#10a37f" />,
 }
 
 const AlertComponent = ({
@@ -24,23 +24,23 @@ const AlertComponent = ({
 }) => {
   if (!alert) return null
   return (
-    <div className="fixed right-5 top-5 z-[1001] w-80 shadow-lg rounded-lg overflow-hidden">
-      <div className={`${alertStyles[alert.status] ?? ""} flex items-center gap-3 px-4 py-4`}>
+    <div className="fixed right-5 top-5 z-[1001] w-80 shadow-2xl rounded-xl overflow-hidden">
+      <div className={`${alertStyles[alert.status] ?? ""} flex items-center gap-3 px-4 py-3.5`}>
         <div className="flex-shrink-0">
           {alertIcons[alert.status]}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-gray-900 dark:text-white">{alert.title}</p>
+          <p className="text-sm font-semibold text-[#ececec]">{alert.title}</p>
           {alert.content && (
-            <p className="text-xs mt-0.5 text-gray-600 dark:text-gray-300">{alert.content}</p>
+            <p className="text-xs mt-0.5 text-[#9b9ba4]">{alert.content}</p>
           )}
         </div>
         <button
           onClick={onClose}
           aria-label="Dismiss notification"
-          className="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+          className="flex-shrink-0 text-[#6b6b76] hover:text-[#9b9ba4] transition-colors"
         >
-          <MdClose className="w-5 h-5" />
+          <MdClose className="w-4 h-4" />
         </button>
       </div>
     </div>

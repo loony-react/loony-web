@@ -6,43 +6,39 @@ type TextAreaProps = {
   setContentType: (type: string) => void
   contentType: string
 }
+
 const modes = [
   { id: "basic", label: "Basic" },
   { id: "markdown", label: "Markdown" },
   { id: "maths", label: "Maths" },
 ]
+
 export const TextArea = (props: TextAreaProps) => {
   return (
-    <div className="">
-      <div className="bg-muted border border-gray-300 dark:border-[#4d4d4d] rounded-2xl p-4">
-        {/* Tabs */}
-        <div className="flex mb-3 border-b border-gray-200 dark:border-[#4d4d4d]">
-          {modes.map((m) => (
-            <button
-              key={m.id}
-              onClick={() => props.setContentType(m.id)}
-              className={`flex-1 text-sm font-medium px-4 py-2 text-center dark:text-gray-200 transition-colors duration-200 ${
-                props.contentType === m.id
-                  ? "border-b-2 border-primary text-primary"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {m.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Textarea */}
-        <textarea
-          rows={12}
-          value={props.formContent}
-          placeholder={`Content...`}
-          className="w-full bg-transparent resize-none outline-none text-sm text-foreground dark:text-gray-200 placeholder:text-muted-foreground"
-          onChange={(event) => {
-            props.setFormContent(event.target.value)
-          }}
-        />
+    <div className="rounded-xl border border-white/[0.08] bg-[#111111] overflow-hidden">
+      <div className="flex border-b border-white/[0.06]">
+        {modes.map((m) => (
+          <button
+            key={m.id}
+            type="button"
+            onClick={() => props.setContentType(m.id)}
+            className={`flex-1 text-xs font-medium px-4 py-2.5 transition-colors duration-150 ${
+              props.contentType === m.id
+                ? "text-[#ececec] border-b-2 border-[#10a37f] bg-white/[0.03]"
+                : "text-[#6b6b76] hover:text-[#9b9ba4]"
+            }`}
+          >
+            {m.label}
+          </button>
+        ))}
       </div>
+      <textarea
+        rows={12}
+        value={props.formContent}
+        placeholder="Write your content here…"
+        className="w-full bg-transparent resize-none outline-none text-sm text-[#ececec] placeholder-[#4a4a54] px-4 py-3 leading-relaxed"
+        onChange={(e) => props.setFormContent(e.target.value)}
+      />
     </div>
   )
 }
