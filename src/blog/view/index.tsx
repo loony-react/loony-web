@@ -5,7 +5,7 @@ import { AppRouteProps, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
 import { RightNavEdit } from "../../components/RightNav.tsx"
 import { useGetBlogNodes } from "loony-api"
-import { Container } from "loony-ui"
+
 import Image from "../Image.tsx"
 
 const View = (props: AppRouteProps) => {
@@ -30,9 +30,8 @@ const View = (props: AppRouteProps) => {
     return <PageLoadingContainer title="" />
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d]">
-      <Container>
-        <div className="max-w-2xl mx-auto px-4 pt-8 pb-24">
+    <div className="min-h-screen bg-[#0d0d0d] pt-14">
+      <div className="max-w-4xl mx-auto px-4 pt-8 pb-24">
           <Image mainNode={mainNode} node={mainNode} base_url={base_url} />
           <h1 className="text-3xl font-bold text-[#ececec] mt-6 mb-4 leading-tight">
             {mainNode.title}
@@ -51,7 +50,6 @@ const View = (props: AppRouteProps) => {
             )
           })}
         </div>
-      </Container>
 
       <div className="fixed bottom-0 right-16 mb-4 mx-auto">
         <RightNavEdit

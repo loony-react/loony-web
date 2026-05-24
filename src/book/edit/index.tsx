@@ -83,7 +83,7 @@ export default function Edit(props: AppRouteProps) {
             />
           )}
           {!state.form.method && (
-            <div className="max-w-2xl mx-auto px-4 pt-8 pb-24">
+            <div className="max-w-4xl mx-auto px-4 pt-8 pb-24">
               <BookImage docId={doc_id} node={parentNode} base_url={base_url} />
               <h2 className="text-3xl font-bold text-[#ececec] mb-8 pb-2">
                 {parentNode.title}
@@ -114,7 +114,7 @@ export default function Edit(props: AppRouteProps) {
             </div>
           )}
           {state.form.method && (
-            <div className="max-w-2xl mx-auto px-4 pt-8 pb-24">
+            <div className="max-w-4xl mx-auto px-4 pt-8 pb-24">
               <EditComponent
                 state={state}
                 setState={setState}

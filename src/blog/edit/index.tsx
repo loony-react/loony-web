@@ -70,7 +70,7 @@ export default function Edit(props: AppRouteProps) {
             title={state.modal.title}
           />
         )}
-        <div className="max-w-2xl mx-auto px-4 pt-8 pb-24">
+        <div className="max-w-4xl mx-auto px-4 pt-8 pb-24">
           {!state.form.method && (
             <>
               <Image mainNode={mainNode} node={mainNode} base_url={base_url} />
@@ -83,6 +83,7 @@ export default function Edit(props: AppRouteProps) {
                 setState={setState}
                 node={mainNode}
                 nodeIndex={null}
+                onDeleteDoc={() => setState((s) => ({ ...s, modal: { method: "delete", nodeType: 100, title: mainNode.title } }))}
               />
 
               {childNodes.map((node, id) => {
@@ -222,11 +223,13 @@ const NodeSettings = ({
   node,
   state,
   nodeIndex,
+  onDeleteDoc,
 }: {
   setState: EditBlogAction
   node: DocNode
   state: EditBlogState
   nodeIndex: number | null
+  onDeleteDoc?: () => void
 }) => {
   return (
     <div className="flex gap-1 mb-12">
@@ -269,6 +272,15 @@ const NodeSettings = ({
       </button>
 
       {/* Delete */}
+      {node.identity === 100 && onDeleteDoc && (
+        <button
+          className="p-1.5 rounded-md text-red-500/60 hover:bg-red-500/10 hover:text-red-400 transition-colors duration-150"
+          title="Delete blog"
+          onClick={(e) => { e.stopPropagation(); onDeleteDoc() }}
+        >
+          <Trash2 className="w-4 h-4" />
+        </button>
+      )}
       {node.identity > 100 && (
         <button
           className="p-1.5 rounded-md text-[#6b6b76] hover:bg-white/5 hover:text-[#9b9ba4] transition-colors duration-150"
