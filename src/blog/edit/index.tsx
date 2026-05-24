@@ -19,10 +19,7 @@ import { Plus, Pencil, Trash2 } from "lucide-react"
 import { RightNavView } from "../../components/RightNav.tsx"
 import DeleteModal from "../../components/Modal.tsx"
 import { STATE_VALUES } from "../../utils/const.ts"
-import {
-  onConfirmDelete,
-  onCancel,
-} from "./utils.ts"
+import { onConfirmDelete, onCancel } from "./utils.ts"
 import { AppContext } from "../../context/AppContext.tsx"
 import { useGetBlogNodes } from "loony-api"
 import { Container } from "loony-ui"
@@ -82,13 +79,26 @@ export default function Edit(props: AppRouteProps) {
                 setState={setState}
                 node={mainNode}
                 nodeIndex={null}
-                onDeleteDoc={() => setState((s) => ({ ...s, modal: { method: "delete", nodeType: 100, title: mainNode.title } }))}
+                onDeleteDoc={() =>
+                  setState((s) => ({
+                    ...s,
+                    modal: {
+                      method: "delete",
+                      nodeType: 100,
+                      title: mainNode.title,
+                    },
+                  }))
+                }
               />
 
               {childNodes.map((node, id) => {
                 return (
                   <div key={id}>
-                    <Image mainNode={mainNode} node={node} base_url={base_url} />
+                    <Image
+                      mainNode={mainNode}
+                      node={node}
+                      base_url={base_url}
+                    />
                     <h2 className="text-2xl font-semibold my-4 border-b border-[var(--border)] text-[var(--text-primary)]">
                       {node.title}
                     </h2>
@@ -98,6 +108,7 @@ export default function Edit(props: AppRouteProps) {
                       setState={setState}
                       node={node}
                       nodeIndex={id}
+                      canDelete={true}
                     />
                   </div>
                 )
@@ -121,7 +132,10 @@ export default function Edit(props: AppRouteProps) {
           mainNode={mainNode}
           docType="blog"
           deleteDoc={() => {
-            setState((s) => ({ ...s, modal: { method: "delete", nodeType: 100, title: mainNode.title } }))
+            setState((s) => ({
+              ...s,
+              modal: { method: "delete", nodeType: 100, title: mainNode.title },
+            }))
           }}
           navigate={navigate}
         />
@@ -223,12 +237,14 @@ const NodeSettings = ({
   state,
   nodeIndex,
   onDeleteDoc,
+  canDelete = false,
 }: {
   setState: EditBlogAction
   node: DocNode
   state: EditBlogState
   nodeIndex: number | null
   onDeleteDoc?: () => void
+  canDelete?: boolean
 }) => {
   return (
     <div className="flex gap-1 mb-12">
@@ -275,12 +291,15 @@ const NodeSettings = ({
         <button
           className="p-1.5 rounded-md text-red-500/60 hover:bg-red-500/10 hover:text-red-400 transition-colors duration-150"
           title="Delete blog"
-          onClick={(e) => { e.stopPropagation(); onDeleteDoc() }}
+          onClick={(e) => {
+            e.stopPropagation()
+            onDeleteDoc()
+          }}
         >
           <Trash2 className="w-4 h-4" />
         </button>
       )}
-      {node.identity > 100 && (
+      {canDelete && (
         <button
           className="p-1.5 rounded-md text-[var(--text-muted)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-secondary)] transition-colors duration-150"
           title="Delete"
