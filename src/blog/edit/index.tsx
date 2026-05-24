@@ -70,7 +70,7 @@ export default function Edit(props: AppRouteProps) {
             title={state.modal.title}
           />
         )}
-        <div className="w-[45%] mx-auto">
+        <div className="max-w-2xl mx-auto px-4 pt-8 pb-24">
           {!state.form.method && (
             <>
               <Image mainNode={mainNode} node={mainNode} base_url={base_url} />
@@ -105,14 +105,12 @@ export default function Edit(props: AppRouteProps) {
             </>
           )}
           {state.form.method && (
-            <div className="w-[90%] mx-[5%]">
-              <EditComponent
-                state={state}
-                setState={setState}
-                doc_id={doc_id as number}
-                isMobile={false}
-              />
-            </div>
+            <EditComponent
+              state={state}
+              setState={setState}
+              doc_id={doc_id as number}
+              isMobile={false}
+            />
           )}
         </div>
       </Container>

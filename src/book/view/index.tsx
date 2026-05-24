@@ -65,7 +65,7 @@ const View = (props: AppRouteProps) => {
             }
           }}
         >
-          <div className="w-[45%] mx-auto">
+          <div className="max-w-2xl mx-auto px-4 pt-8 pb-24">
             <BookImage docId={docId} node={parentNode} base_url={base_url} />
             <h2 className="text-3xl font-bold mb-4 pb-2 text-[#ececec]">
               {parentNode.title}
@@ -84,7 +84,6 @@ const View = (props: AppRouteProps) => {
                 )
               })}
           </div>
-          <div className="pb-16" />
         </div>
       </main>
 

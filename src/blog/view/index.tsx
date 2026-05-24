@@ -32,7 +32,7 @@ const View = (props: AppRouteProps) => {
   return (
     <div className="min-h-screen bg-[#0d0d0d]">
       <Container>
-        <div className="max-w-2xl mx-auto px-4 py-8">
+        <div className="max-w-2xl mx-auto px-4 pt-8 pb-24">
           <Image mainNode={mainNode} node={mainNode} base_url={base_url} />
           <h1 className="text-3xl font-bold text-[#ececec] mt-6 mb-4 leading-tight">
             {mainNode.title}
@@ -50,7 +50,6 @@ const View = (props: AppRouteProps) => {
               </div>
             )
           })}
-          <div className="pb-16" />
         </div>
       </Container>
 
