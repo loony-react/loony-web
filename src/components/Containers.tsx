@@ -3,14 +3,16 @@ import React from "react"
 export const ChapterNavContainer = ({
   children,
   onClick,
-}: // isActive,
-{
+}: {
   children: React.ReactNode
   onClick: React.MouseEventHandler<HTMLDivElement>
   isActive: boolean
 }) => {
   return (
-    <div className="chapter-nav" onClick={onClick}>
+    <div
+      className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer hover:bg-white/5 transition-colors duration-150 text-sm text-[#9b9ba4] hover:text-[#ececec]"
+      onClick={onClick}
+    >
       {children}
     </div>
   )
@@ -21,7 +23,11 @@ export const ChapterButtonNavContainer = ({
 }: {
   children: React.ReactNode
 }) => {
-  return <div className="chapter-button-nav">{children}</div>
+  return (
+    <div className="flex items-center gap-2 px-3 py-1">
+      {children}
+    </div>
+  )
 }
 
 export const SectionButtonNavContainer = ({
@@ -29,7 +35,11 @@ export const SectionButtonNavContainer = ({
 }: {
   children: React.ReactNode
 }) => {
-  return <div className="section-button-nav">{children}</div>
+  return (
+    <div className="flex items-center gap-2 px-3 py-1">
+      {children}
+    </div>
+  )
 }
 
 export const MenuNavContainer = ({
@@ -43,9 +53,14 @@ export const MenuNavContainer = ({
   route: string | undefined
   activeMenu?: string | undefined
 }) => {
+  const isActive = activeMenu === route
   return (
     <div
-      className={`menu-nav flex-row p8_12 ${activeMenu}`}
+      className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-colors duration-150 text-sm ${
+        isActive
+          ? "bg-white/8 text-[#ececec]"
+          : "text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec]"
+      }`}
       data-id={route}
       onClick={onClick}
     >
@@ -59,7 +74,11 @@ export const BasicMenuNavContainer = ({
 }: {
   children: React.ReactNode
 }) => {
-  return <div className="menu-nav flex-row p8_12">{children}</div>
+  return (
+    <div className="flex items-center gap-2 px-3 py-2 text-sm text-[#9b9ba4]">
+      {children}
+    </div>
+  )
 }
 
 export const PageNavContainer = ChapterNavContainer
@@ -67,14 +86,16 @@ export const PageNavContainer = ChapterNavContainer
 export const SectionNavContainer = ({
   children,
   onClick,
-}: // isActive,
-{
+}: {
   children: React.ReactNode
   onClick: React.MouseEventHandler<HTMLDivElement>
   isActive: boolean
 }) => {
   return (
-    <div className="section-nav" onClick={onClick}>
+    <div
+      className="flex items-center gap-2 px-3 py-1.5 rounded-md cursor-pointer hover:bg-white/5 transition-colors duration-150 text-sm text-[#9b9ba4] hover:text-[#ececec]"
+      onClick={onClick}
+    >
       {children}
     </div>
   )
@@ -88,7 +109,10 @@ export const SectionsNavContainer = ({
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }) => {
   return (
-    <div className="sections-nav" onClick={onClick}>
+    <div
+      className="pl-4 space-y-0.5"
+      onClick={onClick}
+    >
       {children}
     </div>
   )
@@ -102,7 +126,7 @@ export const DocsBodyContainer = ({
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }) => {
   return (
-    <div className="flex-row con-xxl-70 mar-hor-30" onClick={onClick}>
+    <div className="flex flex-row w-full max-w-[70%] mx-auto" onClick={onClick}>
       {children}
     </div>
   )
@@ -116,7 +140,7 @@ export const DocsContentContainer = ({
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }) => {
   return (
-    <div className="con-xxl-50 mar-hor-auto" onClick={onClick}>
+    <div className="w-full max-w-2xl mx-auto" onClick={onClick}>
       {children}
     </div>
   )
@@ -130,7 +154,7 @@ export const DocsNavContainer = ({
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }) => {
   return (
-    <div className="con-xxl-20" onClick={onClick}>
+    <div className="w-[20%] flex-shrink-0" onClick={onClick}>
       {children}
     </div>
   )
@@ -144,7 +168,7 @@ export const HomeNavContainer = ({
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }) => {
   return (
-    <div className="con-xxl-15" onClick={onClick}>
+    <div className="w-[15%] flex-shrink-0" onClick={onClick}>
       {children}
     </div>
   )
@@ -158,7 +182,7 @@ export const DocsSettingsContainer = ({
   onClick?: React.MouseEventHandler<HTMLDivElement>
 }) => {
   return (
-    <div className="con-xxl-20" onClick={onClick}>
+    <div className="w-[20%] flex-shrink-0" onClick={onClick}>
       {children}
     </div>
   )

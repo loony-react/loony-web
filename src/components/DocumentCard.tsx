@@ -24,31 +24,36 @@ export default function Card({
 
   return (
     <div
-      className="rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer text-neutral-900 dark:text-neutral-300"
+      className="group rounded-xl overflow-hidden bg-[#1a1a1a] cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/30 text-[#ececec]"
       onClick={() => navigate(`/view/${docType}/${node.uid}`)}
       role="article"
       aria-label={node.title}
     >
-      <div className="relative w-full h-44 bg-gray-100 dark:bg-cardTop flex items-center justify-center">
+      {/* Image / thumbnail area — 16:9 */}
+      <div className="aspect-video w-full bg-[#212121] flex items-center justify-center overflow-hidden">
         {image ? (
           <img
             src={image}
             alt={node.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
           />
         ) : (
-          <h3 className="text-center text-sm font-semibold px-4">
+          <h3 className="text-center text-sm font-medium px-4 text-[#9b9ba4] line-clamp-3">
             {node.title}
           </h3>
         )}
       </div>
-      <div className="flex p-4 bg-neutral-100 dark:bg-cardBot">
-        <div className="w-10 h-10 mr-2 flex-shrink-0 rounded-full bg-gray-200 flex items-center justify-center">
-          <User className="w-5 h-5 text-neutral-900" />
+
+      {/* Bottom info */}
+      <div className="flex items-start gap-3 p-3">
+        <div className="w-8 h-8 flex-shrink-0 rounded-full bg-[#2a2a2a] flex items-center justify-center">
+          <User className="w-4 h-4 text-[#9b9ba4]" />
         </div>
         <div className="flex flex-col min-w-0">
-          <h3 className="text-sm font-semibold line-clamp-2">{node.title}</h3>
-          <p className="text-xs mt-0.5 text-gray-500 dark:text-gray-400">{timeAgo(node.created_at)}</p>
+          <h3 className="text-sm font-medium text-[#ececec] line-clamp-2 leading-snug">
+            {node.title}
+          </h3>
+          <p className="text-xs mt-1 text-[#6b6b76]">{timeAgo(node.created_at)}</p>
         </div>
       </div>
     </div>

@@ -2,61 +2,197 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-navbar: #131313;
-  --color-body: #212121;
-  --color-body-dark: #1a1a1a;
-  --color-cardTop: #262626;
-  --color-cardBot: #303030;
+  /* Legacy tokens — kept for backward compat */
+  --color-navbar: #111111;
+  --color-body: #0d0d0d;
+  --color-body-dark: #111111;
+  --color-cardTop: #1a1a1a;
+  --color-cardBot: #1a1a1a;
+
+  /* Design system surfaces */
+  --color-surface-0: #0d0d0d;
+  --color-surface-1: #111111;
+  --color-surface-2: #1a1a1a;
+  --color-surface-3: #212121;
+
+  /* Accent */
+  --color-accent: #10a37f;
+  --color-accent-hover: #0d8c6e;
+
+  /* Text */
+  --color-text-primary: #ececec;
+  --color-text-secondary: #9b9ba4;
+  --color-text-muted: #6b6b76;
 }
 
+/* ── Design tokens ─────────────────────────────────────── */
 :root {
-}
-button {
-  cursor: pointer;
+  /* Light mode defaults */
+  --bg: #f7f7f8;
+  --surface: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.16);
+  --text-primary: #111111;
+  --text-secondary: #555560;
+  --text-muted: #888890;
+  --accent: #10a37f;
+  --accent-hover: #0d8c6e;
+  --scrollbar-thumb: rgba(0, 0, 0, 0.15);
+  --scrollbar-track: transparent;
 }
 
+.dark {
+  --bg: #0d0d0d;
+  --surface: #1a1a1a;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text-primary: #ececec;
+  --text-secondary: #9b9ba4;
+  --text-muted: #6b6b76;
+  --accent: #10a37f;
+  --accent-hover: #0d8c6e;
+  --scrollbar-thumb: rgba(255, 255, 255, 0.12);
+  --scrollbar-track: transparent;
+}
+
+/* ── Base ──────────────────────────────────────────────── */
 html,
 body,
 #root {
   height: 100%;
 }
+
+body {
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
+  color: var(--text-primary);
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 9999px;
+}
+
+/* ── Syntax highlighting ───────────────────────────────── */
 @layer base {
-  /* code block container */
   pre code.hljs {
     @apply block bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm;
   }
 
-  /* inline code */
   :not(pre) > code {
-    @apply bg-gray-800 text-gray-100 px-1 py-0.5 rounded;
+    @apply bg-gray-800 text-gray-100 px-1 py-0.5 rounded text-sm;
   }
 
-  /* COMMENTS – optional gray */
   .hljs-comment,
   .hljs-quote {
     @apply text-gray-400;
   }
 
-  /* RED */
   .hljs-keyword,
   .hljs-selector-tag,
   .hljs-meta .hljs-keyword {
-    @apply text-red-500;
+    @apply text-red-400;
   }
 
-  /* GREEN */
   .hljs-string,
   .hljs-title,
   .hljs-attr,
   .hljs-template-tag {
-    @apply text-green-500;
+    @apply text-green-400;
   }
 
-  /* BLUE */
   .hljs-number,
   .hljs-literal,
   .hljs-type,
   .hljs-symbol {
-    @apply text-blue-500;
+    @apply text-blue-400;
+  }
+}
+
+/* ── Component layer ───────────────────────────────────── */
+@layer components {
+  /* Modal overlay */
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm;
+  }
+
+  /* Modal card sizes */
+  .modal-card {
+    @apply relative w-full mx-4 bg-[#1e1e1e] rounded-2xl shadow-2xl overflow-hidden;
+  }
+
+  .modal-card-sm {
+    @apply modal-card max-w-md;
+  }
+
+  .modal-card-md {
+    @apply modal-card max-w-lg;
+  }
+
+  .modal-card-lg {
+    @apply modal-card max-w-2xl;
+  }
+
+  /* Modal header */
+  .modal-header {
+    @apply flex items-center justify-between px-6 py-4 border-b border-white/8;
+  }
+
+  /* Modal body */
+  .modal-body {
+    @apply px-6 py-5;
+  }
+
+  /* Modal footer / button row */
+  .modal-footer {
+    @apply px-6 py-4 flex justify-end gap-3 border-t border-white/8;
+  }
+
+  /* Print modal (full-screen) */
+  .modal-print {
+    @apply fixed inset-0 z-50 bg-white dark:bg-[#0d0d0d] overflow-auto;
+  }
+
+  /* Nav items */
+  .nav-item {
+    @apply flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150 cursor-pointer;
+    color: var(--text-secondary);
+  }
+
+  .nav-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+  }
+
+  .nav-item.active {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
   }
 }

@@ -39,54 +39,69 @@ export const PageNavigation = <T extends ReadBookState | EditBookState>({
   if (!frontPage || !parentNode) return null
 
   return (
-    <div className="fixed bg-gray-50 dark:bg-[#131313] text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16">
-      <nav>
-        <h2 className="text-sm font-semibold uppercase mb-2">
+    <div className="fixed bg-[#111111] border-r border-white/[0.08] w-64 h-screen overflow-y-auto mt-14 pt-4 pb-6">
+      <nav className="px-3">
+        {/* Book title */}
+        <button
+          type="button"
+          onClick={viewFrontPage}
+          className="w-full text-left px-3 py-2 mb-3 rounded-lg text-sm font-semibold text-[#ececec] hover:bg-white/5 transition-colors duration-150 truncate"
+        >
           {frontPage.title}
-        </h2>
-        {navNodes.map((chapter) => {
-          return (
-            <div key={chapter.uid}>
-              <h2
-                className="px-2 py-1 text-xs font-semibold uppercase tracking-wide hover:bg-[#ececec] dark:hover:bg-[#333333]"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onGetChapter(chapter)
-                }}
-                // isActive={parentNode.uid === chapter.uid}
-              >
-                {chapter.title}
-              </h2>
-              <div className="sections px-4">
-                <ul
-                  onClick={() => {
-                    return
+        </button>
+
+        <div className="space-y-0.5">
+          {navNodes.map((chapter) => {
+            const isActiveChapter = parentNode.uid === chapter.uid
+
+            return (
+              <div key={chapter.uid}>
+                {/* Chapter row */}
+                <button
+                  type="button"
+                  className={`w-full text-left flex items-center px-3 py-2 rounded-lg text-xs font-semibold uppercase tracking-wide transition-colors duration-150 border-l-2 ${
+                    isActiveChapter
+                      ? "border-[#10a37f] text-[#ececec] bg-white/5"
+                      : "border-transparent text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec]"
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onGetChapter(chapter)
                   }}
                 >
-                  {/* {page_id === chapter.uid &&
-                } */}
-                  {chapter.child?.map((section) => {
-                    return (
-                      <li key={section.uid}>
-                        <a
-                          href="#"
-                          className="block px-2 py-1 rounded hover:bg-[#ececec] dark:hover:bg-[#363636]"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            onGetSection(section)
-                          }}
-                          // isActive={parentNode.uid === section.uid}
-                        >
-                          {section.title}
-                        </a>
-                      </li>
-                    )
-                  })}
-                </ul>
+                  {chapter.title}
+                </button>
+
+                {/* Section list */}
+                {chapter.child && chapter.child.length > 0 && (
+                  <ul className="pl-4 mt-0.5 space-y-0.5">
+                    {chapter.child.map((section) => {
+                      const isActiveSection = parentNode.uid === section.uid
+                      return (
+                        <li key={section.uid}>
+                          <button
+                            type="button"
+                            className={`w-full text-left flex items-center px-3 py-1.5 rounded-md text-xs transition-colors duration-150 border-l-2 ${
+                              isActiveSection
+                                ? "border-[#10a37f] text-[#ececec] bg-white/5"
+                                : "border-transparent text-[#6b6b76] hover:bg-white/5 hover:text-[#9b9ba4]"
+                            }`}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              onGetSection(section)
+                            }}
+                          >
+                            {section.title}
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )}
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </nav>
     </div>
   )

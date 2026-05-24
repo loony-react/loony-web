@@ -30,31 +30,30 @@ const View = (props: AppRouteProps) => {
     return <PageLoadingContainer title="" />
 
   return (
-    <div className="min-h-screen">
-      <div className="fixed bg-gray-50 dark:bg-[#131313] text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16" />
+    <div className="min-h-screen bg-[#0d0d0d]">
       <Container>
-        <div>
-          <div className="w-[45%] mx-auto">
-            <Image mainNode={mainNode} node={mainNode} base_url={base_url} />
-            <h2 className="text-4xl dark:text-white font-semibold my-4">
-              {mainNode.title}
-            </h2>
-            <ViewContent source={mainNode.content} isDark={isDark} />
-            {childNodes.map((node, id) => {
-              return (
-                <>
-                  <Image mainNode={mainNode} node={node} base_url={base_url} />
-                  <h2 className="text-2xl font-semibold my-4 border-b border-gray-300">
-                    {node.title}
-                  </h2>
-                  <ViewContent key={id} source={node.content} isDark={isDark} />
-                </>
-              )
-            })}
-          </div>
+        <div className="max-w-2xl mx-auto px-4 py-8">
+          <Image mainNode={mainNode} node={mainNode} base_url={base_url} />
+          <h1 className="text-3xl font-bold text-[#ececec] mt-6 mb-4 leading-tight">
+            {mainNode.title}
+          </h1>
+          <ViewContent source={mainNode.content} isDark={isDark} />
+
+          {childNodes.map((node, id) => {
+            return (
+              <div key={id} className="mt-10">
+                <Image mainNode={mainNode} node={node} base_url={base_url} />
+                <h2 className="text-xl font-semibold text-[#ececec] my-4 pb-3 border-b border-white/[0.08]">
+                  {node.title}
+                </h2>
+                <ViewContent source={node.content} isDark={isDark} />
+              </div>
+            )
+          })}
           <div className="pb-16" />
         </div>
       </Container>
+
       <div className="fixed bottom-0 right-16 mb-4 mx-auto">
         <RightNavEdit
           doc_id={doc_id as number}

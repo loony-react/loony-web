@@ -14,49 +14,39 @@ const Profile = (props: AppRouteProps) => {
   const books = useUserBooks(user?.uid as number)
 
   return (
-    <>
-      <div
-        className={`fixed bg-gray-50 dark:bg-navbar text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16`}
-      />
-      <div className="flex flex-col items-center dark:bg-body min-h-screen">
-        {/* Profile Header */}
-        <div className="w-[60%] dark:bg-body relative mt-8 mb-4">
-          <div className="flex items-center gap-4">
-            <div className="w-24 h-24 mr-2 rounded-full bg-gray-200 flex items-center justify-center">
-              <User className="w-14 h-14 text-gray-600" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
-                {user?.fname} {user?.lname}
-              </h1>
-            </div>
+    <div className="ml-64 min-h-screen bg-[#0d0d0d] pt-14">
+      {/* Profile header */}
+      <div className="border-b border-white/[0.06] px-10 py-8">
+        <div className="flex items-center gap-5 max-w-5xl">
+          <div className="w-16 h-16 rounded-full bg-[#1a1a1a] border border-white/10 flex items-center justify-center flex-shrink-0">
+            <User className="w-8 h-8 text-[#6b6b76]" />
+          </div>
+          <div>
+            <h1 className="text-xl font-semibold text-[#ececec]">
+              {user?.fname} {user?.lname}
+            </h1>
+            <p className="text-sm text-[#6b6b76] mt-0.5">{user?.fname?.toLowerCase()}{user?.lname?.toLowerCase()}</p>
           </div>
         </div>
-
-        {/* Padding to make space for avatar overlap */}
-        <div className="h-16" />
-
-        {/* Posts Section */}
-        <main className="w-[60%]">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
-            <Documents
-              navigate={navigate}
-              documents={blogs}
-              base_url={base_url}
-              docType="blog"
-            />
-          </div>
-          <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
-            <Documents
-              navigate={navigate}
-              documents={books}
-              base_url={base_url}
-              docType="book"
-            />
-          </div>
-        </main>
       </div>
-    </>
+
+      {/* Content */}
+      <div className="px-10 py-8 max-w-7xl">
+        <section className="mb-10">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-white/40 mb-4">Blogs</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <Documents navigate={navigate} documents={blogs} base_url={base_url} docType="blog" />
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-white/40 mb-4">Books</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <Documents navigate={navigate} documents={books} base_url={base_url} docType="book" />
+          </div>
+        </section>
+      </div>
+    </div>
   )
 }
 

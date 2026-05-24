@@ -26,13 +26,17 @@ const ConfirmAction = ({
       <ModalBodyContainer>{confirmTitle}</ModalBodyContainer>
       <ModalButtonContainer>
         <button
+          type="button"
           onClick={onCancel as React.MouseEventHandler<HTMLButtonElement>}
-          className="white-bg shadow"
-          style={{ marginRight: 10 }}
+          className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 bg-transparent ring-1 ring-white/10 text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec]"
         >
           Cancel
         </button>
-        <button onClick={confirmAction} className="black-bg shadow">
+        <button
+          type="button"
+          onClick={confirmAction}
+          className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 bg-red-600/10 text-red-400 ring-1 ring-red-500/20 hover:bg-red-600/20 hover:text-red-300"
+        >
           Confirm
         </button>
       </ModalButtonContainer>

@@ -21,7 +21,7 @@ export const Input = ({
     <input
       id={id}
       type={type}
-      className="w-full px-4 py-2 border border-gray-300 dark:border-[#4d4d4d] rounded-md bg-gray-50 dark:bg-[#292929] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#4d4d4d]"
+      className="w-full px-4 py-2.5 rounded-lg bg-[#1a1a1a] border border-white/10 text-[#ececec] placeholder-[#6b6b76] focus:outline-none focus:ring-2 focus:ring-[#10a37f]/50 focus:border-[#10a37f]/60 transition-all duration-150"
       value={value}
       name={name}
       onChange={onChange}
@@ -55,7 +55,7 @@ export const PasswordInput = ({
     <input
       id={id}
       type={type}
-      className="w-full px-4 py-2 border border-gray-300 dark:border-[#4d4d4d] rounded-md bg-gray-50 dark:bg-[#292929] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-[#4d4d4d]"
+      className="w-full px-4 py-2.5 rounded-lg bg-[#1a1a1a] border border-white/10 text-[#ececec] placeholder-[#6b6b76] focus:outline-none focus:ring-2 focus:ring-[#10a37f]/50 focus:border-[#10a37f]/60 transition-all duration-150"
       value={value}
       name={name}
       onChange={onChange}
@@ -66,5 +66,3 @@ export const PasswordInput = ({
     />
   )
 }
-
-// focus:outline-none focus:ring-1 focus:ring-[#4d4d4d]

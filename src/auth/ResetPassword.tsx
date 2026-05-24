@@ -55,110 +55,103 @@ const ResetPassword = ({
     })
   }
 
+  const labelClass = "block text-xs font-medium mb-1.5 text-[#9b9ba4] uppercase tracking-wide"
+  const inputClass = "w-full px-4 py-2.5 rounded-lg bg-[#1a1a1a] border border-white/10 text-[#ececec] placeholder-[#6b6b76] focus:outline-none focus:ring-2 focus:ring-[#10a37f]/50 focus:border-[#10a37f]/60 transition-all duration-150"
+
   return (
-    <div className="flex flex-1 justify-center items-center min-h-screen bg-gray-50 dark:bg-[#212121] px-4">
-      <div className="w-full max-w-sm bg-white dark:bg-[#2e2e2e] shadow-md rounded-xl p-8">
-        <h1 className="text-2xl font-bold text-center mb-2 text-gray-900 dark:text-white">
+    <div className="flex flex-1 justify-center items-center min-h-screen bg-[#0d0d0d] px-4">
+      <div className="w-full max-w-sm">
+        <h1 className="text-2xl font-semibold text-center mb-1 text-[#ececec]">
           Reset password
         </h1>
-        <p className="text-sm text-center text-gray-500 dark:text-gray-400 mb-8">
+        <p className="text-sm text-center text-[#6b6b76] mb-8">
           Enter your account email and choose a new password.
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-gray-700 dark:text-gray-300">
-              Email or username
-            </label>
-            <input
-              id="email"
-              type="text"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="you@example.com"
-              autoFocus
-              className="w-full px-4 py-2 border border-gray-300 dark:border-[#4d4d4d] rounded-md bg-gray-50 dark:bg-[#292929] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400"
-              aria-invalid={!!errors.email}
-            />
-            {errors.email && (
-              <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.email}</p>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium mb-1.5 text-gray-700 dark:text-gray-300">
-              New password
-            </label>
-            <div className="relative">
+        <div className="bg-[#111111] border border-white/[0.08] rounded-2xl p-8">
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            <div>
+              <label htmlFor="email" className={labelClass}>Email or username</label>
               <input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                name="password"
-                value={formData.password}
+                id="email"
+                type="text"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
-                placeholder="At least 8 characters"
-                className="w-full px-4 py-2 pr-10 border border-gray-300 dark:border-[#4d4d4d] rounded-md bg-gray-50 dark:bg-[#292929] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400"
-                aria-invalid={!!errors.password}
+                placeholder="you@example.com"
+                autoFocus
+                className={inputClass}
+                aria-invalid={!!errors.email}
               />
-              {formData.password.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setShowPassword((v) => !v)}
-                  className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? <IoEyeOff className="w-5 h-5" /> : <IoEye className="w-5 h-5" />}
-                </button>
-              )}
+              {errors.email && <p className="mt-1.5 text-xs text-red-400">{errors.email}</p>}
             </div>
-            {errors.password && (
-              <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.password}</p>
-            )}
-          </div>
 
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1.5 text-gray-700 dark:text-gray-300">
-              Confirm new password
-            </label>
-            <div className="relative">
-              <input
-                id="confirmPassword"
-                type={showConfirm ? "text" : "password"}
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                placeholder="Repeat your new password"
-                className="w-full px-4 py-2 pr-10 border border-gray-300 dark:border-[#4d4d4d] rounded-md bg-gray-50 dark:bg-[#292929] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400"
-                aria-invalid={!!errors.confirmPassword}
-              />
-              {formData.confirmPassword.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setShowConfirm((v) => !v)}
-                  className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
-                  aria-label={showConfirm ? "Hide password" : "Show password"}
-                >
-                  {showConfirm ? <IoEyeOff className="w-5 h-5" /> : <IoEye className="w-5 h-5" />}
-                </button>
-              )}
+            <div>
+              <label htmlFor="password" className={labelClass}>New password</label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="At least 8 characters"
+                  className={inputClass}
+                  aria-invalid={!!errors.password}
+                />
+                {formData.password.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((v) => !v)}
+                    className="absolute inset-y-0 right-3 flex items-center text-[#6b6b76] hover:text-[#9b9ba4] transition-colors"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <IoEyeOff className="w-4 h-4" /> : <IoEye className="w-4 h-4" />}
+                  </button>
+                )}
+              </div>
+              {errors.password && <p className="mt-1.5 text-xs text-red-400">{errors.password}</p>}
             </div>
-            {errors.confirmPassword && (
-              <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.confirmPassword}</p>
-            )}
-          </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full py-2.5 rounded-lg font-medium bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            {isSubmitting ? "Saving…" : "Reset password"}
-          </button>
-        </form>
+            <div>
+              <label htmlFor="confirmPassword" className={labelClass}>Confirm new password</label>
+              <div className="relative">
+                <input
+                  id="confirmPassword"
+                  type={showConfirm ? "text" : "password"}
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Repeat your new password"
+                  className={inputClass}
+                  aria-invalid={!!errors.confirmPassword}
+                />
+                {formData.confirmPassword.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirm((v) => !v)}
+                    className="absolute inset-y-0 right-3 flex items-center text-[#6b6b76] hover:text-[#9b9ba4] transition-colors"
+                    aria-label={showConfirm ? "Hide password" : "Show password"}
+                  >
+                    {showConfirm ? <IoEyeOff className="w-4 h-4" /> : <IoEye className="w-4 h-4" />}
+                  </button>
+                )}
+              </div>
+              {errors.confirmPassword && <p className="mt-1.5 text-xs text-red-400">{errors.confirmPassword}</p>}
+            </div>
 
-        <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-          <a href="/login" className="font-medium text-gray-900 dark:text-white hover:underline">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full py-2.5 rounded-lg font-medium text-sm transition-all duration-150 bg-[#ececec] text-[#0d0d0d] hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98]"
+            >
+              {isSubmitting ? "Saving…" : "Reset password"}
+            </button>
+          </form>
+        </div>
+
+        <p className="mt-5 text-center text-sm text-[#6b6b76]">
+          <a href="/login" className="text-[#10a37f] hover:text-[#0d8c6e] font-medium transition-colors">
             Back to sign in
           </a>
         </p>
