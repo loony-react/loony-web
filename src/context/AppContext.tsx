@@ -2,12 +2,8 @@
 import { createContext, useState, ReactNode, useEffect } from "react"
 import { AppContextProps, AppState } from "loony-types"
 import { ApiHandler } from "./ApiHandler"
-import config from "../../config/app.config.json"
 
-const appConfig: any = config
-const env: string = config.env
-const currentConfig: any = appConfig[env]
-const { API_URL } = currentConfig
+const API_URL = process.env.API_URL || "http://localhost:8000"
 
 export const AppContext = createContext<AppContextProps>({
   env: {

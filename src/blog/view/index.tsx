@@ -1,11 +1,12 @@
 import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
-import { createImageUrl, extractImage, useBlogNodes } from "loony-utils"
+import { useBlogNodes } from "loony-utils"
 import { AppRouteProps, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
 import { RightNavEdit } from "../../components/RightNav.tsx"
 import { useGetBlogNodes } from "loony-api"
 import { Container } from "loony-ui"
+import Image from "../Image.tsx"
 
 const View = (props: AppRouteProps) => {
   const { authContext, appContext } = props
@@ -25,14 +26,6 @@ const View = (props: AppRouteProps) => {
   const { childNodes, mainNode } = state
   if (!mainNode || !mainNode || !user) return null
 
-  const image = createImageUrl({
-    docType: "blog",
-    baseUrl: base_url,
-    nodeId: mainNode.uid,
-    image: extractImage(mainNode.images),
-    size: 720,
-  })
-
   if (status.status !== PageStatus.VIEW_PAGE)
     return <PageLoadingContainer title="" />
 
@@ -42,13 +35,7 @@ const View = (props: AppRouteProps) => {
       <Container>
         <div>
           <div className="w-[45%] mx-auto">
-            {image && (
-              <img
-                src={image}
-                alt="Video Thumbnail"
-                className="w-full h-full object-cover mb-4"
-              />
-            )}
+            <Image mainNode={mainNode} node={mainNode} base_url={base_url} />
             <h2 className="text-4xl dark:text-white font-semibold my-4">
               {mainNode.title}
             </h2>
@@ -56,6 +43,7 @@ const View = (props: AppRouteProps) => {
             {childNodes.map((node, id) => {
               return (
                 <>
+                  <Image mainNode={mainNode} node={node} base_url={base_url} />
                   <h2 className="text-2xl font-semibold my-4 border-b border-gray-300">
                     {node.title}
                   </h2>
