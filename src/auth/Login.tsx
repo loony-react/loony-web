@@ -59,17 +59,17 @@ const Login = ({
   }
 
   return (
-    <div className="flex flex-1 justify-center items-center min-h-screen bg-[#0d0d0d] px-4">
+    <div className="flex flex-1 justify-center items-center min-h-screen bg-[var(--bg)] px-4">
       <div className="w-full max-w-sm">
-        <h1 className="text-2xl font-semibold text-center mb-1 text-[#ececec]">
+        <h1 className="text-2xl font-semibold text-center mb-1 text-[var(--text-primary)]">
           Welcome back
         </h1>
-        <p className="text-sm text-center text-[#6b6b76] mb-8">Sign in to your account</p>
+        <p className="text-sm text-center text-[var(--text-muted)] mb-8">Sign in to your account</p>
 
-        <div className="bg-[#111111] border border-white/[0.08] rounded-2xl p-8">
+        <div className="bg-[var(--surface-nav)] border border-[var(--border)] rounded-2xl p-8">
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             <div>
-              <label htmlFor="username" className="block text-xs font-medium mb-1.5 text-[#9b9ba4] uppercase tracking-wide">
+              <label htmlFor="username" className="block text-xs font-medium mb-1.5 text-[var(--text-secondary)] uppercase tracking-wide">
                 Username or email
               </label>
               <Input
@@ -88,7 +88,7 @@ const Login = ({
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-xs font-medium mb-1.5 text-[#9b9ba4] uppercase tracking-wide">
+              <label htmlFor="password" className="block text-xs font-medium mb-1.5 text-[var(--text-secondary)] uppercase tracking-wide">
                 Password
               </label>
               <div className="relative">
@@ -106,7 +106,7 @@ const Login = ({
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
-                    className="absolute inset-y-0 right-3 flex items-center text-[#6b6b76] hover:text-[#9b9ba4] transition-colors"
+                    className="absolute inset-y-0 right-3 flex items-center text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors"
                     aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? <IoEyeOff className="w-4 h-4" /> : <IoEye className="w-4 h-4" />}
@@ -127,13 +127,13 @@ const Login = ({
         </div>
 
         <div className="mt-5 text-center space-y-2">
-          <p className="text-sm text-[#6b6b76]">
+          <p className="text-sm text-[var(--text-muted)]">
             Don't have an account?{" "}
             <a href="/signup" className="text-[#10a37f] hover:text-[#0d8c6e] font-medium transition-colors">
               Create one
             </a>
           </p>
-          <a href="/forgot-password" className="block text-xs text-[#6b6b76] hover:text-[#9b9ba4] transition-colors">
+          <a href="/forgot-password" className="block text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors">
             Forgot password?
           </a>
         </div>

@@ -20,7 +20,6 @@ import { RightNavView } from "../../components/RightNav.tsx"
 import DeleteModal from "../../components/Modal.tsx"
 import { STATE_VALUES } from "../../utils/const.ts"
 import {
-  showModalToConfirmDeleteDoc,
   onConfirmDelete,
   onCancel,
 } from "./utils.ts"
@@ -51,7 +50,7 @@ export default function Edit(props: AppRouteProps) {
 
   return (
     <div>
-      <div className="fixed bg-[#111111] border-r border-white/[0.08] w-64 h-screen mt-14" />
+      <div className="fixed bg-[var(--surface-nav)] border-r border-[var(--border)] w-64 h-screen mt-14" />
       <Container>
         {state.modal.method === "delete" && (
           <DeleteModal
@@ -74,7 +73,7 @@ export default function Edit(props: AppRouteProps) {
           {!state.form.method && (
             <>
               <Image mainNode={mainNode} node={mainNode} base_url={base_url} />
-              <h2 className="text-3xl font-bold text-[#ececec] mb-8 pb-2">
+              <h2 className="text-3xl font-bold text-[var(--text-primary)] mb-8 pb-2">
                 {mainNode.title}
               </h2>
               <ViewContent source={mainNode.content} isDark={isDark} />
@@ -90,7 +89,7 @@ export default function Edit(props: AppRouteProps) {
                 return (
                   <div key={id}>
                     <Image mainNode={mainNode} node={node} base_url={base_url} />
-                    <h2 className="text-2xl font-semibold my-4 border-b border-white/[0.08] text-[#ececec]">
+                    <h2 className="text-2xl font-semibold my-4 border-b border-[var(--border)] text-[var(--text-primary)]">
                       {node.title}
                     </h2>
                     <ViewContent source={node.content} isDark={isDark} />
@@ -121,8 +120,8 @@ export default function Edit(props: AppRouteProps) {
           doc_id={doc_id as number}
           mainNode={mainNode}
           docType="blog"
-          deleteDoc={(e: any) => {
-            showModalToConfirmDeleteDoc(e, setState, mainNode.title)
+          deleteDoc={() => {
+            setState((s) => ({ ...s, modal: { method: "delete", nodeType: 100, title: mainNode.title } }))
           }}
           navigate={navigate}
         />
@@ -235,7 +234,7 @@ const NodeSettings = ({
     <div className="flex gap-1 mb-12">
       {/* Create */}
       <button
-        className="p-1.5 rounded-md text-[#6b6b76] hover:bg-white/5 hover:text-[#9b9ba4] transition-colors duration-150"
+        className="p-1.5 rounded-md text-[var(--text-muted)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-secondary)] transition-colors duration-150"
         title="Create"
         onClick={(e) => {
           e.stopPropagation()
@@ -254,7 +253,7 @@ const NodeSettings = ({
 
       {/* Edit */}
       <button
-        className="p-1.5 rounded-md text-[#6b6b76] hover:bg-white/5 hover:text-[#9b9ba4] transition-colors duration-150"
+        className="p-1.5 rounded-md text-[var(--text-muted)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-secondary)] transition-colors duration-150"
         title="Edit"
         onClick={(e) => {
           setState({
@@ -283,7 +282,7 @@ const NodeSettings = ({
       )}
       {node.identity > 100 && (
         <button
-          className="p-1.5 rounded-md text-[#6b6b76] hover:bg-white/5 hover:text-[#9b9ba4] transition-colors duration-150"
+          className="p-1.5 rounded-md text-[var(--text-muted)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-secondary)] transition-colors duration-150"
           title="Delete"
           onClick={(e) => {
             setState({

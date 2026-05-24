@@ -90,10 +90,10 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
   return (
     <div className="pb-24">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-[#ececec] mb-1">{heading}</h2>
+        <h2 className="text-xl font-semibold text-[var(--text-primary)] mb-1">{heading}</h2>
         <div className="flex items-center gap-2 mt-3">
           <StepDot active={step === "image"} done={step === "details"} label="Image" />
-          <div className="h-px w-8 bg-white/10" />
+          <div className="h-px w-8 bg-[var(--border)]" />
           <StepDot active={step === "details"} done={false} label="Details" />
         </div>
       </div>
@@ -148,12 +148,12 @@ const StepDot = ({
           ? "bg-[#10a37f]"
           : active
             ? "bg-[#10a37f] ring-2 ring-[#10a37f]/30"
-            : "bg-white/10"
+            : "bg-[var(--border)]"
       }`}
     />
     <span
       className={`text-xs font-medium transition-colors duration-200 ${
-        active ? "text-[#ececec]" : done ? "text-[#10a37f]" : "text-[#6b6b76]"
+        active ? "text-[var(--text-primary)]" : done ? "text-[#10a37f]" : "text-[var(--text-muted)]"
       }`}
     >
       {label}
@@ -180,7 +180,7 @@ const ImageStep = ({
 
   return (
     <div>
-      <p className="text-sm text-[#9b9ba4] mb-4">
+      <p className="text-sm text-[var(--text-secondary)] mb-4">
         {hasImage
           ? "Image selected. Continue to fill in the details."
           : "Add a cover image for this section — you can skip this step."}
@@ -188,14 +188,14 @@ const ImageStep = ({
 
       <UploadImage baseUrl={baseUrl} user={user} setFormImages={setFormImages} />
 
-      <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/[0.08]">
+      <div className="flex items-center justify-between mt-6 pt-4 border-t border-[var(--border)]">
         <BorderButton onClick={onCancel} />
         <div className="flex items-center gap-3">
           {!hasImage && (
             <button
               type="button"
               onClick={onContinue}
-              className="text-sm text-[#6b6b76] hover:text-[#9b9ba4] transition-colors duration-150"
+              className="text-sm text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors duration-150"
             >
               Skip for now
             </button>
@@ -206,7 +206,7 @@ const ImageStep = ({
             className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 active:scale-[0.98] ${
               hasImage
                 ? "bg-[#10a37f] text-white hover:bg-[#0d8c6e] focus:ring-2 focus:ring-[#10a37f]/40"
-                : "bg-white/5 text-[#9b9ba4] ring-1 ring-white/10 hover:bg-white/10"
+                : "bg-[var(--hover-bg)] text-[var(--text-secondary)] ring-1 ring-[var(--ring-color)] hover:bg-[var(--surface-2)]"
             }`}
           >
             {hasImage ? (
@@ -262,12 +262,12 @@ const DetailsStep = ({
 }) => (
   <div>
     {previewImage && (
-      <div className="mb-4 relative rounded-xl overflow-hidden border border-white/[0.08]">
+      <div className="mb-4 relative rounded-xl overflow-hidden border border-[var(--border)]">
         <img src={previewImage} alt="Cover" className="w-full object-cover max-h-48" />
         <button
           type="button"
           onClick={onBack}
-          className="absolute bottom-2 right-2 inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-black/60 border border-white/10 text-[#9b9ba4] hover:text-[#ececec] hover:bg-black/80 transition-all duration-150"
+          className="absolute bottom-2 right-2 inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-black/60 border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-black/80 transition-all duration-150"
         >
           <MdImage size={13} />
           Change
@@ -278,7 +278,7 @@ const DetailsStep = ({
       <button
         type="button"
         onClick={onBack}
-        className="flex items-center gap-1.5 text-xs text-[#6b6b76] hover:text-[#9b9ba4] mb-4 transition-colors duration-150"
+        className="flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] mb-4 transition-colors duration-150"
       >
         <MdImage size={14} />
         Add cover image
@@ -310,9 +310,9 @@ const DetailsStep = ({
       />
     </div>
 
-    <div className="mt-10 border border-white/[0.08] bg-[#111111] p-10 rounded-xl">
+    <div className="mt-10 border border-[var(--border)] bg-[var(--surface-nav)] p-10 rounded-xl">
       <RenderImage previewImage={previewImage} />
-      <h2 className="text-3xl font-semibold border-b border-white/[0.08] text-[#ececec] mb-8 pb-2">
+      <h2 className="text-3xl font-semibold border-b border-[var(--border)] text-[var(--text-primary)] mb-8 pb-2">
         {formTitle}
       </h2>
       <ViewContent
@@ -326,7 +326,7 @@ const DetailsStep = ({
       <button
         type="button"
         onClick={onBack}
-        className="inline-flex items-center gap-1.5 text-sm text-[#6b6b76] hover:text-[#9b9ba4] transition-colors duration-150"
+        className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors duration-150"
       >
         <MdArrowBack size={16} />
         Back

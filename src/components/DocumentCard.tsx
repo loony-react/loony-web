@@ -24,13 +24,13 @@ export default function Card({
 
   return (
     <div
-      className="group rounded-xl overflow-hidden bg-[#1a1a1a] cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/30 text-[#ececec]"
+      className="group rounded-xl overflow-hidden bg-[var(--surface)] cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/10 text-[var(--text-primary)]"
       onClick={() => navigate(`/view/${docType}/${node.uid}`)}
       role="article"
       aria-label={node.title}
     >
       {/* Image / thumbnail area — 16:9 */}
-      <div className="aspect-video w-full bg-[#212121] flex items-center justify-center overflow-hidden">
+      <div className="aspect-video w-full bg-[var(--surface-2)] flex items-center justify-center overflow-hidden">
         {image ? (
           <img
             src={image}
@@ -38,7 +38,7 @@ export default function Card({
             className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
           />
         ) : (
-          <h3 className="text-center text-sm font-medium px-4 text-[#9b9ba4] line-clamp-3">
+          <h3 className="text-center text-sm font-medium px-4 text-[var(--text-secondary)] line-clamp-3">
             {node.title}
           </h3>
         )}
@@ -46,14 +46,14 @@ export default function Card({
 
       {/* Bottom info */}
       <div className="flex items-start gap-3 p-3">
-        <div className="w-8 h-8 flex-shrink-0 rounded-full bg-[#2a2a2a] flex items-center justify-center">
-          <User className="w-4 h-4 text-[#9b9ba4]" />
+        <div className="w-8 h-8 flex-shrink-0 rounded-full bg-[var(--surface-2)] flex items-center justify-center">
+          <User className="w-4 h-4 text-[var(--text-secondary)]" />
         </div>
         <div className="flex flex-col min-w-0">
-          <h3 className="text-sm font-medium text-[#ececec] line-clamp-2 leading-snug">
+          <h3 className="text-sm font-medium text-[var(--text-primary)] line-clamp-2 leading-snug">
             {node.title}
           </h3>
-          <p className="text-xs mt-1 text-[#6b6b76]">{timeAgo(node.created_at)}</p>
+          <p className="text-xs mt-1 text-[var(--text-muted)]">{timeAgo(node.created_at)}</p>
         </div>
       </div>
     </div>

@@ -39,13 +39,13 @@ export const PageNavigation = <T extends ReadBookState | EditBookState>({
   if (!frontPage || !parentNode) return null
 
   return (
-    <div className="fixed bg-[#111111] border-r border-white/[0.08] w-64 h-screen overflow-y-auto mt-14 pt-4 pb-6">
+    <div className="fixed bg-[var(--surface-nav)] border-r border-[var(--border)] w-64 h-screen overflow-y-auto mt-14 pt-4 pb-6">
       <nav className="px-3">
         {/* Book title */}
         <button
           type="button"
           onClick={viewFrontPage}
-          className="w-full text-left px-3 py-2 mb-3 rounded-lg text-sm font-semibold text-[#ececec] hover:bg-white/5 transition-colors duration-150 truncate"
+          className="w-full text-left px-3 py-2 mb-3 rounded-lg text-sm font-semibold text-[var(--text-primary)] hover:bg-[var(--hover-bg)] transition-colors duration-150 truncate"
         >
           {frontPage.title}
         </button>
@@ -61,8 +61,8 @@ export const PageNavigation = <T extends ReadBookState | EditBookState>({
                   type="button"
                   className={`w-full text-left flex items-center px-3 py-2 rounded-lg text-xs font-semibold uppercase tracking-wide transition-colors duration-150 border-l-2 ${
                     isActiveChapter
-                      ? "border-[#10a37f] text-[#ececec] bg-white/5"
-                      : "border-transparent text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec]"
+                      ? "border-[#10a37f] text-[var(--text-primary)] bg-[var(--hover-bg)]"
+                      : "border-transparent text-[var(--text-secondary)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-primary)]"
                   }`}
                   onClick={(e) => {
                     e.stopPropagation()
@@ -83,8 +83,8 @@ export const PageNavigation = <T extends ReadBookState | EditBookState>({
                             type="button"
                             className={`w-full text-left flex items-center px-3 py-1.5 rounded-md text-xs transition-colors duration-150 border-l-2 ${
                               isActiveSection
-                                ? "border-[#10a37f] text-[#ececec] bg-white/5"
-                                : "border-transparent text-[#6b6b76] hover:bg-white/5 hover:text-[#9b9ba4]"
+                                ? "border-[#10a37f] text-[var(--text-primary)] bg-[var(--hover-bg)]"
+                                : "border-transparent text-[var(--text-muted)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-secondary)]"
                             }`}
                             onClick={(e) => {
                               e.stopPropagation()

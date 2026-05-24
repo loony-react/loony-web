@@ -58,13 +58,13 @@ export const LeftNav = ({
   if (!frontPage || !parentNode) return null
 
   return (
-    <div className="fixed bg-[#111111] border-r border-white/[0.08] w-64 h-screen overflow-y-auto mt-14 pt-4 pb-6">
+    <div className="fixed bg-[var(--surface-nav)] border-r border-[var(--border)] w-64 h-screen overflow-y-auto mt-14 pt-4 pb-6">
       <nav className="px-3">
         {/* Book title */}
         <button
           type="button"
           onClick={viewFrontPage}
-          className="w-full text-left px-3 py-2 mb-1 rounded-lg text-sm font-semibold text-[#ececec] hover:bg-white/5 transition-colors duration-150 truncate"
+          className="w-full text-left px-3 py-2 mb-1 rounded-lg text-sm font-semibold text-[var(--text-primary)] hover:bg-[var(--hover-bg)] transition-colors duration-150 truncate"
         >
           {frontPage.title}
         </button>
@@ -72,7 +72,7 @@ export const LeftNav = ({
         {/* Add first chapter */}
         <button
           type="button"
-          className="flex items-center gap-1.5 px-3 py-1.5 mb-3 text-xs text-[#10a37f] hover:bg-[#10a37f]/10 rounded-md transition-colors duration-150"
+          className="flex items-center gap-1.5 px-3 py-1.5 mb-3 text-xs text-[var(--accent)] hover:bg-[#10a37f]/10 rounded-md transition-colors duration-150"
           onClick={(e) => addChapter(e, undefined)}
         >
           <span className="text-base leading-none">+</span> Add chapter
@@ -88,8 +88,8 @@ export const LeftNav = ({
                   type="button"
                   className={`w-full text-left flex items-center px-3 py-2 rounded-lg text-xs font-semibold uppercase tracking-wide transition-colors duration-150 border-l-2 ${
                     isActive
-                      ? "border-[#10a37f] text-[#ececec] bg-white/5"
-                      : "border-transparent text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec]"
+                      ? "border-[#10a37f] text-[var(--text-primary)] bg-[var(--hover-bg)]"
+                      : "border-transparent text-[var(--text-secondary)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-primary)]"
                   }`}
                   onClick={(e) => {
                     e.stopPropagation()
@@ -109,8 +109,8 @@ export const LeftNav = ({
                           type="button"
                           className={`w-full text-left flex items-center px-3 py-1.5 rounded-md text-xs transition-colors duration-150 border-l-2 ${
                             isSectionActive
-                              ? "border-[#10a37f] text-[#ececec] bg-white/5"
-                              : "border-transparent text-[#6b6b76] hover:bg-white/5 hover:text-[#9b9ba4]"
+                              ? "border-[#10a37f] text-[var(--text-primary)] bg-[var(--hover-bg)]"
+                              : "border-transparent text-[var(--text-muted)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-secondary)]"
                           }`}
                           onClick={(e) => {
                             e.stopPropagation()
@@ -121,7 +121,7 @@ export const LeftNav = ({
                         </button>
                         <button
                           type="button"
-                          className="flex items-center gap-1 px-4 py-1 text-[10px] text-[#10a37f] hover:bg-[#10a37f]/10 rounded transition-colors"
+                          className="flex items-center gap-1 px-4 py-1 text-[10px] text-[var(--accent)] hover:bg-[#10a37f]/10 rounded transition-colors"
                           onClick={(e) => addSection(e, section, chapter.uid)}
                         >
                           + section
@@ -131,7 +131,7 @@ export const LeftNav = ({
                   })}
                   <button
                     type="button"
-                    className="flex items-center gap-1 px-3 py-1 text-[10px] text-[#10a37f] hover:bg-[#10a37f]/10 rounded transition-colors"
+                    className="flex items-center gap-1 px-3 py-1 text-[10px] text-[var(--accent)] hover:bg-[#10a37f]/10 rounded transition-colors"
                     onClick={(e) => addSection(e, chapter, chapter.uid)}
                   >
                     + section
@@ -141,7 +141,7 @@ export const LeftNav = ({
                 {/* Add chapter after this one */}
                 <button
                   type="button"
-                  className="flex items-center gap-1 px-3 py-1 mb-1 text-[10px] text-[#6b6b76] hover:text-[#10a37f] hover:bg-[#10a37f]/10 rounded transition-colors"
+                  className="flex items-center gap-1 px-3 py-1 mb-1 text-[10px] text-[var(--text-muted)] hover:text-[var(--accent)] hover:bg-[#10a37f]/10 rounded transition-colors"
                   onClick={(e) => addChapter(e, chapter)}
                 >
                   + chapter

@@ -30,7 +30,10 @@
 :root {
   /* Light mode defaults */
   --bg: #f7f7f8;
+  --bg-nav: rgba(247, 247, 248, 0.95);
   --surface: #ffffff;
+  --surface-nav: #ffffff;
+  --surface-2: #f0f0f2;
   --border: rgba(0, 0, 0, 0.08);
   --border-strong: rgba(0, 0, 0, 0.16);
   --text-primary: #111111;
@@ -38,13 +41,18 @@
   --text-muted: #888890;
   --accent: #10a37f;
   --accent-hover: #0d8c6e;
+  --hover-bg: rgba(0, 0, 0, 0.04);
+  --ring-color: rgba(0, 0, 0, 0.1);
   --scrollbar-thumb: rgba(0, 0, 0, 0.15);
   --scrollbar-track: transparent;
 }
 
 .dark {
   --bg: #0d0d0d;
+  --bg-nav: rgba(13, 13, 13, 0.95);
   --surface: #1a1a1a;
+  --surface-nav: #111111;
+  --surface-2: #212121;
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.16);
   --text-primary: #ececec;
@@ -52,6 +60,8 @@
   --text-muted: #6b6b76;
   --accent: #10a37f;
   --accent-hover: #0d8c6e;
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --ring-color: rgba(255, 255, 255, 0.1);
   --scrollbar-thumb: rgba(255, 255, 255, 0.12);
   --scrollbar-track: transparent;
 }

@@ -52,7 +52,7 @@ export default function Edit(props: AppRouteProps) {
   return (
     <div className="min-h-screen">
       <LeftNav doc_id={doc_id} setState={setState} state={state} {...props} />
-      <main className="min-h-screen flex-1 ml-64 bg-[#0d0d0d] pt-14">
+      <main className="min-h-screen flex-1 ml-64 bg-[var(--bg)] pt-14">
         {/* Markdown Body */}
         <div
           onClick={(e) => {
@@ -85,7 +85,7 @@ export default function Edit(props: AppRouteProps) {
           {!state.form.method && (
             <div className="max-w-4xl mx-auto px-4 pt-8 pb-24">
               <BookImage docId={doc_id} node={parentNode} base_url={base_url} />
-              <h2 className="text-3xl font-bold text-[#ececec] mb-8 pb-2">
+              <h2 className="text-3xl font-bold text-[var(--text-primary)] mb-8 pb-2">
                 {parentNode.title}
               </h2>
               <ViewContent source={parentNode.content} isDark={isDark} />
@@ -99,7 +99,7 @@ export default function Edit(props: AppRouteProps) {
                   return (
                     <div key={childNode.uid}>
                       <BookImage docId={doc_id} node={childNode} base_url={base_url} />
-                      <h2 className="text-4xl font-semibold border-b border-white/[0.08] mb-8 pb-2">
+                      <h2 className="text-4xl font-semibold border-b border-[var(--border)] mb-8 pb-2">
                         {childNode.title}
                       </h2>
                       <ViewContent source={childNode.content} isDark={isDark} />

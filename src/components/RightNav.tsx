@@ -2,7 +2,7 @@ import { DocNode, AuthContextProps, AuthStatus } from "loony-types"
 import { Link, NavigateFunction } from "react-router"
 
 const ghostBtn =
-  "px-3 py-1.5 text-xs font-medium rounded-lg ring-1 ring-white/10 text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec] transition-all duration-150"
+  "px-3 py-1.5 text-xs font-medium rounded-lg ring-1 ring-[var(--ring-color)] text-[var(--text-secondary)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-primary)] transition-all duration-150"
 
 const dangerBtn =
   "px-3 py-1.5 text-xs font-medium rounded-lg ring-1 ring-red-500/20 bg-red-600/10 text-red-400 hover:bg-red-600/20 hover:text-red-300 transition-all duration-150"
@@ -23,7 +23,7 @@ export const RightNavView = ({
   navigate: NavigateFunction
 }) => {
   return (
-    <div className="flex items-center gap-2 bg-[#111111] border border-white/[0.08] rounded-xl px-3 py-2 shadow-xl">
+    <div className="flex items-center gap-2 bg-[var(--surface-nav)] border border-[var(--border)] rounded-xl px-3 py-2 shadow-xl">
       {authContext.status === AuthStatus.AUTHORIZED &&
       authContext.user?.uid === mainNode.user_id ? (
         <>
@@ -57,7 +57,7 @@ export const RightNavEdit = ({
   navigate: NavigateFunction
 }) => {
   return (
-    <div className="flex items-center gap-2 bg-[#111111] border border-white/[0.08] rounded-xl px-3 py-2 shadow-xl">
+    <div className="flex items-center gap-2 bg-[var(--surface-nav)] border border-[var(--border)] rounded-xl px-3 py-2 shadow-xl">
       {authContext.status === AuthStatus.AUTHORIZED &&
       authContext.user?.uid === mainNode.user_id ? (
         <button

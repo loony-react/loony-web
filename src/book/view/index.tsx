@@ -53,7 +53,7 @@ const View = (props: AppRouteProps) => {
         navNodes={navNodes}
         {...props}
       />
-      <main className="flex-1 min-h-screen ml-64 bg-[#0d0d0d] pt-14">
+      <main className="flex-1 min-h-screen ml-64 bg-[var(--bg)] pt-14">
         <div
           onClick={(e) => {
             e.preventDefault()
@@ -67,7 +67,7 @@ const View = (props: AppRouteProps) => {
         >
           <div className="max-w-4xl mx-auto px-4 pt-8 pb-24">
             <BookImage docId={docId} node={parentNode} base_url={base_url} />
-            <h2 className="text-3xl font-bold mb-4 pb-2 text-[#ececec]">
+            <h2 className="text-3xl font-bold mb-4 pb-2 text-[var(--text-primary)]">
               {parentNode.title}
             </h2>
             <ViewContent source={parentNode.content} isDark={isDark} />
@@ -76,7 +76,7 @@ const View = (props: AppRouteProps) => {
                 return (
                   <div key={childNode.uid}>
                     <BookImage docId={docId} node={childNode} base_url={base_url} />
-                    <h2 className="text-3xl font-semibold border-b border-white/[0.08] mb-8 pb-3 text-[#ececec]">
+                    <h2 className="text-3xl font-semibold border-b border-[var(--border)] mb-8 pb-3 text-[var(--text-primary)]">
                       {childNode.title}
                     </h2>
                     <ViewContent source={childNode.content} isDark={isDark} />

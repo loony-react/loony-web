@@ -119,14 +119,14 @@ const UploadedPreview = ({
   onClear: () => void
 }) => (
   <div className="space-y-2 my-4">
-    <label className="block text-xs font-medium text-[#9b9ba4] uppercase tracking-wide">
+    <label className="block text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wide">
       Image
     </label>
-    <div className="relative inline-block rounded-xl overflow-hidden border border-white/[0.08] bg-[#111111]">
+    <div className="relative inline-block rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface-nav)]">
       <button
         type="button"
         onClick={onClear}
-        className="absolute top-2 right-2 z-10 w-7 h-7 rounded-md bg-black/60 border border-white/10 flex items-center justify-center text-[#9b9ba4] hover:bg-black/80 hover:text-[#ececec] transition-all duration-150"
+        className="absolute top-2 right-2 z-10 w-7 h-7 rounded-md bg-black/60 border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:bg-black/80 hover:text-[var(--text-primary)] transition-all duration-150"
         aria-label="Remove image"
       >
         <MdOutlineClear size={14} />
@@ -158,13 +158,13 @@ const EditImageComponent = (props: EditImageComponentProps) => {
 
   return (
     <div className="space-y-2 my-4">
-      <label className="block text-xs font-medium text-[#9b9ba4] uppercase tracking-wide">
+      <label className="block text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wide">
         Image
       </label>
 
       {/* Cropper canvas */}
       <div
-        className="relative w-full rounded-xl overflow-hidden border border-white/[0.08] bg-[#111111]"
+        className="relative w-full rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface-nav)]"
         style={{ minHeight: 340 }}
       >
         <Cropper
@@ -180,7 +180,7 @@ const EditImageComponent = (props: EditImageComponentProps) => {
 
       {/* Zoom slider */}
       <div className="flex items-center gap-3 pt-1">
-        <span className="text-xs text-[#6b6b76] w-10 shrink-0">Zoom</span>
+        <span className="text-xs text-[var(--text-muted)] w-10 shrink-0">Zoom</span>
         <input
           type="range"
           min={1}
@@ -188,16 +188,16 @@ const EditImageComponent = (props: EditImageComponentProps) => {
           step={0.05}
           value={zoom}
           onChange={(e) => setZoom(Number(e.target.value))}
-          className="flex-1 h-1 appearance-none rounded-full bg-white/10 accent-[#10a37f] cursor-pointer"
+          className="flex-1 h-1 appearance-none rounded-full bg-[var(--border)] accent-[#10a37f] cursor-pointer"
         />
-        <span className="text-xs text-[#6b6b76] w-8 text-right">
+        <span className="text-xs text-[var(--text-muted)] w-8 text-right">
           {zoom.toFixed(1)}x
         </span>
       </div>
 
       {/* Aspect ratio pills */}
       {/* <div className="flex items-center gap-2 pt-1">
-        <span className="text-xs text-[#6b6b76] w-10 shrink-0">Ratio</span>
+        <span className="text-xs text-[var(--text-muted)] w-10 shrink-0">Ratio</span>
         <div className="flex gap-1.5">
           {ratios.map((r) => {
             const key = `${r.width}/${r.height}`
@@ -210,7 +210,7 @@ const EditImageComponent = (props: EditImageComponentProps) => {
                 className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all duration-150 ${
                   isActive
                     ? "bg-[#10a37f]/15 text-[#10a37f] ring-1 ring-[#10a37f]/40"
-                    : "bg-white/5 text-[#6b6b76] ring-1 ring-white/[0.06] hover:bg-white/10 hover:text-[#9b9ba4]"
+                    : "bg-white/5 text-[var(--text-muted)] ring-1 ring-white/[0.06] hover:bg-white/10 hover:text-[var(--text-secondary)]"
                 }`}
               >
                 {r.label}
@@ -231,7 +231,7 @@ const EditImageComponent = (props: EditImageComponentProps) => {
         <button
           type="button"
           onClick={(e) => { e.stopPropagation(); inputRef.current?.click() }}
-          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-[#9b9ba4] ring-1 ring-white/10 bg-transparent hover:bg-white/5 hover:text-[#ececec] transition-all duration-150 active:scale-[0.98]"
+          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-[var(--text-secondary)] ring-1 ring-[var(--ring-color)] bg-transparent hover:bg-[var(--hover-bg)] hover:text-[var(--text-primary)] transition-all duration-150 active:scale-[0.98]"
         >
           <MdImage size={16} />
           Change image
@@ -258,24 +258,24 @@ const SelectImage = ({
 
   return (
     <div className="space-y-2 my-4">
-      <label className="block text-xs font-medium text-[#9b9ba4] uppercase tracking-wide">
+      <label className="block text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wide">
         Image
       </label>
       <button
         type="button"
         onClick={(e) => { e.stopPropagation(); inputRef.current?.click() }}
-        className="w-full border border-dashed border-white/[0.12] hover:border-white/25 rounded-xl p-6 transition-colors duration-150 text-center group focus:outline-none focus:border-[#10a37f]/40"
+        className="w-full border border-dashed border-[var(--border)] hover:border-[var(--border-strong)] rounded-xl p-6 transition-colors duration-150 text-center group focus:outline-none focus:border-[#10a37f]/40"
       >
         <div className="flex flex-col items-center justify-center">
-          <div className="mb-3 w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center group-hover:bg-white/8 transition-colors duration-150">
+          <div className="mb-3 w-10 h-10 rounded-full border border-[var(--border)] bg-[var(--hover-bg)] flex items-center justify-center group-hover:bg-[var(--surface-2)] transition-colors duration-150">
             <MdImage
               size={20}
-              className="text-[#6b6b76] group-hover:text-[#9b9ba4] transition-colors duration-150"
+              className="text-[var(--text-muted)] group-hover:text-[var(--text-secondary)] transition-colors duration-150"
             />
           </div>
-          <p className="text-sm text-[#9b9ba4] mb-1">Drop your image here</p>
-          <p className="text-xs text-[#6b6b76] mb-4">PNG, JPG up to 10MB</p>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-[#9b9ba4] ring-1 ring-white/10 bg-white/5 group-hover:bg-white/10 group-hover:text-[#ececec] transition-all duration-150">
+          <p className="text-sm text-[var(--text-secondary)] mb-1">Drop your image here</p>
+          <p className="text-xs text-[var(--text-muted)] mb-4">PNG, JPG up to 10MB</p>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium text-[var(--text-secondary)] ring-1 ring-[var(--ring-color)] bg-[var(--hover-bg)] group-hover:bg-[var(--surface-2)] group-hover:text-[var(--text-primary)] transition-all duration-150">
             <MdUpload size={14} />
             Select image
           </span>

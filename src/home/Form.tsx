@@ -11,7 +11,7 @@ export default function CreateNewDocument(
         mobileNavOpen={props.mobileNavOpen}
         appContext={props.appContext}
       />
-      <main className="ml-64 flex-1 bg-[#0d0d0d] overflow-y-auto mt-14 px-8 py-8">
+      <main className="ml-64 flex-1 bg-[var(--bg)] overflow-y-auto mt-14 px-8 py-8">
         <CreateDocument {...props} />
       </main>
     </div>

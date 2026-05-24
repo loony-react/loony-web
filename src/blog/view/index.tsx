@@ -30,10 +30,10 @@ const View = (props: AppRouteProps) => {
     return <PageLoadingContainer title="" />
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d] pt-14">
+    <div className="min-h-screen bg-[var(--bg)] pt-14">
       <div className="max-w-4xl mx-auto px-4 pt-8 pb-24">
           <Image mainNode={mainNode} node={mainNode} base_url={base_url} />
-          <h1 className="text-3xl font-bold text-[#ececec] mt-6 mb-4 leading-tight">
+          <h1 className="text-3xl font-bold text-[var(--text-primary)] mt-6 mb-4 leading-tight">
             {mainNode.title}
           </h1>
           <ViewContent source={mainNode.content} isDark={isDark} />
@@ -42,7 +42,7 @@ const View = (props: AppRouteProps) => {
             return (
               <div key={id} className="mt-10">
                 <Image mainNode={mainNode} node={node} base_url={base_url} />
-                <h2 className="text-xl font-semibold text-[#ececec] my-4 pb-3 border-b border-white/[0.08]">
+                <h2 className="text-xl font-semibold text-[var(--text-primary)] my-4 pb-3 border-b border-[var(--border)]">
                   {node.title}
                 </h2>
                 <ViewContent source={node.content} isDark={isDark} />

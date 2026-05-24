@@ -10,7 +10,7 @@ export const ChapterNavContainer = ({
 }) => {
   return (
     <div
-      className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer hover:bg-white/5 transition-colors duration-150 text-sm text-[#9b9ba4] hover:text-[#ececec]"
+      className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer hover:bg-[var(--hover-bg)] transition-colors duration-150 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
       onClick={onClick}
     >
       {children}
@@ -58,8 +58,8 @@ export const MenuNavContainer = ({
     <div
       className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-colors duration-150 text-sm ${
         isActive
-          ? "bg-white/8 text-[#ececec]"
-          : "text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec]"
+          ? "bg-white/8 text-[var(--text-primary)]"
+          : "text-[var(--text-secondary)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-primary)]"
       }`}
       data-id={route}
       onClick={onClick}
@@ -75,7 +75,7 @@ export const BasicMenuNavContainer = ({
   children: React.ReactNode
 }) => {
   return (
-    <div className="flex items-center gap-2 px-3 py-2 text-sm text-[#9b9ba4]">
+    <div className="flex items-center gap-2 px-3 py-2 text-sm text-[var(--text-secondary)]">
       {children}
     </div>
   )
@@ -93,7 +93,7 @@ export const SectionNavContainer = ({
 }) => {
   return (
     <div
-      className="flex items-center gap-2 px-3 py-1.5 rounded-md cursor-pointer hover:bg-white/5 transition-colors duration-150 text-sm text-[#9b9ba4] hover:text-[#ececec]"
+      className="flex items-center gap-2 px-3 py-1.5 rounded-md cursor-pointer hover:bg-[var(--hover-bg)] transition-colors duration-150 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
       onClick={onClick}
     >
       {children}

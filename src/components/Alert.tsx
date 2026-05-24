@@ -6,7 +6,7 @@ import { Alert } from 'loony-types'
 const alertStyles: Record<string, string> = {
   success: "bg-[#0d2818] border border-green-800/40",
   error: "bg-[#2a0d0d] border border-red-800/40",
-  request: "bg-[#1a1a1a] border border-white/[0.08]",
+  request: "bg-[var(--surface)] border border-[var(--border)]",
 }
 
 const alertIcons: Record<string, React.ReactNode> = {
@@ -30,15 +30,15 @@ const AlertComponent = ({
           {alertIcons[alert.status]}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-[#ececec]">{alert.title}</p>
+          <p className="text-sm font-semibold text-[var(--text-primary)]">{alert.title}</p>
           {alert.content && (
-            <p className="text-xs mt-0.5 text-[#9b9ba4]">{alert.content}</p>
+            <p className="text-xs mt-0.5 text-[var(--text-secondary)]">{alert.content}</p>
           )}
         </div>
         <button
           onClick={onClose}
           aria-label="Dismiss notification"
-          className="flex-shrink-0 text-[#6b6b76] hover:text-[#9b9ba4] transition-colors"
+          className="flex-shrink-0 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors"
         >
           <MdClose className="w-4 h-4" />
         </button>

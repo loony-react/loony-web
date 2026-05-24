@@ -35,11 +35,11 @@ export default function DesktopLeftNavbar({
 
   return (
     <div
-      className={`${mobileNavOpen ? "block" : "hidden"} md:flex flex-col fixed bg-[#111111] border-r border-white/[0.08] w-64 h-screen overflow-y-auto mt-14 pt-4 pb-6`}
+      className={`${mobileNavOpen ? "block" : "hidden"} md:flex flex-col fixed bg-[var(--surface-nav)] border-r border-[var(--border)] w-64 h-screen overflow-y-auto mt-14 pt-4 pb-6`}
     >
       {/* App Navigation */}
       <div className="px-3 mb-6">
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-white/30 px-3 mb-2">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)] px-3 mb-2">
           Navigation
         </p>
         <nav className="space-y-0.5">
@@ -47,7 +47,7 @@ export default function DesktopLeftNavbar({
             <a
               key={label}
               href={href}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec] transition-colors duration-150"
+              className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-primary)] transition-colors duration-150"
             >
               <Icon className="w-4 h-4 flex-shrink-0" />
               <span>{label}</span>
@@ -58,7 +58,7 @@ export default function DesktopLeftNavbar({
 
       {/* Legal / Info */}
       <div className="px-3 mb-6">
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-white/30 px-3 mb-2">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)] px-3 mb-2">
           Info
         </p>
         <nav className="space-y-0.5">
@@ -66,7 +66,7 @@ export default function DesktopLeftNavbar({
             <a
               key={label}
               href={href}
-              className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec] transition-colors duration-150"
+              className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-primary)] transition-colors duration-150"
             >
               <Icon className="w-4 h-4 flex-shrink-0" />
               <span>{label}</span>
@@ -85,7 +85,7 @@ export default function DesktopLeftNavbar({
             }))
           }}
           aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-          className="flex items-center gap-2.5 text-sm text-[#9b9ba4] hover:text-[#ececec] transition-colors duration-150 group"
+          className="flex items-center gap-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-150 group"
         >
           <span
             className={`relative w-9 h-5 rounded-full transition-colors duration-300 flex-shrink-0 ${

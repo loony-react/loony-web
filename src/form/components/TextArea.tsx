@@ -15,8 +15,8 @@ const modes = [
 
 export const TextArea = (props: TextAreaProps) => {
   return (
-    <div className="rounded-xl border border-white/[0.08] bg-[#111111] overflow-hidden">
-      <div className="flex border-b border-white/[0.06]">
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-nav)] overflow-hidden">
+      <div className="flex border-b border-[var(--border)]">
         {modes.map((m) => (
           <button
             key={m.id}
@@ -24,8 +24,8 @@ export const TextArea = (props: TextAreaProps) => {
             onClick={() => props.setContentType(m.id)}
             className={`flex-1 text-xs font-medium px-4 py-2.5 transition-colors duration-150 ${
               props.contentType === m.id
-                ? "text-[#ececec] border-b-2 border-[#10a37f] bg-white/[0.03]"
-                : "text-[#6b6b76] hover:text-[#9b9ba4]"
+                ? "text-[var(--text-primary)] border-b-2 border-[#10a37f] bg-white/[0.03]"
+                : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
             }`}
           >
             {m.label}
@@ -36,7 +36,7 @@ export const TextArea = (props: TextAreaProps) => {
         rows={12}
         value={props.formContent}
         placeholder="Write your content here…"
-        className="w-full bg-transparent resize-none outline-none text-sm text-[#ececec] placeholder-[#4a4a54] px-4 py-3 leading-relaxed"
+        className="w-full bg-transparent resize-none outline-none text-sm text-[var(--text-primary)] placeholder-[#4a4a54] px-4 py-3 leading-relaxed"
         onChange={(e) => props.setFormContent(e.target.value)}
       />
     </div>

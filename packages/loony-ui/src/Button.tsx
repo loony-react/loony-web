@@ -50,7 +50,7 @@ export const BorderButton = ({
     <button
       type="button"
       onClick={onClick}
-      className="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-150 bg-transparent ring-1 ring-white/10 text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec] active:scale-[0.98]"
+      className="px-4 py-2 rounded-lg font-medium text-sm transition-all duration-150 bg-transparent ring-1 ring-[var(--ring-color)] text-[var(--text-secondary)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-primary)] active:scale-[0.98]"
     >
       Cancel
     </button>
@@ -83,7 +83,7 @@ export const ButtonIcon = ({
   return (
     <button
       type="button"
-      className="inline-flex items-center justify-center rounded-md p-1.5 text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec] transition-all duration-150 active:scale-[0.95]"
+      className="inline-flex items-center justify-center rounded-md p-1.5 text-[var(--text-secondary)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-primary)] transition-all duration-150 active:scale-[0.95]"
       onClick={onClick}
     >
       {children}

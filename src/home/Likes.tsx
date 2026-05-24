@@ -31,14 +31,14 @@ const Followed = ({ authContext }: { authContext: AuthContextProps }) => {
       <p className="text-sm font-semibold mb-2">Recommendations</p>
       {canFollowTags.map((tag) => (
         <BasicMenuNavContainer key={`r-${tag.uid}`}>
-          <span className="mr-2.5 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-sm font-medium text-[#9b9ba4]">
+          <span className="mr-2.5 w-8 h-8 rounded-full bg-white/5 border border-[var(--border)] flex items-center justify-center text-sm font-medium text-[var(--text-secondary)]">
             {tag.name.charAt(0)}
           </span>
           <div className="flex-1 flex items-center justify-between">
-            <span className="text-sm text-[#9b9ba4]">{tag.name}</span>
+            <span className="text-sm text-[var(--text-secondary)]">{tag.name}</span>
             <button
               onClick={() => removeFollowedTag(tag.uid)}
-              className="ml-2 text-xs text-[#6b6b76] hover:text-red-400 transition-colors"
+              className="ml-2 text-xs text-[var(--text-muted)] hover:text-red-400 transition-colors"
             >
               Remove
             </button>
@@ -75,14 +75,14 @@ const Recommended = ({ authContext }: { authContext: AuthContextProps }) => {
       <p className="text-sm font-semibold mb-2">Followed</p>
       {followedTags.map((tag) => (
         <BasicMenuNavContainer key={`f-${tag.uid}`}>
-          <span className="mr-2.5 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-sm font-medium text-[#9b9ba4]">
+          <span className="mr-2.5 w-8 h-8 rounded-full bg-white/5 border border-[var(--border)] flex items-center justify-center text-sm font-medium text-[var(--text-secondary)]">
             {tag.name.charAt(0)}
           </span>
           <div className="flex-1 flex items-center justify-between">
-            <span className="text-sm text-[#9b9ba4]">{tag.name}</span>
+            <span className="text-sm text-[var(--text-secondary)]">{tag.name}</span>
             <button
               onClick={() => removeFollowedTag(tag.uid)}
-              className="ml-2 text-xs text-[#6b6b76] hover:text-red-400 transition-colors"
+              className="ml-2 text-xs text-[var(--text-muted)] hover:text-red-400 transition-colors"
             >
               Remove
             </button>

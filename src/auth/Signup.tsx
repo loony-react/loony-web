@@ -76,17 +76,17 @@ const Signup = ({
   }
 
   return (
-    <div className="flex flex-1 justify-center items-center min-h-screen bg-[#0d0d0d] px-4 py-12">
+    <div className="flex flex-1 justify-center items-center min-h-screen bg-[var(--bg)] px-4 py-12">
       <div className="w-full max-w-sm">
-        <h1 className="text-2xl font-semibold text-center mb-1 text-[#ececec]">
+        <h1 className="text-2xl font-semibold text-center mb-1 text-[var(--text-primary)]">
           Create account
         </h1>
-        <p className="text-sm text-center text-[#6b6b76] mb-8">Join Loony today</p>
+        <p className="text-sm text-center text-[var(--text-muted)] mb-8">Join Loony today</p>
 
-        <div className="bg-[#111111] border border-white/[0.08] rounded-2xl p-8">
+        <div className="bg-[var(--surface-nav)] border border-[var(--border)] rounded-2xl p-8">
           <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             <div>
-              <label htmlFor="username" className="block text-xs font-medium mb-1.5 text-[#9b9ba4] uppercase tracking-wide">
+              <label htmlFor="username" className="block text-xs font-medium mb-1.5 text-[var(--text-secondary)] uppercase tracking-wide">
                 Username or email
               </label>
               <Input
@@ -106,7 +106,7 @@ const Signup = ({
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label htmlFor="fname" className="block text-xs font-medium mb-1.5 text-[#9b9ba4] uppercase tracking-wide">
+                <label htmlFor="fname" className="block text-xs font-medium mb-1.5 text-[var(--text-secondary)] uppercase tracking-wide">
                   First name
                 </label>
                 <Input
@@ -124,7 +124,7 @@ const Signup = ({
                 )}
               </div>
               <div>
-                <label htmlFor="lname" className="block text-xs font-medium mb-1.5 text-[#9b9ba4] uppercase tracking-wide">
+                <label htmlFor="lname" className="block text-xs font-medium mb-1.5 text-[var(--text-secondary)] uppercase tracking-wide">
                   Last name
                 </label>
                 <Input
@@ -144,7 +144,7 @@ const Signup = ({
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-xs font-medium mb-1.5 text-[#9b9ba4] uppercase tracking-wide">
+              <label htmlFor="password" className="block text-xs font-medium mb-1.5 text-[var(--text-secondary)] uppercase tracking-wide">
                 Password
               </label>
               <div className="relative">
@@ -162,7 +162,7 @@ const Signup = ({
                   <button
                     type="button"
                     onClick={() => setShowPassword((v) => !v)}
-                    className="absolute inset-y-0 right-3 flex items-center text-[#6b6b76] hover:text-[#9b9ba4] transition-colors"
+                    className="absolute inset-y-0 right-3 flex items-center text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors"
                     aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? <IoEyeOff className="w-4 h-4" /> : <IoEye className="w-4 h-4" />}
@@ -175,7 +175,7 @@ const Signup = ({
             </div>
 
             <div>
-              <label htmlFor="confirm_password" className="block text-xs font-medium mb-1.5 text-[#9b9ba4] uppercase tracking-wide">
+              <label htmlFor="confirm_password" className="block text-xs font-medium mb-1.5 text-[var(--text-secondary)] uppercase tracking-wide">
                 Confirm password
               </label>
               <div className="relative">
@@ -193,7 +193,7 @@ const Signup = ({
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword((v) => !v)}
-                    className="absolute inset-y-0 right-3 flex items-center text-[#6b6b76] hover:text-[#9b9ba4] transition-colors"
+                    className="absolute inset-y-0 right-3 flex items-center text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors"
                     aria-label={showConfirmPassword ? "Hide password" : "Show password"}
                   >
                     {showConfirmPassword ? <IoEyeOff className="w-4 h-4" /> : <IoEye className="w-4 h-4" />}
@@ -213,7 +213,7 @@ const Signup = ({
           </form>
         </div>
 
-        <p className="mt-5 text-center text-sm text-[#6b6b76]">
+        <p className="mt-5 text-center text-sm text-[var(--text-muted)]">
           Already have an account?{" "}
           <a href="/login" className="text-[#10a37f] hover:text-[#0d8c6e] font-medium transition-colors">
             Sign in

@@ -103,7 +103,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
 
   return (
     <div className="pb-24">
-      <h2 className="text-xl font-semibold text-[#ececec] mb-1">{heading}</h2>
+      <h2 className="text-xl font-semibold text-[var(--text-primary)] mb-1">{heading}</h2>
       <div>
         <div>
           {error ? (
@@ -138,7 +138,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
         </div>
       </div>
 
-      <div className="mt-10 border border-white/[0.08] bg-[#111111] p-10 rounded-xl">
+      <div className="mt-10 border border-[var(--border)] bg-[var(--surface-nav)] p-10 rounded-xl">
         <RenderImage
           formImages={formImages}
           nodeImages={editNode.images}
@@ -147,7 +147,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
           node={editNode}
           userId={user.uid}
         />
-        <h2 className="text-4xl text-[#ececec] font-semibold mb-8 py-4">
+        <h2 className="text-4xl text-[var(--text-primary)] font-semibold mb-8 py-4">
           {formTitle}
         </h2>
         <ViewContent

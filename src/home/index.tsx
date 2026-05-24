@@ -17,11 +17,11 @@ const Home = (props: AppRouteProps) => {
   return (
     <div className="flex flex-1 overflow-hidden h-screen">
       <HomeLeftNavbar mobileNavOpen={mobileNavOpen} appContext={appContext} />
-      <main className="ml-64 flex-1 bg-[#0d0d0d] overflow-y-auto mt-14 px-6 py-6">
+      <main className="ml-64 flex-1 bg-[var(--bg)] overflow-y-auto mt-14 px-6 py-6">
 
         {/* Blogs section */}
         <section className="mb-8">
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-white/40 mb-4">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-4">
             Blogs
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
@@ -36,7 +36,7 @@ const Home = (props: AppRouteProps) => {
 
         {/* Books section */}
         <section>
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-white/40 mb-4">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-4">
             Books
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">

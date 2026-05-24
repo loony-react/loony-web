@@ -28,7 +28,7 @@ const ConfirmAction = ({
         <button
           type="button"
           onClick={onCancel as React.MouseEventHandler<HTMLButtonElement>}
-          className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 bg-transparent ring-1 ring-white/10 text-[#9b9ba4] hover:bg-white/5 hover:text-[#ececec]"
+          className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 bg-transparent ring-1 ring-[var(--ring-color)] text-[var(--text-secondary)] hover:bg-[var(--hover-bg)] hover:text-[var(--text-primary)]"
         >
           Cancel
         </button>
