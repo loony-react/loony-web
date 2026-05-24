@@ -1,26 +1,17 @@
 import { MdClose } from 'react-icons/md'
 import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6'
 import CustomSpinner from './Spinner.tsx'
-import { JsonObject, Alert } from 'loony-types'
+import { Alert } from 'loony-types'
 
-const alertTypes: JsonObject = {
-  success: {
-    backgroundColor: '#DEF2D6',
-    color: 'green',
-  },
-  error: {
-    backgroundColor: '#ffcfcf',
-    color: '#ba0000',
-  },
-  request: {
-    backgroundColor: 'orange',
-    color: 'white',
-  },
+const alertStyles: Record<string, string> = {
+  success: "bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800",
+  error: "bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800",
+  request: "bg-orange-400 border border-orange-500",
 }
 
-const alertIcons: JsonObject = {
-  success: <FaCircleCheck color="green" size={40} />,
-  error: <FaCircleXmark color="#ba0000" size={40} />,
+const alertIcons: Record<string, React.ReactNode> = {
+  success: <FaCircleCheck className="text-green-600 dark:text-green-400 w-8 h-8" />,
+  error: <FaCircleXmark className="text-red-600 dark:text-red-400 w-8 h-8" />,
   request: <CustomSpinner color="#fff" />,
 }
 
@@ -29,58 +20,28 @@ const AlertComponent = ({
   onClose,
 }: {
   alert: Alert
-  onClose: React.MouseEventHandler<HTMLDivElement>
+  onClose: React.MouseEventHandler<HTMLButtonElement>
 }) => {
   if (!alert) return null
-  const css = alertTypes[alert.status]
   return (
-    <div
-      style={{
-        position: 'fixed',
-        right: 20,
-        top: 20,
-        zIndex: 1001,
-        flex: 1,
-      }}
-    >
-      <div
-        style={{
-          ...css,
-          width: 350,
-          boxShadow: '0px 0px 7px rgba(0, 0, 0, 0.2)',
-          borderRadius: 5,
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingTop: 15,
-            paddingBottom: 15,
-          }}
-        >
-          <div
-            style={{ width: '20%', display: 'flex', justifyContent: 'center' }}
-          >
-            <div style={{ width: '50%' }} className="buttonIcon">
-              {alertIcons[alert.status]}
-            </div>
-          </div>
-          <div style={{ width: '50%' }}>
-            <div style={{ fontSize: 20 }}>{alert.title}</div>
-            <div style={{ fontSize: 14, paddingTop: 5 }}>{alert.content}</div>
-          </div>
-          <div
-            onClick={onClose}
-            style={{ width: '20%', display: 'flex', justifyContent: 'center' }}
-          >
-            <div style={{ width: '50%' }} className="buttonIcon">
-              <MdClose />
-            </div>
-          </div>
+    <div className="fixed right-5 top-5 z-[1001] w-80 shadow-lg rounded-lg overflow-hidden">
+      <div className={`${alertStyles[alert.status] ?? ""} flex items-center gap-3 px-4 py-4`}>
+        <div className="flex-shrink-0">
+          {alertIcons[alert.status]}
         </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold text-gray-900 dark:text-white">{alert.title}</p>
+          {alert.content && (
+            <p className="text-xs mt-0.5 text-gray-600 dark:text-gray-300">{alert.content}</p>
+          )}
+        </div>
+        <button
+          onClick={onClose}
+          aria-label="Dismiss notification"
+          className="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+        >
+          <MdClose className="w-5 h-5" />
+        </button>
       </div>
     </div>
   )

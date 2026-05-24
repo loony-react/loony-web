@@ -1,11 +1,6 @@
 import { useContext, useState } from "react"
 import { useNavigate } from "react-router"
-import {
-  AuthStatus,
-  NotificationContextProps,
-  NotificationState,
-  User,
-} from "loony-types"
+import { AuthStatus, NotificationContextProps, NotificationState, User } from "loony-types"
 import { useLogin } from "loony-api"
 import { IoEye, IoEyeOff } from "react-icons/io5"
 import { AuthContext } from "../context/AuthContext.tsx"
@@ -18,118 +13,133 @@ const Login = ({
   notificationContext: NotificationContextProps
 }) => {
   const { onLogin } = useLogin()
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  })
-  const [state, setState] = useState({
-    showPassword: false,
-  })
-
+  const authContext = useContext(AuthContext)
   const navigate = useNavigate()
 
-  const authContext = useContext(AuthContext)
+  const [formData, setFormData] = useState({ username: "", password: "" })
+  const [errors, setErrors] = useState({ username: "", password: "" })
+  const [showPassword, setShowPassword] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }))
+    }
+  }
+
+  const validate = (): boolean => {
+    const next = { username: "", password: "" }
+    if (!formData.username.trim()) next.username = "Username or email is required."
+    if (!formData.password) next.password = "Password is required."
+    else if (formData.password.length < 6) next.password = "Password must be at least 6 characters."
+    setErrors(next)
+    return !next.username && !next.password
   }
 
   const onSuccess = (data: User) => {
-    authContext.setAuthContext({
-      status: AuthStatus.AUTHORIZED,
-      user: data,
-    })
+    authContext.setAuthContext({ status: AuthStatus.AUTHORIZED, user: data })
     navigate("/", {})
   }
 
-  const onFailed = (err: any) => {
-    notificationContext.setNotificationContext(
-      (prevState: NotificationState) => ({
-        ...prevState,
-        alert: {
-          title: "Error",
-          content: err,
-          status: "error",
-        },
-      }),
-    )
+  const onFailed = (err: string) => {
+    setIsSubmitting(false)
+    notificationContext.setNotificationContext((prev: NotificationState) => ({
+      ...prev,
+      alert: { title: "Login failed", content: err, status: "error" },
+    }))
   }
 
-  const onHandleLogin = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    if (!validate()) return
+    setIsSubmitting(true)
     onLogin(formData, onSuccess, onFailed)
   }
 
   return (
-    <>
-      <div className="fixed bg-gray-50 dark:bg-[#131313] text-stone-800 dark:text-stone-300 md:block w-72 bg-white p-4 space-y-6 shadow-md h-screen overflow-y-auto mt-16" />
-      <div className="flex flex-1 justify-center items-center overflow-hidden h-screen bg-gray-50 dark:bg-[#212121]">
-        <div className="w-120 mx-auto p-6 bg-white dark:bg-cardTop dark:text-white shadow-md rounded-lg">
-          <div className="flex justify-center">
-            <h2 className="text-2xl font-bold mb-6">Login</h2>
+    <div className="flex flex-1 justify-center items-center min-h-screen bg-gray-50 dark:bg-[#212121] px-4">
+      <div className="w-full max-w-sm bg-white dark:bg-[#2e2e2e] dark:text-white shadow-md rounded-xl p-8">
+        <h1 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">
+          Sign in
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium mb-1.5 text-gray-700 dark:text-gray-300">
+              Username or email
+            </label>
+            <Input
+              id="username"
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Enter your username or email"
+              aria-invalid={!!errors.username}
+              aria-describedby={errors.username ? "username-error" : undefined}
+            />
+            {errors.username && (
+              <p id="username-error" className="mt-1 text-xs text-red-600 dark:text-red-400">
+                {errors.username}
+              </p>
+            )}
           </div>
-          <form onSubmit={onHandleLogin} className="space-y-4">
-            {/* Username / Email Input */}
-            <div>
-              <label className="block text-sm mb-2">Username</label>
-              <Input
-                type="text"
-                name="username"
-                value={formData.username}
+
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium mb-1.5 text-gray-700 dark:text-gray-300">
+              Password
+            </label>
+            <div className="relative">
+              <PasswordInput
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                value={formData.password}
                 onChange={handleChange}
-                placeholder="Enter your email address or 10 digit phone number."
+                placeholder="Enter your password"
+                aria-invalid={!!errors.password}
+                aria-describedby={errors.password ? "password-error" : undefined}
               />
+              {formData.password.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <IoEyeOff className="w-5 h-5" /> : <IoEye className="w-5 h-5" />}
+                </button>
+              )}
             </div>
-
-            {/* Password Input */}
-            <div>
-              <label className="block text-sm mb-2">Password</label>
-              <div className="relative">
-                <PasswordInput
-                  name="password"
-                  type={state.showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="Password"
-                />
-
-                {/* Show eye icon only when typing */}
-                {formData.password.length > 0 && (
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setState({ ...state, showPassword: !state.showPassword })
-                    }
-                    className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700"
-                  >
-                    {state.showPassword ? (
-                      <IoEyeOff className="w-5 h-5" />
-                    ) : (
-                      <IoEye className="w-5 h-5" />
-                    )}
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Submit Button */}
-            <div className="mt-8">
-              <Button onClick={onHandleLogin}>Sign In</Button>
-            </div>
-          </form>
-          <div className="mt-4 text-center text-sm">
-            <span>Dont have an account?</span>
-            <a
-              href="/signup"
-              className="ml-1 font-medium text-black dark:text-white hover:underline"
-            >
-              Register
-            </a>
+            {errors.password && (
+              <p id="password-error" className="mt-1 text-xs text-red-600 dark:text-red-400">
+                {errors.password}
+              </p>
+            )}
           </div>
-        </div>
+
+          <div className="pt-2">
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Signing in…" : "Sign in"}
+            </Button>
+          </div>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+          Don't have an account?{" "}
+          <a href="/signup" className="font-medium text-gray-900 dark:text-white hover:underline">
+            Create one
+          </a>
+        </p>
+        <p className="mt-2 text-center text-sm">
+          <a href="/forgot-password" className="text-sm text-gray-500 dark:text-gray-400 hover:underline">
+            Forgot password?
+          </a>
+        </p>
       </div>
-    </>
+    </div>
   )
 }
 

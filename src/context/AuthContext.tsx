@@ -30,8 +30,7 @@ const useAuthSession = (): [
           status: AuthStatus.AUTHORIZED,
         })
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         setAuthContext({
           user: null,
           status: AuthStatus.UNAUTHORIZED,
@@ -46,26 +45,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   if (authContext.status === AuthStatus.IDLE)
     return (
-      <div className="book-container">
-        <div style={{ display: "flex", flexDirection: "row", height: "100%" }}>
-          <div
-            style={{
-              width: "20%",
-              paddingTop: 15,
-              borderRight: "1px solid #ebebeb",
-            }}
-          />
-          <div
-            style={{
-              width: "100%",
-              paddingTop: 15,
-              paddingLeft: "5%",
-              paddingBottom: 50,
-            }}
-          >
-            <PageLoader key_id={1} />
-          </div>
-        </div>
+      <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-[#212121]">
+        <PageLoader key_id={1} />
       </div>
     )
 

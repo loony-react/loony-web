@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useContext } from "react"
 import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
@@ -7,10 +6,11 @@ import type {
   AppContextProps,
   AddNodeComponentProps,
   UploadImageState,
+  DocNode,
+  Auth,
 } from "loony-types"
 import { AppContext } from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
-import type { Auth } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"
 import { createImageUrl, createTmpImageUrl, extractImage } from "loony-utils"
 import { BorderButton, SubmitButton, Input } from "loony-ui"
@@ -69,9 +69,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
       .then(({ data }) => {
         FnCallback(data)
       })
-      .catch((e) => {
-        console.log(e)
-      })
+      .catch(() => {})
   }
   if (!user) return null
 
@@ -92,7 +90,7 @@ export default function AddNodeComponent(props: AddNodeComponentProps) {
               type="text"
               name="title"
               value={formTitle}
-              onChange={(e: any) => {
+              onChange={(e) => {
                 setFormTitle(e.target.value)
               }}
               placeholder="Title"
@@ -160,7 +158,14 @@ const RenderImage = ({
   baseUrl,
   node,
   userId,
-}: any) => {
+}: {
+  formImages: UploadImageState[] | null
+  nodeImages: string | null
+  docType: string
+  baseUrl: string
+  node: DocNode | null
+  userId: number
+}) => {
   if (formImages) {
     const image = createTmpImageUrl({
       docType,
@@ -171,7 +176,7 @@ const RenderImage = ({
     })
     if (!image) return null
     return <img src={image} alt="Uploaded file" />
-  } else if (nodeImages) {
+  } else if (nodeImages && node) {
     const image = createImageUrl({
       docType,
       baseUrl,

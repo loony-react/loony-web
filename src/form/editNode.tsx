@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, useContext } from "react"
 import { apiHttpClient } from "loony-api"
 import { AuthContext } from "../context/AuthContext.tsx"
@@ -7,6 +6,8 @@ import type {
   EditNodeComponentProps,
   AuthContextProps,
   AppContextProps,
+  DocNode,
+  UploadImageState,
 } from "loony-types"
 import {
   createImageUrl,
@@ -16,7 +17,7 @@ import {
 } from "loony-utils"
 import { AppContext } from "../context/AppContext.tsx"
 import UploadImage from "./uploadImage.tsx"
-import type { Auth, UploadImageState } from "loony-types"
+import type { Auth } from "loony-types"
 import ViewContent from "../components/ViewContent.tsx"
 import { BorderButton, Input, SubmitButton } from "loony-ui"
 
@@ -118,7 +119,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
               name="title"
               placeholder="Title"
               value={formTitle}
-              onChange={(e: any) => {
+              onChange={(e) => {
                 setFormTitle(e.target.value)
               }}
             />
@@ -175,7 +176,14 @@ const RenderImage = ({
   baseUrl,
   node,
   userId,
-}: any) => {
+}: {
+  formImages: UploadImageState[] | null
+  nodeImages: string | null
+  docType: string
+  baseUrl: string
+  node: DocNode
+  userId: number
+}) => {
   if (formImages) {
     const image = createTmpImageUrl({
       docType,
@@ -187,7 +195,7 @@ const RenderImage = ({
     if (!image) return null
     return <img src={image} alt="Uploaded file" />
   } else if (nodeImages) {
-    console.log(nodeImages, "nodeImages")
+
     const image = createImageUrl({
       docType,
       baseUrl,

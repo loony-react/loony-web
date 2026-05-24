@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useContext } from "react"
 import { useNavigate } from "react-router"
 import { apiHttpClient } from "loony-api"
@@ -6,7 +5,6 @@ import { AuthContext } from "../context/AuthContext.tsx"
 import { TextArea } from "./components/TextArea.tsx"
 import ViewContent from "../components/ViewContent.tsx"
 import { stopWords } from "../utils/index.tsx"
-
 import { AppContext } from "../context/AppContext.tsx"
 import type { Auth, UploadImageState } from "loony-types"
 import UploadImage from "./uploadImage.tsx"
@@ -51,38 +49,18 @@ export default function CreateNewDocument({
       return
     }
 
-    const filterTitle = formTitle
-      .split(" ")
-      .filter((x) => {
-        if (stopWords.includes(x)) {
-          return false
-        }
-        if (x === " " || x === "") {
-          return false
-        }
-        return true
-      })
-      .map((x) => x.toLowerCase())
+    const filterWords = (input: string) =>
+      input
+        .split(" ")
+        .filter((x) => x && x !== " " && !stopWords.includes(x))
+        .map((x) => x.toLowerCase())
 
-    const filterTags = tags
-      .split(" ")
-      .filter((x) => {
-        if (stopWords.includes(x)) {
-          return false
-        }
-        if (x === " " || x === "") {
-          return false
-        }
-        return true
-      })
-      .map((x) => x.toLowerCase())
-
-    const allTags = filterTitle.concat(filterTags)
+    const allTags = filterWords(formTitle).concat(filterWords(tags))
 
     const submitData = {
       title: formTitle,
       content: `<${contentType}>` + " " + formContent,
-      images: formImages ? formImages : [],
+      images: formImages ?? [],
       tags: allTags,
       theme,
     }
@@ -103,10 +81,6 @@ export default function CreateNewDocument({
       .catch(() => {})
   }
 
-  const routeTo = () => {
-    navigate("/", { replace: true })
-  }
-
   if (!user) return null
 
   const image =
@@ -125,63 +99,52 @@ export default function CreateNewDocument({
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-1">
           {title}
         </h2>
-        {error ? (
-          <div
-            style={{
-              color: "#ff4949",
-              fontWeight: "bold",
-              fontSize: 14,
-            }}
-          >
-            {error}
-          </div>
-        ) : null}
+        {error && (
+          <p className="text-sm text-red-600 dark:text-red-400 font-medium mb-2">{error}</p>
+        )}
       </div>
       <div className="mb-8">
-        <div style={{}}>
-          <div className="my-4">
-            <Input
-              type="text"
-              name="title"
-              value={formTitle}
-              onChange={(e: any) => {
-                setFormTitle(e.target.value)
-              }}
-              placeholder="Title"
-            />
-          </div>
+        <div className="my-4">
+          <Input
+            type="text"
+            name="title"
+            value={formTitle}
+            onChange={(e) => {
+              setFormTitle(e.target.value)
+              if (error) setError("")
+            }}
+            placeholder="Title"
+          />
+        </div>
 
-          <TextArea
-            formContent={formContent}
-            setFormContent={setFormContent}
-            theme={theme}
-            setTheme={setTheme}
-            setContentType={setContentType}
-            contentType={contentType}
+        <TextArea
+          formContent={formContent}
+          setFormContent={setFormContent}
+          theme={theme}
+          setTheme={setTheme}
+          setContentType={setContentType}
+          contentType={contentType}
+        />
+        <UploadImage
+          baseUrl={base_url}
+          user={user}
+          setFormImages={setFormImages}
+        />
+        <div className="my-4">
+          <Input
+            name="tags"
+            type="text"
+            placeholder="Keywords"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
           />
-          <UploadImage
-            baseUrl={base_url}
-            user={user}
-            setFormImages={setFormImages}
-          />
-          <div className="my-4">
-            <Input
-              name="tags"
-              type="text"
-              placeholder="Keywords"
-              value={tags}
-              onChange={(e: any) => {
-                setTags(e.target.value)
-              }}
-            />
-          </div>
         </div>
       </div>
 
       {HR}
 
       <div className="mt-10 border border-gray-300 dark:border-[#4d4d4d] p-12 rounded-md mb-8">
-        {image && <img key={image} src={image} alt="tmp file upload" />}
+        {image && <img key={image} src={image} alt="preview" className="mb-4" />}
         <h2 className="text-4xl font-semibold border-b border-gray-300 dark:text-gray-200 dark:border-[#4d4d4d] mb-8 mt-4">
           {formTitle}
         </h2>
@@ -192,11 +155,9 @@ export default function CreateNewDocument({
         />
       </div>
 
-      <div className="flex-row" style={{ justifyContent: "flex-end" }}>
-        <span style={{ marginRight: 12 }}>
-          <SubmitButton onClick={createDoc} />
-        </span>
-        <BorderButton onClick={routeTo} />
+      <div className="flex flex-row justify-end gap-3">
+        <SubmitButton onClick={createDoc} />
+        <BorderButton onClick={() => navigate("/", { replace: true })} />
       </div>
     </div>
   )

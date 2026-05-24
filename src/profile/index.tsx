@@ -20,8 +20,8 @@ const Profile = (props: AppRouteProps) => {
       />
       <div className="flex flex-col items-center dark:bg-body min-h-screen">
         {/* Profile Header */}
-        <div className="w-[60%] h-60 dark:bg-body relative mt-34">
-          <div className="left-6 flex items-center gap-4">
+        <div className="w-[60%] dark:bg-body relative mt-8 mb-4">
+          <div className="flex items-center gap-4">
             <div className="w-24 h-24 mr-2 rounded-full bg-gray-200 flex items-center justify-center">
               <User className="w-14 h-14 text-gray-600" />
             </div>
@@ -29,7 +29,6 @@ const Profile = (props: AppRouteProps) => {
               <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
                 {user?.fname} {user?.lname}
               </h1>
-              <p className="text-sm text-gray-200">1.23M subscribers</p>
             </div>
           </div>
         </div>

@@ -1,227 +1,167 @@
-import { useContext, useState } from "react"
+import { useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import { NotificationContextProps } from "loony-types"
 import { onSendResetPassword } from "loony-api"
-import { AuthContext } from "../context/AuthContext.tsx"
+import { IoEye, IoEyeOff } from "react-icons/io5"
 
 const ResetPassword = ({
-  isMobile,
   notificationContext,
 }: {
   isMobile: boolean
   notificationContext: NotificationContextProps
 }) => {
-  // const [viewPassword, setViewPassword] = useState(false)
-  // const [viewConfirmPassword, setViewConfirmPassword] = useState(false)
-
-  const [formData, setFormData] = useState({
-    password: "",
-    confirmPassword: "",
-    email: "",
-  })
-  const [formError, setFormError] = useState({
-    label: "",
-    message: "",
-  })
-
   const navigate = useNavigate()
   const { sessionId } = useParams()
 
-  const authContext = useContext(AuthContext)
+  const [formData, setFormData] = useState({ email: "", password: "", confirmPassword: "" })
+  const [errors, setErrors] = useState({ email: "", password: "", confirmPassword: "" })
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }))
+    }
   }
 
-  const onClickSendResetPassword = () => {
-    setFormError({ label: "", message: "" })
+  const validate = (): boolean => {
+    const next = { email: "", password: "", confirmPassword: "" }
+    if (!formData.email.trim()) next.email = "Email or username is required."
+    if (!formData.password) next.password = "Password is required."
+    else if (formData.password.length < 8) next.password = "Password must be at least 8 characters."
+    if (!formData.confirmPassword) next.confirmPassword = "Please confirm your password."
+    else if (formData.password !== formData.confirmPassword) next.confirmPassword = "Passwords do not match."
+    setErrors(next)
+    return Object.values(next).every((v) => !v)
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!validate()) return
+    setIsSubmitting(true)
     onSendResetPassword({
       sessionId,
       formData,
-      setFormError,
-      authContext,
+      setFormError: ({ label, message }: { label: string; message: string }) => {
+        setErrors((prev) => ({ ...prev, [label]: message }))
+        setIsSubmitting(false)
+      },
+      authContext: null,
       notificationContext,
       navigate,
     })
   }
 
   return (
-    <div className="book-container">
-      <div className="login-body">
-        <div
-          style={{
-            width: "90%",
-            height: "90vh",
-            display: "flex",
-            flexDirection: "row",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
-        >
-          {!isMobile ? (
-            <div
-              style={{
-                width: "50%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "80%",
-                }}
-              >
-                {/* <img src={require('../../assets/images/login.png')} style={{ width: '100%' }} /> */}
-              </div>
-              <div style={{ marginBlock: 20 }}>
-                <div style={{ fontWeight: "bold", fontSize: 32 }}>Loony</div>
-              </div>
-            </div>
-          ) : null}
-          <div
-            style={{
-              width: isMobile ? "94%" : "50%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{
-                width: 380,
-                padding: 20,
-                borderRadius: 10,
-              }}
-              className="box-shadow-1"
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginBottom: 20,
-                }}
-              >
-                <h2>Reset Password</h2>
-              </div>
+    <div className="flex flex-1 justify-center items-center min-h-screen bg-gray-50 dark:bg-[#212121] px-4">
+      <div className="w-full max-w-sm bg-white dark:bg-[#2e2e2e] shadow-md rounded-xl p-8">
+        <h1 className="text-2xl font-bold text-center mb-2 text-gray-900 dark:text-white">
+          Reset password
+        </h1>
+        <p className="text-sm text-center text-gray-500 dark:text-gray-400 mb-8">
+          Enter your account email and choose a new password.
+        </p>
 
-              <div className="input-container">
-                <label htmlFor="phone">Email/Username</label>
-                <input
-                  name="email"
-                  type="text"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  autoFocus
-                />
-
-                {formError.label === "username" ? (
-                  <div style={{ marginBottom: 24 }}>
-                    <div style={{ color: "red" }}>{formError.message}</div>
-                  </div>
-                ) : null}
-              </div>
-
-              <div className="input-container">
-                <label htmlFor="password">New Password</label>
-                <input
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      // onHandleLogin()
-                    }
-                  }}
-                  required
-                />
-
-                {formError.label === "password" ? (
-                  <div style={{ marginBottom: 24 }}>
-                    <div style={{ color: "red" }}>{formError.message}</div>
-                  </div>
-                ) : null}
-                {/* <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginBlock: 10,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div>
-                    <input
-                      style={{ width: 16, height: 16 }}
-                      type="checkbox"
-                      onChange={() => {
-                        setViewPassword(!viewPassword)
-                      }}
-                    />
-                    <span style={{ marginLeft: 10 }}>Show password</span>
-                  </div>
-                </div> */}
-              </div>
-
-              <div className="input-container">
-                <label htmlFor="password">Confirm Password</label>
-                <input
-                  name="confirmPassword"
-                  type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      // onHandleLogin()
-                    }
-                  }}
-                  required
-                />
-
-                {formError.label === "confirm_password" ? (
-                  <div style={{ marginBottom: 24 }}>
-                    <div style={{ color: "red" }}>{formError.message}</div>
-                  </div>
-                ) : null}
-                {/* <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginBlock: 10,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div>
-                    <input
-                      style={{ width: 16, height: 16 }}
-                      type="checkbox"
-                      onChange={() => {
-                        setViewConfirmPassword(!viewConfirmPassword)
-                      }}
-                    />
-                    <span style={{ marginLeft: 10 }}>Show password</span>
-                  </div>
-                </div> */}
-              </div>
-
-              <button
-                style={{ width: "100%", marginTop: 30 }}
-                onClick={onClickSendResetPassword}
-                className="shadow black-bg"
-              >
-                Send Reset Password Email
-              </button>
-            </div>
+        <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium mb-1.5 text-gray-700 dark:text-gray-300">
+              Email or username
+            </label>
+            <input
+              id="email"
+              type="text"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="you@example.com"
+              autoFocus
+              className="w-full px-4 py-2 border border-gray-300 dark:border-[#4d4d4d] rounded-md bg-gray-50 dark:bg-[#292929] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400"
+              aria-invalid={!!errors.email}
+            />
+            {errors.email && (
+              <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.email}</p>
+            )}
           </div>
-        </div>
+
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium mb-1.5 text-gray-700 dark:text-gray-300">
+              New password
+            </label>
+            <div className="relative">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="At least 8 characters"
+                className="w-full px-4 py-2 pr-10 border border-gray-300 dark:border-[#4d4d4d] rounded-md bg-gray-50 dark:bg-[#292929] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400"
+                aria-invalid={!!errors.password}
+              />
+              {formData.password.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <IoEyeOff className="w-5 h-5" /> : <IoEye className="w-5 h-5" />}
+                </button>
+              )}
+            </div>
+            {errors.password && (
+              <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.password}</p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1.5 text-gray-700 dark:text-gray-300">
+              Confirm new password
+            </label>
+            <div className="relative">
+              <input
+                id="confirmPassword"
+                type={showConfirm ? "text" : "password"}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Repeat your new password"
+                className="w-full px-4 py-2 pr-10 border border-gray-300 dark:border-[#4d4d4d] rounded-md bg-gray-50 dark:bg-[#292929] text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-gray-400"
+                aria-invalid={!!errors.confirmPassword}
+              />
+              {formData.confirmPassword.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowConfirm((v) => !v)}
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
+                  aria-label={showConfirm ? "Hide password" : "Show password"}
+                >
+                  {showConfirm ? <IoEyeOff className="w-5 h-5" /> : <IoEye className="w-5 h-5" />}
+                </button>
+              )}
+            </div>
+            {errors.confirmPassword && (
+              <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.confirmPassword}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full py-2.5 rounded-lg font-medium bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {isSubmitting ? "Saving…" : "Reset password"}
+          </button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+          <a href="/login" className="font-medium text-gray-900 dark:text-white hover:underline">
+            Back to sign in
+          </a>
+        </p>
       </div>
     </div>
   )

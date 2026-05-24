@@ -89,7 +89,6 @@ export default function DesktopLeftNavbar({
       <div>
         <button
           onClick={() => {
-            console.log()
             setAppContext((prev) => ({
               ...prev,
               isDark: !isDark,

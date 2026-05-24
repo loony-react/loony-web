@@ -24,21 +24,18 @@ export default function Card({
 
   return (
     <div
-      className="rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 text-neutral-900 dark:text-neutral-300"
+      className="rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer text-neutral-900 dark:text-neutral-300"
       onClick={() => navigate(`/view/${docType}/${node.uid}`)}
+      role="article"
+      aria-label={node.title}
     >
       <div className="relative w-full h-44 bg-gray-100 dark:bg-cardTop flex items-center justify-center">
         {image ? (
-          <>
-            <img
-              src={image}
-              alt="Video Thumbnail"
-              className="w-full h-full object-cover"
-            />
-            <span className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-1.5 py-0.5 rounded">
-              12:34
-            </span>
-          </>
+          <img
+            src={image}
+            alt={node.title}
+            className="w-full h-full object-cover"
+          />
         ) : (
           <h3 className="text-center text-sm font-semibold px-4">
             {node.title}
@@ -46,13 +43,12 @@ export default function Card({
         )}
       </div>
       <div className="flex p-4 bg-neutral-100 dark:bg-cardBot">
-        <div className="w-10 h-10 mr-2 rounded-full bg-gray-200 flex items-center justify-center">
+        <div className="w-10 h-10 mr-2 flex-shrink-0 rounded-full bg-gray-200 flex items-center justify-center">
           <User className="w-5 h-5 text-neutral-900" />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col min-w-0">
           <h3 className="text-sm font-semibold line-clamp-2">{node.title}</h3>
-          <p className="text-xs mt-0.5">Sankar Boro</p>
-          <p className="text-xs">0 views • {timeAgo(node.created_at)}</p>
+          <p className="text-xs mt-0.5 text-gray-500 dark:text-gray-400">{timeAgo(node.created_at)}</p>
         </div>
       </div>
     </div>

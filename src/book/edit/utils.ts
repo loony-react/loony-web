@@ -138,7 +138,5 @@ const deleteNode = ({
         })
       }
     })
-    .catch((err) => {
-      console.log(err)
-    })
+    .catch(() => {})
 }

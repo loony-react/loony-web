@@ -1,129 +1,96 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react"
-
 import { BasicMenuNavContainer } from "../components/Containers.tsx"
-import {} from "loony-api"
 import { AuthContextProps, AuthStatus } from "loony-types"
 import { apiHttpClient } from "loony-api"
 
+type Tag = { uid: number; name: string }
+
 const Followed = ({ authContext }: { authContext: AuthContextProps }) => {
-  const [canFollowTags, setCanFollowTags] = useState<any>([])
+  const [canFollowTags, setCanFollowTags] = useState<Tag[]>([])
 
   useEffect(() => {
     if (authContext.status === AuthStatus.AUTHORIZED && authContext.user) {
       apiHttpClient
         .get(`/tag/${authContext.user.uid}/get_all_tags_user_can_follow`)
-        .then(({ data }: { data: any }) => {
+        .then(({ data }: { data: Tag[] }) => {
           setCanFollowTags(data)
         })
-        .catch((err) => {
-          console.log(err)
-        })
+        .catch(() => {})
     }
   }, [])
 
-  const user_removed_a_followed_tag = (tag_id: number) => {
+  const removeFollowedTag = (tag_id: number) => {
     apiHttpClient.post(`/tag/user_removed_a_followed_tag`, {
       tag_id,
-      user_id: authContext.user && authContext.user.uid,
+      user_id: authContext.user?.uid,
     })
   }
 
   return (
     <div>
-      <div>Recommendations</div>
-      {Array.isArray(canFollowTags) &&
-        canFollowTags.map((tag) => {
-          return (
-            <BasicMenuNavContainer key={`r-${tag.uid}`}>
-              <span
-                style={{
-                  marginRight: 10,
-                  backgroundColor: "#ccc",
-                  width: 35,
-                  height: 30,
-                  borderRadius: 30,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {tag.name.substr(0, 1)}
-              </span>
-              <div className="page-nav-title">
-                <span>{tag.name}</span>
-                <button
-                  onClick={() => {
-                    user_removed_a_followed_tag(tag.uid)
-                  }}
-                  style={{ marginLeft: 10 }}
-                >
-                  Remove
-                </button>
-              </div>
-            </BasicMenuNavContainer>
-          )
-        })}
+      <p className="text-sm font-semibold mb-2">Recommendations</p>
+      {canFollowTags.map((tag) => (
+        <BasicMenuNavContainer key={`r-${tag.uid}`}>
+          <span className="mr-2.5 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium">
+            {tag.name.charAt(0)}
+          </span>
+          <div className="flex-1 flex items-center justify-between">
+            <span className="text-sm">{tag.name}</span>
+            <button
+              onClick={() => removeFollowedTag(tag.uid)}
+              className="ml-2 text-xs text-gray-500 hover:text-red-600 transition-colors"
+            >
+              Remove
+            </button>
+          </div>
+        </BasicMenuNavContainer>
+      ))}
     </div>
   )
 }
 
 const Recommended = ({ authContext }: { authContext: AuthContextProps }) => {
-  const [followedTags, setFollowedTags] = useState<any>([])
+  const [followedTags, setFollowedTags] = useState<Tag[]>([])
 
   useEffect(() => {
     if (authContext.status === AuthStatus.AUTHORIZED && authContext.user) {
       apiHttpClient
         .get(`/tag/${authContext.user.uid}/get_all_tags_user_has_followed`)
-        .then(({ data }: { data: any }) => {
+        .then(({ data }: { data: Tag[] }) => {
           setFollowedTags(data)
         })
-        .catch((err) => {
-          console.log(err)
-        })
+        .catch(() => {})
     }
   }, [])
-  const user_removed_a_followed_tag = (tag_id: number) => {
+
+  const removeFollowedTag = (tag_id: number) => {
     apiHttpClient.post(`/tag/user_removed_a_followed_tag`, {
       tag_id,
-      user_id: authContext.user && authContext.user.uid,
+      user_id: authContext.user?.uid,
     })
   }
 
   return (
     <div>
-      <div>Followed</div>
-      {Array.isArray(followedTags) &&
-        followedTags.map((tag) => {
-          return (
-            <BasicMenuNavContainer key={`f-${tag.uid}`}>
-              <span
-                style={{
-                  marginRight: 10,
-                  backgroundColor: "#ccc",
-                  width: 35,
-                  height: 30,
-                  borderRadius: 30,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                {tag.name.substr(0, 1)}
-              </span>
-              <div className="page-nav-title">
-                <span>{tag.name}</span>
-                <button
-                  onClick={() => {
-                    user_removed_a_followed_tag(tag.uid)
-                  }}
-                >
-                  Remove
-                </button>
-              </div>
-            </BasicMenuNavContainer>
-          )
-        })}
+      <p className="text-sm font-semibold mb-2">Followed</p>
+      {followedTags.map((tag) => (
+        <BasicMenuNavContainer key={`f-${tag.uid}`}>
+          <span className="mr-2.5 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium">
+            {tag.name.charAt(0)}
+          </span>
+          <div className="flex-1 flex items-center justify-between">
+            <span className="text-sm">{tag.name}</span>
+            <button
+              onClick={() => removeFollowedTag(tag.uid)}
+              className="ml-2 text-xs text-gray-500 hover:text-red-600 transition-colors"
+            >
+              Remove
+            </button>
+          </div>
+        </BasicMenuNavContainer>
+      ))}
     </div>
   )
 }
+
+export { Followed, Recommended }

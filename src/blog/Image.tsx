@@ -1,19 +1,15 @@
-// import { useNavigate, useParams } from "react-router"
 import { createImageUrl, extractImage } from "loony-utils"
-// import { AppRouteProps, PageStatus } from "loony-types"
-// import { useGetBlogNodes } from "loony-api"
-// import { Container } from "loony-ui"
+import { DocNode } from "loony-types"
 
 const Image = ({
   mainNode,
   node,
   base_url,
 }: {
-  mainNode: any
-  node: any
+  mainNode: DocNode | null
+  node: DocNode
   base_url: string
 }) => {
-  // console.log(node)
   const image = createImageUrl({
     docType: "blog",
     baseUrl: base_url,
@@ -23,11 +19,10 @@ const Image = ({
   })
 
   if (!image) return null
-  console.log(image)
   return (
     <img
       src={image}
-      alt="Video Thumbnail"
+      alt={node.title ?? ""}
       className="w-full h-full object-cover mb-4"
     />
   )

@@ -67,24 +67,19 @@ export const DeleteButton = ({
 export const Button = ({
   onClick,
   children,
+  type = "button",
+  disabled = false,
 }: {
-  onClick: React.MouseEventHandler<HTMLButtonElement>
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
   children: ReactNode
+  type?: "button" | "submit" | "reset"
+  disabled?: boolean
 }) => {
   return (
     <button
-      className="w-full
-        py-2.5
-        rounded-lg
-        font-medium
-        duration-200
-        bg-black
-        text-white
-        hover:bg-gray-800
-        dark:bg-white
-        dark:text-black
-        dark:hover:bg-gray-200
-        dark:focus:ring-white"
+      type={type}
+      disabled={disabled}
+      className="w-full py-2.5 rounded-lg font-medium duration-200 bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 dark:focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       onClick={onClick}
     >
       {children}

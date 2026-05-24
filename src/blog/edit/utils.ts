@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from "react"
 import { apiHttpClient } from "loony-api"
 import {
   AppDispatchAction,
@@ -20,12 +20,12 @@ export const onCancel = ({ setState }: { setState: EditBlogAction }) => {
 }
 
 export const showModalToConfirmDeleteDoc = (
-  e: any,
-  setState: any,
+  e: React.MouseEvent,
+  setState: EditBlogAction,
   title?: string,
 ) => {
   e.preventDefault()
-  setState((prevState: any) => ({
+  setState((prevState) => ({
     ...prevState,
     modal: {
       method: "delete",
@@ -59,7 +59,7 @@ const deleteBlog = ({
   setAppContext: AppDispatchAction
 }) => {
   apiHttpClient.post("/blog/delete", { doc_id: doc_id }).then(() => {
-    setAppContext((prevState: any) => ({
+    setAppContext((prevState) => ({
       ...prevState,
       alert: {
         status: "success",
@@ -71,14 +71,13 @@ const deleteBlog = ({
   })
 }
 
-const deleteNode = ({ state, setState }: any) => {
+const deleteNode = ({ state, setState }: { state: EditBlogState; setState: EditBlogAction }) => {
   if (!state.deleteNode) return
   const { deleteNode, childNodes, mainNode } = state
 
   if (childNodes) {
-    console.log("deleteNode", state)
     let updateNode: DocNode | undefined
-    childNodes.forEach((r: any) => {
+    childNodes.forEach((r: DocNode) => {
       if (r.parent_id === deleteNode.uid) {
         updateNode = r
       }
@@ -108,8 +107,6 @@ const deleteNode = ({ state, setState }: any) => {
           modal: STATE_VALUES.modal,
         })
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      .catch(() => {})
   }
 }
