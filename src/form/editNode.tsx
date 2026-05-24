@@ -103,9 +103,7 @@ export default function EditNodeComponent(props: EditNodeComponentProps) {
 
   return (
     <div className="pb-24">
-      <h2 className="text-xl font-semibold text-[#ececec] mb-1">
-        {heading}
-      </h2>
+      <h2 className="text-xl font-semibold text-[#ececec] mb-1">{heading}</h2>
       <div>
         <div>
           {error ? (
@@ -195,7 +193,6 @@ const RenderImage = ({
     if (!image) return null
     return <img src={image} alt="Uploaded file" />
   } else if (nodeImages) {
-
     const image = createImageUrl({
       docType,
       baseUrl,

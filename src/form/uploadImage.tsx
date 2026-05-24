@@ -48,19 +48,11 @@ export default function UploadImage({
     reader.onload = (e) => {
       const img = new Image()
       img.onload = function () {
-        const width = img.naturalWidth
-        const height = img.naturalHeight
-        if (width > height && width <= 1420) {
-          return
-        }
-        if (height > width && height <= 1420) {
-          return
-        }
         setAfterImageSelect({
           hasImage: true,
           image: selectedFile,
-          width,
-          height,
+          width: img.naturalWidth,
+          height: img.naturalHeight,
         })
         setImageEdit(URL.createObjectURL(selectedFile))
       }
@@ -171,7 +163,10 @@ const EditImageComponent = (props: EditImageComponentProps) => {
       </label>
 
       {/* Cropper canvas */}
-      <div className="relative w-full rounded-xl overflow-hidden border border-white/[0.08] bg-[#111111]" style={{ minHeight: 340 }}>
+      <div
+        className="relative w-full rounded-xl overflow-hidden border border-white/[0.08] bg-[#111111]"
+        style={{ minHeight: 340 }}
+      >
         <Cropper
           image={imageEdit as string}
           crop={crop}
@@ -195,11 +190,13 @@ const EditImageComponent = (props: EditImageComponentProps) => {
           onChange={(e) => setZoom(Number(e.target.value))}
           className="flex-1 h-1 appearance-none rounded-full bg-white/10 accent-[#10a37f] cursor-pointer"
         />
-        <span className="text-xs text-[#6b6b76] w-8 text-right">{zoom.toFixed(1)}x</span>
+        <span className="text-xs text-[#6b6b76] w-8 text-right">
+          {zoom.toFixed(1)}x
+        </span>
       </div>
 
       {/* Aspect ratio pills */}
-      <div className="flex items-center gap-2 pt-1">
+      {/* <div className="flex items-center gap-2 pt-1">
         <span className="text-xs text-[#6b6b76] w-10 shrink-0">Ratio</span>
         <div className="flex gap-1.5">
           {ratios.map((r) => {
@@ -221,7 +218,7 @@ const EditImageComponent = (props: EditImageComponentProps) => {
             )
           })}
         </div>
-      </div>
+      </div> */}
 
       {/* Actions */}
       <div className="flex items-center gap-2 pt-2">
@@ -233,7 +230,7 @@ const EditImageComponent = (props: EditImageComponentProps) => {
         />
         <button
           type="button"
-          onClick={() => inputRef.current?.click()}
+          onClick={(e) => { e.stopPropagation(); inputRef.current?.click() }}
           className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-[#9b9ba4] ring-1 ring-white/10 bg-transparent hover:bg-white/5 hover:text-[#ececec] transition-all duration-150 active:scale-[0.98]"
         >
           <MdImage size={16} />
@@ -266,12 +263,15 @@ const SelectImage = ({
       </label>
       <button
         type="button"
-        onClick={() => inputRef.current?.click()}
+        onClick={(e) => { e.stopPropagation(); inputRef.current?.click() }}
         className="w-full border border-dashed border-white/[0.12] hover:border-white/25 rounded-xl p-6 transition-colors duration-150 text-center group focus:outline-none focus:border-[#10a37f]/40"
       >
         <div className="flex flex-col items-center justify-center">
           <div className="mb-3 w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center group-hover:bg-white/8 transition-colors duration-150">
-            <MdImage size={20} className="text-[#6b6b76] group-hover:text-[#9b9ba4] transition-colors duration-150" />
+            <MdImage
+              size={20}
+              className="text-[#6b6b76] group-hover:text-[#9b9ba4] transition-colors duration-150"
+            />
           </div>
           <p className="text-sm text-[#9b9ba4] mb-1">Drop your image here</p>
           <p className="text-xs text-[#6b6b76] mb-4">PNG, JPG up to 10MB</p>
