@@ -1,7 +1,8 @@
 import { useContext } from "react"
 import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
-import { createImageUrl, extractImage, useEditBlogNodes } from "loony-utils"
+import { useEditBlogNodes } from "loony-utils"
+import Image from "../Image.tsx"
 import { AppRouteProps, Auth, EditBlogState, PageStatus } from "loony-types"
 import ViewContent from "../../components/ViewContent.tsx"
 import { useCallback } from "react"
@@ -45,14 +46,6 @@ export default function Edit(props: AppRouteProps) {
 
   if (!mainNode || !user) return null
 
-  const image = createImageUrl({
-    docType: "blog",
-    baseUrl: base_url,
-    nodeId: mainNode.uid,
-    image: extractImage(mainNode.images),
-    size: 720,
-  })
-
   if (status.status !== PageStatus.VIEW_PAGE)
     return <PageLoadingContainer title="" />
 
@@ -80,13 +73,7 @@ export default function Edit(props: AppRouteProps) {
         <div className="w-[45%] mx-auto">
           {!state.form.method && (
             <>
-              {image && (
-                <img
-                  src={image}
-                  alt="Video Thumbnail"
-                  className="w-full h-full object-cover mb-4"
-                />
-              )}
+              <Image mainNode={mainNode} node={mainNode} base_url={base_url} />
               <h2 className="text-3xl font-bold text-[#ececec] mb-8 pb-2">
                 {mainNode.title}
               </h2>
@@ -101,6 +88,7 @@ export default function Edit(props: AppRouteProps) {
               {childNodes.map((node, id) => {
                 return (
                   <div key={id}>
+                    <Image mainNode={mainNode} node={node} base_url={base_url} />
                     <h2 className="text-2xl font-semibold my-4 border-b border-white/[0.08] text-[#ececec]">
                       {node.title}
                     </h2>

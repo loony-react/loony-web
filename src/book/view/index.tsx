@@ -1,4 +1,5 @@
-import { createImageUrl, extractImage, useBookNodes } from "loony-utils"
+import { useBookNodes } from "loony-utils"
+import BookImage from "../Image.tsx"
 import { useGetBookNav } from "loony-api"
 import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
@@ -42,14 +43,6 @@ const View = (props: AppRouteProps) => {
       childNodes: [],
     }))
 
-  const image = createImageUrl({
-    docType: "book",
-    baseUrl: base_url,
-    nodeId: docId,
-    image: extractImage(parentNode.images),
-    size: 720,
-  })
-
   return (
     <div className="min-h-screen">
       <PageNavigation
@@ -73,30 +66,19 @@ const View = (props: AppRouteProps) => {
           }}
         >
           <div className="w-[45%] mx-auto">
-            {parentNode && image ? (
-              <img src={image} alt="" width="100%" className="mb-4" />
-            ) : null}
+            <BookImage docId={docId} node={parentNode} base_url={base_url} />
             <h2 className="text-3xl font-bold mb-4 pb-2 text-[#ececec]">
               {parentNode.title}
             </h2>
             <ViewContent source={parentNode.content} isDark={isDark} />
             {childNodes &&
               childNodes.map((childNode) => {
-                const nodeImage = createImageUrl({
-                  docType: "book",
-                  baseUrl: base_url,
-                  nodeId: docId,
-                  image: extractImage(childNode.images),
-                  size: 720,
-                })
                 return (
                   <div key={childNode.uid}>
+                    <BookImage docId={docId} node={childNode} base_url={base_url} />
                     <h2 className="text-3xl font-semibold border-b border-white/[0.08] mb-8 pb-3 text-[#ececec]">
                       {childNode.title}
                     </h2>
-                    {nodeImage && nodeImage ? (
-                      <img src={nodeImage} alt="" width="100%" />
-                    ) : null}
                     <ViewContent source={childNode.content} isDark={isDark} />
                   </div>
                 )

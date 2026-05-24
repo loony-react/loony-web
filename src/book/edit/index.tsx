@@ -1,5 +1,6 @@
 import { useContext } from "react"
-import { createImageUrl, extractImage, useEditBookNodes } from "loony-utils"
+import { useEditBookNodes } from "loony-utils"
+import BookImage from "../Image.tsx"
 import { useNavigate, useParams } from "react-router"
 import PageLoadingContainer from "../../components/PageLoadingContainer.tsx"
 import ViewContent from "../../components/ViewContent.tsx"
@@ -23,7 +24,7 @@ import { LeftNav } from "./LeftNav.tsx"
 import { RightNavView } from "../../components/RightNav.tsx"
 import { ButtonIcon } from "loony-ui"
 import { useGetBookNav } from "loony-api"
-import { Image } from "./Image.tsx"
+
 
 export default function Edit(props: AppRouteProps) {
   const { isMobile, appContext, authContext, mobileNavOpen, setMobileNavOpen } =
@@ -33,8 +34,7 @@ export default function Edit(props: AppRouteProps) {
   const { bookId } = useParams()
   const { setAppContext } = useContext(AppContext)
   //
-  const { isDark, device } = appContext
-  const { base_url } = appContext.env
+  const { isDark, device, env: { base_url } } = appContext
   const doc_id = bookId && parseInt(bookId)
   const { data: book_data } = useGetBookNav(doc_id)
   const { state, setState, pageStatus } = useEditBookNodes(
@@ -48,15 +48,6 @@ export default function Edit(props: AppRouteProps) {
     return <PageLoadingContainer title="" />
 
   if (!parentNode || !mainNode || !doc_id) return null
-
-  const baseImageUrl = `${base_url}/file/book/${doc_id}`
-  const image = createImageUrl({
-    docType: "book",
-    baseUrl: base_url,
-    nodeId: doc_id,
-    image: extractImage(parentNode.images),
-    size: 720,
-  })
 
   return (
     <div className="min-h-screen">
@@ -93,9 +84,7 @@ export default function Edit(props: AppRouteProps) {
           )}
           {!state.form.method && (
             <div className="w-[45%] mx-auto pt-4">
-              {parentNode && image ? (
-                <img src={image} alt="" width="100%" className="mb-4" />
-              ) : null}
+              <BookImage docId={doc_id} node={parentNode} base_url={base_url} />
               <h2 className="text-3xl font-bold text-[#ececec] mb-8 pb-2">
                 {parentNode.title}
               </h2>
@@ -109,14 +98,10 @@ export default function Edit(props: AppRouteProps) {
                 childNodes.map((childNode) => {
                   return (
                     <div key={childNode.uid}>
+                      <BookImage docId={doc_id} node={childNode} base_url={base_url} />
                       <h2 className="text-4xl font-semibold border-b border-white/[0.08] mb-8 pb-2">
                         {childNode.title}
                       </h2>
-                      <Image
-                        baseUrl={baseImageUrl}
-                        images={childNode.images}
-                        size={720}
-                      />
                       <ViewContent source={childNode.content} isDark={isDark} />
                       <NodeSettings
                         state={state}
