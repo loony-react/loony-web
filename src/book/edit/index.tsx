@@ -49,7 +49,7 @@ export default function Edit(props: AppRouteProps) {
 
   if (!parentNode || !mainNode || !doc_id) return null
 
-  const baseImageUrl = `${base_url}/book/${doc_id}`
+  const baseImageUrl = `${base_url}/file/book/${doc_id}`
   const image = createImageUrl({
     docType: "book",
     baseUrl: base_url,
